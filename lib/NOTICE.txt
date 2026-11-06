@@ -1,0 +1,16 @@
+Third-party files in this folder
+
+transformers.min.js
+  Transformers.js 4.3.1 by Hugging Face, Apache License 2.0 (see LICENSE-transformers.txt).
+  https://github.com/huggingface/transformers.js
+  This build includes ONNX Runtime Web.
+
+ort-wasm-simd-threaded.asyncify.mjs, ort-wasm-simd-threaded.asyncify.wasm
+  ONNX Runtime Web 1.31.0-dev.20260911-2a43ec07e by Microsoft, MIT License.
+  https://github.com/microsoft/onnxruntime
+
+Models
+  ../models/haywoodsloan/ai-image-detector-deploy (bundled, 4-bit): Apache License 2.0.
+    4-bit ONNX export of https://huggingface.co/haywoodsloan/ai-image-detector-deploy
+  ../models/ShantanuT01/vanguard-ai-text-detector (bundled, 4-bit with 8-bit embeddings): MIT License.
+    ONNX export of https://huggingface.co/ShantanuT01/vanguard-ai-text-detector

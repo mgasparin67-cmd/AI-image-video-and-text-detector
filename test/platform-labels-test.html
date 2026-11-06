@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Platform labels test</title>
+  <style>
+    body { max-width: 760px; margin: 24px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; color: #222; background: #fafafa; }
+    section { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 14px 0; }
+    h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #888; margin: 0 0 8px; }
+    .head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; }
+    .media { width: 320px; height: 220px; display: block; }
+    .tag { font-size: 12px; color: #555; }
+    pre { background: #f4f4f5; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Platform labels test</h1>
+  <p>Mock posts in each platform's style. <code>findLabeled</code> runs on each with that platform's host;
+    the results are compared with what's expected. Then the real page script blurs them.</p>
+  <pre id="log"></pre>
+
+  <section data-case="instagram-labeled" data-host="www.instagram.com" data-expect="1">
+    <h2>Instagram: labeled post (expect blurred)</h2>
+    <article>
+      <div class="head"><img class="avatar" alt=""><div><a>someuser</a><div><span><span>AI info</span></span></div></div></div>
+      <img class="media" alt="Photo by someuser">
+    </article>
+  </section>
+
+  <section data-case="instagram-comment" data-host="www.instagram.com" data-expect="0">
+    <h2>Instagram: comment mentioning the label (expect NOT blurred)</h2>
+    <article>
+      <div class="head"><img class="avatar" alt=""><a>otheruser</a></div>
+      <img class="media" alt="Photo by otheruser">
+      <p><span>friend</span> why does this have AI info on it?? I took this photo myself</p>
+    </article>
+  </section>
+
+  <section data-case="facebook-labeled" data-host="www.facebook.com" data-expect="1">
+    <h2>Facebook: labeled post (expect blurred)</h2>
+    <div role="article">
+      <div class="head"><img class="avatar" alt=""><strong>Page name</strong> · <div role="button" aria-label="AI info"><svg width="12" height="12"></svg></div></div>
+      <p>Look at this amazing sunset!</p>
+      <img class="media" alt="">
+    </div>
+  </section>
+
+  <section data-case="facebook-unlabeled" data-host="www.facebook.com" data-expect="0">
+    <h2>Facebook: unlabeled post (expect NOT blurred)</h2>
+    <div role="article">
+      <div class="head"><img class="avatar" alt=""><strong>Friend</strong></div>
+      <img class="media" alt="">
+    </div>
+  </section>
+
+  <section data-case="tiktok-labeled" data-host="www.tiktok.com" data-expect="1">
+    <h2>TikTok: labeled video (expect blurred)</h2>
+    <div class="item">
+      <video class="media" muted playsinline></video>
+      <div class="tag"><span>Creator labeled as AI-generated</span></div>
+    </div>
+  </section>
+
+  <section data-case="pinterest-labeled" data-host="www.pinterest.com" data-expect="1">
+    <h2>Pinterest: pin close-up (expect blurred)</h2>
+    <div class="closeup">
+      <div><img class="media" alt="Dreamy castle"></div>
+      <div class="tag"><div>AI modified</div></div>
+    </div>
+  </section>
+
+  <section data-case="pinterest-avatar-only" data-host="www.pinterest.com" data-expect="0">
+    <h2>Pinterest: label next to only an avatar (expect NOT blurred)</h2>
+    <div><img class="avatar" alt=""><span>AI modified</span></div>
+  </section>
+
+  <section data-case="facebook-feed-text-post" data-host="www.facebook.com" data-expect="0">
+    <h2>Facebook feed: labeled TEXT post above an unlabeled photo post (expect NOT blurred: the photo isn't the labeled post's)</h2>
+    <div class="feed">
+      <div role="article"><div class="head"><strong>Page</strong> · <span>AI info</span></div><p>A long AI-written caption with no picture.</p></div>
+      <div role="article"><div class="head"><strong>Friend</strong></div><img class="media" alt=""></div>
+    </div>
+  </section>
+
+  <section data-case="wrong-site" data-host="www.example.com" data-expect="0">
+    <h2>Other site: same label text (expect NOT blurred: labels only count on the five platforms)</h2>
+    <div><img class="media" alt=""><span>AI info</span></div>
+  </section>
+
+  <script>
+    // Placeholder pictures and a playing video, so media have real sizes.
+    const svg = c => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="320" height="220"><rect width="320" height="220" fill="${c}"/></svg>`);
+    document.querySelectorAll('img.media').forEach((img, i) => { img.src = svg(['#f97316', '#0ea5e9', '#22c55e', '#a855f7', '#eab308', '#ef4444'][i % 6]); });
+    document.querySelectorAll('img.avatar').forEach(img => { img.src = svg('#94a3b8'); });
+    const canvas = Object.assign(document.createElement('canvas'), { width: 320, height: 220 });
+    const ctx = canvas.getContext('2d');
+    (function draw(t) { ctx.fillStyle = `hsl(${(t / 20) % 360} 70% 55%)`; ctx.fillRect(0, 0, 320, 220); requestAnimationFrame(draw); })(0);
+    const video = document.querySelector('video'); video.srcObject = canvas.captureStream(30); video.play();
+  </script>
+  <script src="../platform-labels.js"></script>
+  <script>
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    window.__results = [];
+    // 1. Unit test: findLabeled on each case, with that case's host.
+    for (const sec of document.querySelectorAll('section[data-case]')) {
+      window.__aibTestHost = sec.dataset.host;
+      const found = window.AIBPlatform.findLabeled(sec);
+      const ok = found.length === Number(sec.dataset.expect);
+      window.__results.push({ case: sec.dataset.case, expected: Number(sec.dataset.expect), found: found.length, ok, label: found[0]?.label, platform: found[0]?.platform });
+      log(`${ok ? 'PASS' : 'FAIL'}  ${sec.dataset.case}: expected ${sec.dataset.expect}, found ${found.length}${found[0] ? ` (${found[0].platform}: “${found[0].label}”)` : ''}`);
+    }
+    window.__aibTestHost = null;
+    window.__done = true; // for test/run-all.mjs
+  </script>
+</body>
+</html>

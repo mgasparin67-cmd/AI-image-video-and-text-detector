@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hiding test</title>
+  <style>
+    body { max-width: 760px; margin: 24px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; color: #222; background: #fafafa; }
+    section { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 14px 0; }
+    h2.case { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #888; margin: 0 0 8px; }
+    pre { background: #f4f4f5; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
+    ytd-rich-item-renderer { display: block; padding: 6px 8px; border-bottom: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <h1>Hiding test</h1>
+  <p>Checks <code>hiding.js</code> on a mock Google results page and a mock YouTube feed, then runs
+    the real page script with both options on and checks what got hidden.</p>
+  <pre id="log"></pre>
+
+  <section>
+    <h2 class="case">Google results (expect the AI Overview hidden, results kept)</h2>
+    <div id="rcnt"><div id="center_col"><div id="res">
+      <div id="mock-aio"><div><div><div role="heading"><span>AI Overview</span></div></div>
+        <div>Sourdough needs a starter, flour, water and salt. Mix, rest, fold, shape, proof and bake at 250°C.</div></div></div>
+      <div id="search"><div id="rso">
+        <div class="g" id="result-1"><a href="#"><h3>How to make sourdough bread - a beginner's guide</h3></a></div>
+        <div class="g" id="result-2"><a href="#"><h3>AI Overview: how to turn it off in Google Search</h3></a></div>
+      </div></div>
+    </div></div></div>
+  </section>
+
+  <section>
+    <h2 class="case">Google results, signed-in style: no #rso, overview and results share a container</h2>
+    <div id="mock2"><div class="wrap"><div class="col">
+      <div class="block"><div id="mock2-aio"><div><span>AI Overview</span></div><div>Boil for 6 to 12 minutes, depending on how set you like the yolk.</div></div></div>
+      <div class="block"><div class="g" id="mock2-r1"><a href="#"><h3>How long to hard boil eggs?? : r/cookingforbeginners</h3></a></div></div>
+      <div class="block"><div class="g" id="mock2-r2"><a href="#"><h3>Perfect boiled eggs - RecipeTin Eats</h3></a></div></div>
+    </div></div></div>
+  </section>
+
+  <section>
+    <h2 class="case">YouTube feed (expect the AI videos hidden)</h2>
+    <div id="yt-feed"></div>
+  </section>
+
+  <script>
+    // [title, about AI?]
+    const VIDEOS = [
+      ['I Tried ChatGPT for 30 Days', true],
+      ['This AI Can Make Any Song in Seconds', true],
+      ['Claude Code vs Cursor: which is better?', true],
+      ['How Neural Networks Learn (visualized)', true],
+      ['Making a short film with Sora 2', true],
+      ['ai art is getting scary good', true],
+      ['Ai no Uta - piano cover', false],
+      ['Sora vs Riku - Kingdom Hearts boss fight', false],
+      ['Gemini zodiac sign: 5 traits', false],
+      ['Baking sourdough at home', false],
+      ['MAIL TIME! unboxing fan letters', false],
+      ['Llama farm tour in Peru', false],
+      ['Claude Monet: the water lilies', false]
+    ];
+    const feed = document.getElementById('yt-feed');
+    VIDEOS.forEach(([title], i) => {
+      const item = document.createElement('ytd-rich-item-renderer');
+      item.id = `video-${i}`;
+      // Newer YouTube nests a lockup view model inside the item.
+      const lockup = document.createElement('yt-lockup-view-model');
+      const h3 = document.createElement('h3');
+      const a = document.createElement('a'); a.title = title; a.textContent = title;
+      h3.append(a); lockup.append(h3); item.append(lockup); feed.append(item);
+    });
+  </script>
+  <script src="../hiding.js"></script>
+  <script>
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const results = window.__results = [];
+    const check = (name, ok, detail = '') => { results.push({ name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ': ' + detail : ''}`); };
+
+    // Unit tests.
+    window.__aibTestHost = 'www.google.com'; window.__aibTestPath = '/search';
+    const aio = AIBHide.findAiOverviews(document.getElementById('rcnt'));
+    check('google: finds one overview block', aio.length === 1 && aio[0].id === 'mock-aio', aio.map(e => e.id || e.tagName).join(','));
+    const rso = document.getElementById('rso'); rso.removeAttribute('id'); // signed-in pages: no #rso
+    const aio2 = AIBHide.findAiOverviews(document.getElementById('mock2'));
+    rso.id = 'rso';
+    const ok2 = aio2.length === 1 && !aio2[0].querySelector('h3') && aio2[0].contains(document.getElementById('mock2-aio'));
+    check('google without #rso: hides the overview only, never a block with results', ok2, aio2.map(e => (e.id || e.className || e.tagName) + (e.querySelector('h3') ? ' (HAS RESULTS)' : '')).join(','));
+    window.__aibTestPath = '/maps';
+    check('google: not on other Google pages', AIBHide.findAiOverviews(document.body).length === 0);
+    window.__aibTestHost = 'www.example.com'; window.__aibTestPath = '/search';
+    check('google: not on other sites', AIBHide.findAiOverviews(document.body).length === 0);
+
+    // Amazon's AI review summary: hidden with its title, real reviews stay.
+    const shop = document.createElement('div');
+    shop.innerHTML = `<div id="mock-reviews"><h2>Customer reviews</h2>
+      <div id="mock-summary"><div><h3>Customers say</h3></div><div><p>Buyers like the sound.</p><div><div><span>AI Generated from the text of customer reviews</span></div></div></div></div>
+      <div data-hook="review"><h4>Great speaker</h4><p>Generated from the text of customer reviews is what the box said.</p></div></div>`;
+    document.body.append(shop);
+    window.__aibTestHost = 'www.amazon.ca'; window.__aibTestPath = '/dp/B000';
+    const summaries = AIBHide.findShoppingSummaries(shop);
+    check('amazon: hides the AI summary and its title', summaries.length === 1 && summaries[0].id === 'mock-summary', summaries.map(e => e.id || e.tagName).join(','));
+    check('amazon: a real review stays', !summaries.some(e => e.querySelector('[data-hook="review"]')));
+    window.__aibTestHost = 'www.example.com';
+    check('amazon: not on other sites', AIBHide.findShoppingSummaries(shop).length === 0);
+    shop.remove();
+
+    // Amazon's Rufus: its buttons and panel go, a product that mentions it in its title stays.
+    const rufus = document.createElement('div');
+    rufus.innerHTML = `<button id="rufus-nav" aria-label="Open Rufus panel"><span>Rufus</span></button>
+      <div id="rufus-ask" role="button" aria-label="Ask Rufus about selected text" style="display:inline-block"><span>Ask Rufus</span></div>
+      <div id="nav-flyout-rufus"><button id="rufus-in-panel" aria-label="Rufus overflow menu"></button></div>
+      <button id="rufus-other" aria-label="Rufus the dog plush toy"></button>
+      <button id="rufus-cart">Add to cart</button>`;
+    document.body.append(rufus);
+    window.__aibTestHost = 'www.amazon.ca';
+    const rufusIds = AIBHide.findRufus(rufus).map(e => e.id).sort().join(',');
+    check('amazon: hides Rufus only, not products or other buttons', rufusIds === 'nav-flyout-rufus,rufus-ask,rufus-nav', rufusIds);
+    window.__aibTestHost = 'www.example.com';
+    check('amazon: Rufus rules are off on other sites', AIBHide.findRufus(rufus).length === 0);
+    rufus.remove();
+
+    // Gmail's AI buttons: gone from Gmail's own interface, never from inside an email or a draft.
+    const mail = document.createElement('div');
+    mail.innerHTML = `<button id="mail-gemini" aria-label="Try Gemini"></button>
+      <div id="mail-write" role="button" data-tooltip="Help me write" style="display:inline-block"><span>Help me write</span></div>
+      <button id="mail-send" aria-label="Send"></button>
+      <button id="mail-shortcut" aria-label="Help me write (⌥ H)"></button>
+      <button id="mail-shortcut2" aria-label="Ask Gemini \u202a(⌘G)\u202c"></button>
+      <div id="mail-long" role="button" aria-label="Try Gemini for free today"></div>
+      <div class="a3s"><button id="mail-in-email" aria-label="Try Gemini"></button></div>
+      <div contenteditable="true"><button id="mail-in-draft" aria-label="Help me write"></button></div>`;
+    document.body.append(mail);
+    window.__aibTestHost = 'mail.google.com';
+    const mailIds = AIBHide.findGmailAiButtons(mail).map(e => e.id).sort().join(',');
+    check('gmail: hides only its AI buttons, not Send, other labels, emails or drafts', mailIds === 'mail-gemini,mail-shortcut,mail-shortcut2,mail-write', mailIds);
+    window.__aibTestHost = 'www.example.com';
+    check('gmail: not on other sites', AIBHide.findGmailAiButtons(mail).length === 0);
+    mail.remove();
+
+    window.__aibTestHost = 'www.youtube.com';
+    const items = AIBHide.youtubeItems();
+    check('youtube: one entry per video (outermost element)', items.length === VIDEOS.length && items.every(i => i.el.tagName === 'YTD-RICH-ITEM-RENDERER'), `${items.length}`);
+    for (const [title, ai] of VIDEOS) check(`youtube topic ${ai ? 'AI    ' : 'not AI'}: ${title}`, AIBHide.isAiTopic(title) === ai);
+    window.__aibTestHost = null; window.__aibTestPath = null;
+
+    // Descriptions: a stand-in for YouTube's player endpoint.
+    const DESCRIPTIONS = {
+      aaaaaaaaaaa: 'In this video we look at how AI will change the job market over the next ten years.',
+      bbbbbbbbbbb: 'My morning routine for focus.\n👻 Voicepal: AI Writing App → https://example.com/voicepal\nThanks for watching!',
+      ccccccccccc: 'Specs: Ryzen AI 9 HX 370, 32 GB RAM, 1 TB SSD. Great battery life.',
+      ddddddddddd: 'A slow sourdough bake, start to finish.',
+      eeeeeeeeeee: 'We trained a neural network to play Mario.'
+    };
+    const realFetch = window.fetch;
+    let sentCookies = false;
+    window.fetch = async (url, opts) => {
+      if (!String(url).includes('/youtubei/v1/player')) return realFetch(url, opts);
+      if (opts.credentials !== 'omit') sentCookies = true;
+      const { videoId } = JSON.parse(opts.body);
+      return new Response(JSON.stringify({ videoDetails: { shortDescription: DESCRIPTIONS[videoId] } }), { status: 200 });
+    };
+    (async () => {
+      const expect = { aaaaaaaaaaa: true, bbbbbbbbbbb: false, ccccccccccc: false, ddddddddddd: false, eeeeeeeeeee: true };
+      for (const id of Object.keys(expect)) AIBHide.descriptionIsAi(id); // queue them
+      await new Promise(r => setTimeout(r, 300));
+      for (const [id, want] of Object.entries(expect)) {
+        check(`description ${want ? 'AI    ' : 'not AI'}: ${DESCRIPTIONS[id].slice(0, 50).replace(/\n/g, ' ')}`, AIBHide.descriptionIsAi(id) === want);
+      }
+      check('descriptions fetched without cookies', !sentCookies);
+
+      // Your own words and allowed channels.
+      AIBHide.configure({ topicBlock: ['robot', 'self-driving cars'], topicIgnore: ['Swift Go AI'], allowChannels: ['@veritasium', 'Two Minute Papers'] });
+      check('custom word: "I built a robot" is hidden', AIBHide.isAiTopic('I built a robot that folds laundry'));
+      check('custom words are whole words: "Robotics club tour" is shown', !AIBHide.isAiTopic('Robotics club tour'));
+      check('custom phrase, any capitalization: "Self-Driving Cars"', AIBHide.isAiTopic('Are Self-Driving Cars safe yet?'));
+      check('ignored name: "Acer Swift Go AI review" is shown', !AIBHide.isAiTopic('Acer Swift Go AI review'));
+      check('ignored name doesn\'t hide other AI terms', AIBHide.isAiTopic('Acer Swift Go AI review: is ChatGPT faster?'));
+      check('allowed channel by @handle', AIBHide.aboutAi({ id: null, title: 'How AI works', channels: ['Veritasium', '@veritasium'] }) === false);
+      check('allowed channel by name', AIBHide.aboutAi({ id: null, title: 'This AI paper is wild', channels: ['Two Minute Papers'] }) === false);
+      check('other channel still hidden', AIBHide.aboutAi({ id: null, title: 'How AI works', channels: ['Some Channel', '@somechannel'] }) === true);
+      AIBHide.configure({});
+      check('cleared lists: "robot" no longer counts', !AIBHide.isAiTopic('I built a robot that folds laundry'));
+      window.fetch = realFetch;
+      window.__done = true;
+    })();
+  </script>
+</body>
+</html>

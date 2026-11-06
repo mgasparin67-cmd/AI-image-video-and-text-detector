@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Text scores</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Text scores</h1>
+  <p>Scores every text in <code>?data=FILE.json</code> ({ set: [texts] }) with the extension's two text
+    checks, as content.js does: the text model (<code>models.js</code>) and the writing patterns
+    (<code>text-detector.js</code>). For evaluations: <code>node test/run-all.mjs "text scores" --save DIR</code>
+    writes the scores to DIR/&lt;name&gt;.json. <code>&amp;normalize=1</code> cleans each text first
+    (<code>AIBText.normalize</code>); each score also records the genre checks.</p>
+  <pre id="log"></pre>
+  <script src="../text-detector.js"></script>
+  <script type="module">
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const q = new URLSearchParams(location.search);
+    const file = q.get('data');
+    const norm = q.get('normalize') === '1'; // clean disguised text first, as content.js does
+    let listener;
+    const root = new URL('..', location.href).href;
+    window.chrome = { runtime: { getURL: p => root + p, onMessage: { addListener: f => { listener = f; } }, sendMessage: async () => {} } };
+    self.__aibModelsUrl ??= new URL('../models/', location.href).href; // models.js loads them from this test server
+    await import('../models.js');
+    const model = text => new Promise(res => listener({ target: 'offscreen', type: 'text', text }, null, res));
+    const sets = await (await fetch(file)).json();
+    const out = {};
+    let n = 0;
+    for (const [name, texts] of Object.entries(sets)) {
+      out[name] = [];
+      for (const raw of texts) {
+        const t = norm ? window.AIBText.normalize(raw) : raw;
+        const m = await model(t);
+        out[name].push({ vanguard: m?.score ?? 0, patterns: window.AIBText.score(t).score, // too short for the model: 0
+          academic: window.AIBText.isAcademic(raw), poem: window.AIBText.isPoem(raw) });
+        document.title = `${++n} scored`;
+      }
+      log(`${name}: ${texts.length}`);
+    }
+    window.__saveAs = { name: q.get('name') || 'text_scores', data: out };
+    window.__results = [{ name: `scored ${n} texts`, ok: n > 0 }];
+    window.__done = true;
+  </script>
+</body>
+</html>

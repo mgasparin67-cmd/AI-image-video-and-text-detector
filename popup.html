@@ -1,0 +1,359 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sloply</title>
+  <style>
+    /* Warm off-white neutrals with one light-blue accent: the same blue as the warnings on pages. */
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f5f3;
+      --surface: #ffffff;
+      --fg: #1c1917;
+      --muted: #78716c;
+      --line: #e7e5e4;
+      --track: #d6d3d1;         /* switch, off */
+      --accent: #38bdf8;        /* fills: switches, chips, slider */
+      --accent-text: #0369a1;   /* text and links, darker for contrast */
+      --on-accent: #082f49;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --ok: #16a34a;
+      --red: #dc2626;
+      --idle: #a8a29e;
+      --press: rgba(28, 25, 23, 0.04);
+      --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0e0d;
+        --surface: #1a1816;
+        --fg: #f5f5f4;
+        --muted: #a8a29e;
+        --line: #2c2926;
+        --track: #3a3633;
+        --accent: #7dd3fc;
+        --accent-text: #7dd3fc;
+        --on-accent: #082f49;
+        --accent-soft: rgba(125, 211, 252, 0.12);
+        --ok: #4ade80;
+        --red: #f87171;
+        --idle: #57534e;
+        --press: rgba(255, 255, 255, 0.04);
+      }
+    }
+    @media (prefers-contrast: more) {
+      :root { --line: currentColor; --muted: var(--fg); }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; width: 320px; background: var(--bg); color: var(--fg);
+      font: 13px/1.4 system-ui, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; color: inherit; }
+
+    /* ---------- Header ---------- */
+    header { padding: 10px 14px 2px; }
+    .brand { display: flex; align-items: center; gap: 9px; }
+    .logo {
+      width: 26px; height: 26px; border-radius: 6px; flex: none;
+      display: grid; place-items: center; background: var(--accent); color: var(--on-accent);
+    }
+    h1 { margin: 0; flex: 1; font-size: 15px; font-weight: 700; letter-spacing: -0.015em; }
+
+    /* Live counts for this tab */
+    .meter {
+      display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 10px;
+      border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+    }
+    .meter > div { padding: 6px 10px 4px; }
+    .meter > div + div { border-left: 1px solid var(--line); }
+    .num { display: block; font: 600 19px/1.1 var(--mono); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .meter small { display: block; margin-top: 2px; font: 500 9.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    #cellWaiting[data-busy] .num { color: var(--accent-text); }
+    body.idle .num { color: var(--idle); }
+
+    /* A model couldn't load: replaces the counts until it does */
+    .alert {
+      display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 7px 8px 7px 11px;
+      border: 1px solid color-mix(in srgb, var(--red) 45%, var(--line)); border-radius: 10px;
+      background: color-mix(in srgb, var(--red) 9%, var(--surface));
+    }
+    .alert[hidden] { display: none; }
+    .alert-text { flex: 1; min-width: 0; font-size: 11.5px; line-height: 1.35; color: var(--muted); }
+    .alert-text strong { display: block; color: var(--red); font-size: 12.5px; font-weight: 650; margin-bottom: 1px; }
+    .alert-btn {
+      flex: none; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
+      font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+    .alert-btn:disabled { color: var(--idle); cursor: default; }
+    .alert[hidden] + .meter { display: grid; }
+    .alert:not([hidden]) + .meter { display: none; }
+
+    /* Where it's running, and the pause button for this site */
+    .site { display: flex; align-items: center; gap: 7px; margin-top: 6px; padding: 0 2px; font-size: 12px; color: var(--muted); min-height: 24px; }
+    #stats { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-btn {
+      flex: none; padding: 3px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
+      font-size: 11.5px; font-weight: 600; cursor: pointer;
+    }
+    .site-btn:disabled { color: var(--idle); cursor: default; }
+
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--idle); flex: none; }
+    .dot[data-state="on"], .dot[data-state="ready"] { background: var(--ok); }
+    .dot[data-state="loading"] { background: var(--accent); }
+    .dot[data-state="error"] { background: var(--red); }
+
+    /* License: a free-trial strip under the counts, or the locked card once the trial is over */
+    .plan-bar {
+      display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 4px 10px;
+      border-radius: 8px; background: var(--accent-soft); font-size: 12px;
+    }
+    .plan-bar[hidden], .lock[hidden] { display: none; }
+    .plan-bar span { flex: 1; min-width: 0; }
+    .plan-bar .link { margin: 0; }
+    .plan-bar.ending { background: rgba(240, 168, 0, 0.18); font-weight: 600; }
+    .review-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+    .review-actions > * { white-space: nowrap; }
+    .review-actions a { font-size: 11.5px; font-weight: 500; color: var(--accent-text); }
+    body.asking #privacyNote, body.asking #reportTip { display: none; } /* room for the review question, within 600 px */
+    .lock {
+      margin-top: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+      display: grid; gap: 8px;
+    }
+    .lock strong { font-size: 14px; }
+    .lock p { margin: 0; color: var(--muted); font-size: 12px; }
+    .lock .actions { margin-top: 4px; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+    body.locked .meter, body.locked .site, body.locked .alert, body.locked main, body.locked #enabled { display: none !important; }
+    .foot { margin: 8px 2px 0; font-size: 11px; color: var(--muted); }
+    .foot[hidden] { display: none; }
+    .foot a { color: var(--accent-text); }
+
+    /* ---------- Sections ---------- */
+    main { padding: 0 14px 8px; transition: opacity 200ms ease; }
+    body.off main { opacity: 0.4; pointer-events: none; }
+    .section {
+      display: flex; align-items: center; gap: 8px; margin: 7px 2px 5px;
+      font: 600 10px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    }
+    .section::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
+
+    /* Blur / Remove: what happens to flagged items. Sits on the section line, after the rule. */
+    .section-link { order: 1; margin: 0; font-size: 10.5px; letter-spacing: 0; text-transform: none; }
+    .seg { order: 1; display: flex; padding: 1px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+    .seg button {
+      border: 0; background: none; padding: 1px 7px; border-radius: 4px; cursor: pointer;
+      font: 600 9.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+      transition: background-color 150ms ease, color 150ms ease;
+    }
+    .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-text); }
+    .panel { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 30px; padding: 3px 11px; }
+    .row + .row, .chips + .slider { border-top: 1px solid var(--line); }
+    label.row, .row > label { cursor: pointer; }
+    .grow { flex: 1; }
+    .row > .link { margin: 0 -4px 0 0; }
+    .note { margin: 5px 2px 0; font-size: 11px; color: var(--muted); }
+
+    /* Switch: squared track and knob, blue when on */
+    .switch {
+      appearance: none; margin: 0; flex: none; position: relative; cursor: pointer;
+      width: 30px; height: 18px; border-radius: 6px; background: var(--track);
+      transition: background-color 160ms ease;
+    }
+    .switch::after {
+      content: ""; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; border-radius: 3.5px;
+      background: var(--surface); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      transition: transform 200ms var(--ease-out);
+    }
+    .switch:checked { background: var(--accent); }
+    .switch:checked::after { transform: translateX(12px); background: var(--on-accent); box-shadow: none; }
+    .switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Images / Videos / Text toggles (real checkboxes underneath) */
+    .chips { display: flex; gap: 6px; padding: 5px 7px; }
+    .chip {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px 0;
+      border: 1px solid var(--line); border-radius: 7px; cursor: pointer; font-weight: 500; color: var(--muted);
+      transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+    }
+    .chip input { position: absolute; opacity: 0; pointer-events: none; }
+    .chip::before {
+      content: ""; width: 9px; height: 9px; border-radius: 2.5px; border: 1.5px solid currentColor; opacity: 0.6;
+      transition: background-color 160ms ease, border-color 160ms ease;
+    }
+    .chip:has(input:checked) { background: var(--accent-soft); color: var(--fg); }
+    .chip:has(input:checked)::before { background: var(--accent); border-color: var(--accent); opacity: 1; }
+    .chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .chip:active { transform: scale(0.97); }
+
+    /* Sensitivity slider; --fill is set from popup.js */
+    .slider { padding: 7px 11px 8px; }
+    .slider-head { display: flex; justify-content: space-between; align-items: baseline; }
+    .slider-head strong { font: 600 13px var(--mono); font-variant-numeric: tabular-nums; }
+    .link { border: 0; background: none; padding: 0; margin-left: 8px; color: var(--accent-text); font-size: 11.5px; font-weight: 500; cursor: pointer; }
+    .link[hidden] { display: none; }
+    input[type=range] {
+      --fill: 44%;
+      appearance: none; width: 100%; height: 4px; margin: 8px 0 5px; border-radius: 2px; cursor: pointer;
+      background: linear-gradient(to right, var(--accent) var(--fill), var(--line) var(--fill));
+    }
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none; width: 14px; height: 14px; border-radius: 4px; background: var(--surface);
+      border: 2px solid var(--accent); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: transform 160ms var(--ease-out);
+    }
+    input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+    input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .ends { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); }
+
+    /* Model status, under the models switch */
+    .stack { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .models { display: flex; flex-wrap: wrap; gap: 0 10px; font: 10.5px var(--mono); color: var(--muted); }
+    .models > span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .models .dot { width: 6px; height: 6px; }
+
+    /* Mistakes */
+    .count { font: 600 13px var(--mono); margin-left: 4px; }
+    .actions { display: flex; gap: 4px; }
+    .btn {
+      padding: 4px 9px; border: 1px solid var(--line); border-radius: 6px; background: none; cursor: pointer;
+      font-size: 12px; font-weight: 500;
+      transition: transform 160ms var(--ease-out), opacity 150ms ease;
+    }
+    .btn.danger { color: var(--red); }
+    .btn:disabled { opacity: 0.4; cursor: default; }
+
+    button:not(:disabled):active { transform: scale(0.97); }
+    button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (hover: hover) and (pointer: fine) {
+      label.row:hover, .site-btn:not(:disabled):hover, .btn:not(:disabled):hover { background: var(--press); }
+      .chip:hover { border-color: var(--muted); }
+          }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-property: background-color, border-color, color, opacity !important; }
+      button:active, .chip:active { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12.5l2 2 4-4"/></svg>
+      </div>
+      <h1 title="More interest, less slop.">Sloply</h1>
+      <input type="checkbox" class="switch" id="enabled" role="switch" aria-label="Sloply on">
+    </div>
+
+    <!-- Shown instead of the counts when a detection model couldn't load. -->
+    <div class="alert" id="modelAlert" role="alert" hidden>
+      <div class="alert-text">
+        <strong id="modelAlertTitle">Detection models didn’t load</strong>
+        <span id="modelAlertBody">Only basic checks for now.</span>
+      </div>
+      <button id="retryModels" class="alert-btn" type="button">Try again</button>
+    </div>
+    <div class="meter" aria-label="This tab">
+      <div><span class="num" id="statBlurred">–</span><small>Flagged</small></div>
+      <div><span class="num" id="statChecked">–</span><small>Checked</small></div>
+      <div id="cellWaiting"><span class="num" id="statWaiting">–</span><small>Waiting</small></div>
+    </div>
+    <div class="site" role="status" aria-live="polite">
+      <span class="dot" id="statusDot"></span>
+      <span id="stats">&nbsp;</span>
+      <button id="siteToggle" class="site-btn" type="button">Pause</button>
+    </div>
+    <div class="plan-bar" id="planBar" hidden>
+      <span id="planText">Free trial</span>
+      <button class="link" id="choosePlan" type="button">Choose a plan</button>
+    </div>
+    <div class="plan-bar" id="reviewBar" hidden>
+      <span>Find Sloply useful?</span>
+      <span class="review-actions">
+        <a id="reviewLink" target="_blank" rel="noopener">Leave a review</a>
+        <button class="link" id="reviewLater" type="button">Not now</button>
+      </span>
+    </div>
+    <div class="lock" id="lock" role="alert" hidden>
+      <strong id="lockTitle">Your free trial has ended</strong>
+      <p id="lockBody">Sloply is paused on every site. Pick a plan to turn it back on: $2.99 a month, or $24.99 once.</p>
+      <span class="actions">
+        <button class="btn primary" id="lockChoose" type="button">Choose a plan</button>
+        <button class="btn" id="lockKey" type="button">Enter license key</button>
+      </span>
+    </div>
+  </header>
+
+  <main>
+    <div class="section">When flagged
+      <span class="seg" role="group" aria-label="What to do with flagged items">
+        <button type="button" id="modeBlur" aria-pressed="true" title="Blur with a warning and “View anyway”">Blur</button>
+        <button type="button" id="modeRemove" aria-pressed="false" title="Take it off the page, no warning">Remove</button>
+      </span>
+    </div>
+    <div class="panel">
+      <div class="chips">
+        <label class="chip"><input type="checkbox" id="images">Images</label>
+        <label class="chip"><input type="checkbox" id="videos">Videos</label>
+        <label class="chip"><input type="checkbox" id="text">Text</label>
+      </div>
+      <div class="slider">
+        <div class="slider-head">
+          <label for="threshold">Flag when at least</label>
+          <span><strong id="thresholdValue"></strong><button class="link" id="resetThreshold" type="button" hidden title="Back to the recommended 70%">Reset</button></span>
+        </div>
+        <input type="range" id="threshold" min="0.5" max="0.95" step="0.05" aria-describedby="ends">
+        <div class="ends" id="ends"><span>Catch more</span><span>Fewer false alarms</span></div>
+      </div>
+    </div>
+
+    <div class="section">Hide</div>
+    <div class="panel">
+      <label class="row" title="Google and Bing AI Overview, DuckDuckGo Search Assist, their AI Mode / Duck.ai tabs, Amazon’s AI review summaries and Rufus, and Gmail’s Gemini buttons"><span>AI answers in search</span><input type="checkbox" class="switch" id="hideAiOverview" role="switch"></label>
+      <div class="row">
+        <label for="hideAiTopics" class="grow">YouTube videos about AI</label>
+        <button class="link" id="editTopics" type="button" title="Your own words and allowed channels">Edit</button>
+        <input type="checkbox" class="switch" id="hideAiTopics" role="switch">
+      </div>
+    </div>
+
+    <div class="section">Detection</div>
+    <div class="panel">
+      <label class="row"><span>Platform AI labels</span><input type="checkbox" class="switch" id="platformLabels" role="switch"></label>
+      <label class="row">
+        <span class="stack">
+          <span>AI detection models</span>
+          <span class="models">
+            <span>img <span class="dot" id="imageDot"></span><span id="imageStatus"></span></span>
+            <span>text <span class="dot" id="textDot"></span><span id="textStatus"></span></span>
+          </span>
+        </span>
+        <input type="checkbox" class="switch" id="useModels" role="switch">
+      </label>
+    </div>
+    <div class="note" id="privacyNote">Runs on this computer. Nothing you browse is sent anywhere.</div>
+
+    <div class="section">Mistakes <button class="link section-link" id="openSummary" type="button" title="What was flagged or hidden in the last 7 days">This week</button></div>
+    <div class="panel">
+      <div class="row">
+        <span>Reported<span class="count" id="reportCount">0</span></span>
+        <span class="actions">
+          <button id="downloadReports" class="btn" type="button">Download</button>
+          <button id="clearReports" class="btn danger" type="button">Clear</button>
+        </span>
+      </div>
+    </div>
+    <div class="note" id="reportTip">Right-click anything it missed → “Report as AI”.</div>
+    <div class="foot" id="licenseFoot" hidden><span id="licenseText"></span><span id="licenseManage"> · <a href="https://sloply.app/manage.html" target="_blank" rel="noopener">Manage or cancel</a></span></div>
+  </main>
+
+  <script src="license.js"></script>
+  <script src="activity.js"></script>
+  <script src="sites.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

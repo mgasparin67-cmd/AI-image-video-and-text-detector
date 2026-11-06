@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Article test</title>
+  <style>body { max-width: 760px; margin: 24px auto; padding: 0 16px; font: 15px/1.6 Georgia, serif; color: #222; } pre { font: 12px system-ui; background: #f4f4f5; padding: 10px; border-radius: 8px; white-space: pre-wrap; } article { margin: 28px 0; }</style>
+</head>
+<body>
+  <nav><a href="#">Home</a> · <a href="#">About</a> · <a href="#">Archive</a></nav>
+  <pre id="log">Mock blog posts with short paragraphs (each under 280 characters, too short to check one by one).
+Texts from the held-out set. Expect the AI post blurred as a whole and the human post left alone.</pre>
+  <article id="ai-post">
+    <h2>Post 1 (AI: ChatGPT, HC3 medicine)</h2>
+    <div class="entry-content">
+<p>Multiple myeloma is a cancer of the plasma cells, which are a type of immune cell found in the bone marrow. It often causes bone lesions, or areas of abnormal bone growth, and can also lead to bone fractures and pain.</p>
+<p>The treatment of multiple myeloma and bone metastases typically involves a combination of approaches, including chemotherapy, radiation therapy, and medications to strengthen bones and control pain. The specific treatment plan for multiple myeloma will depend on a number of factors, including the stage of the disease, the patient&#x27;s overall health, and the presence of any other medical conditions.</p>
+<p>Some common treatment options for multiple myeloma and bone metastases include:
+
+Chemotherapy: Chemotherapy involves the use of drugs to kill cancer cells. These drugs may be given orally or intravenously (through a vein) and can be used alone or in combination with other treatments.</p>
+<p>Radiation therapy: This treatment uses high-energy beams of radiation to kill cancer cells. It is often used to treat bone lesions and may be used in combination with chemotherapy or other treatments.</p>
+<p>Bone-strengthening medications: These medications, such as bisphosphonates, can help reduce the risk of bone fractures and improve bone density in patients with multiple myeloma. Pain medications: Patients with multiple myeloma and bone metastases may experience pain due to bone lesions or fractures.</p>
+<p>Pain medications, such as nonsteroidal anti-inflammatory drugs (NSAIDs) or opioids, can be used to manage pain. It&#x27;s important to discuss all treatment options and their potential side effects with your healthcare team.</p>
+<p>They can help you determine the best course of treatment for your specific situation.</p>
+    </div>
+  </article>
+  <article id="human-post">
+    <h2>Post 2 (Human: HC3 Reddit answer)</h2>
+    <div class="entry-content">
+<p>1 . A New York Times reviewer wrote up a description of a trip he took in a Tesla car .</p>
+<p>He described instances where the car did n&#x27;t get as much mileage as Tesla claimed , and that at one point the car ran out of power and he had to have the car towed . 2 .</p>
+<p>The head of Tesla called him a god damn liar ( I &#x27;m paraphrasing here ) 3 . The reviewer published a blog post and stood by his claims 4 .</p>
+<p>The head of Tesla published the log data from the reviewers trip . In it , they were able to demostrate clear discrepancies with what the reporter said ( e.g.</p>
+<p>&quot; I never drove the car over 65 MPH &quot; ) and what actually happened ( e.g. &quot; he drove the car at 80MPH for at least 10 minutes ) .</p>
+<p>They produced data that appears to indicate that the reviewer may have intentionally tried to drain the battery , and may have removed the car from the charging station before the car was ready to travel the distance he intended . 5 .</p>
+<p>The Reviewer has responded again , but so far he &#x27;s blamed the Tesla PR group for giving him false information about what he could / couldn&#x27;t do with the car . 6 .</p>
+<p>Someone from CNN drove the same car on the same trip as the NYT Reviewer without any significant issues .</p>
+    </div>
+  </article>
+  <aside><p>Subscribe to the newsletter for more posts like this one, every week in your inbox.</p></aside>
+  <script type="module">
+    // ?auto: run the real page script and text model on this page, then check the result
+    // (for test/run-all.mjs). Without it, the page is just the mock posts.
+    if (location.search.includes('auto')) {
+      const root = new URL('..', location.href).href;
+      const R = [];
+      window.chrome = {
+        storage: { sync: { get: (d, cb) => { const r = { ...d }; cb?.(r); return Promise.resolve(r); } },
+          local: { get: (d, cb) => { if (cb) cb({ ...d }); return Promise.resolve({ ...d }); }, set: async () => {} },
+          onChanged: { addListener() {} } },
+        runtime: {
+          getURL: p => root + p, getManifest: () => ({ version: 'test' }),
+          onMessage: { addListener: f => R.push(f) },
+          // Text checks go to the real model code (models.js), like background.js does.
+          sendMessage: async msg => msg.type === 'checkText'
+            ? new Promise(res => { for (const f of R) f({ target: 'offscreen', type: 'text', text: msg.text }, null, res); })
+            : null
+        }
+      };
+      self.__aibModelsUrl ??= new URL('../models/', location.href).href; // models.js loads them from this test server
+      await import('../models.js');
+      const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: '../content.css' });
+      document.head.append(css);
+      for (const src of ['../license.js', '../sites.js', '../text-detector.js', '../reports.js', '../platform-labels.js', '../hiding.js', '../badge.js', '../content.js']) {
+        await new Promise(res => { const s = document.createElement('script'); s.src = src; s.onload = res; document.body.append(s); });
+      }
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      for (let t = 0; t < 150000 && document.querySelectorAll('[data-aib-article="done"]').length < 2; t += 500) await wait(500);
+      await wait(500);
+      const ai = document.getElementById('ai-post'), human = document.getElementById('human-post');
+      const pill = document.querySelector('[data-aib-ui="badge"]')?.shadowRoot.querySelector('.pill');
+      pill?.click();
+      await wait(100);
+      const title = document.querySelector('[data-aib-ui="badge"]')?.shadowRoot.querySelector('.title')?.textContent;
+      window.__results = [
+        { name: 'AI post is flagged as a whole article', ok: !!ai.dataset.aibFlag },
+        { name: 'human post is not flagged', ok: !human.dataset.aibFlag },
+        { name: 'nothing is blurred (text goes in the badge)', ok: !document.querySelector('.aib-text-blur, [data-aib-ui="article"], [data-aib-ui="text"]') },
+        { name: `badge says "This article looks AI-written" (${title})`, ok: title === 'This article looks AI-written' }
+      ];
+      window.__done = true;
+    }
+  </script>
+</body>
+</html>

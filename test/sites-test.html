@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Never-check sites test</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Never-check sites test</h1>
+  <p>Checks <code>sites.js</code> (matching and cleaning up entries), the settings page saving the list,
+    and the popup's Pause / Resume with a parent domain on the list.</p>
+  <pre id="log"></pre>
+  <script src="../sites.js"></script>
+  <script type="module">
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const results = window.__results = [];
+    const check = (name, ok) => { results.push({ name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}`); };
+    const { normalize, isListed, without } = window.AIBSites;
+
+    // Cleaning up entries.
+    check('full address becomes a host name', normalize('https://www.Example.com/some/page?x=1') === 'www.example.com');
+    check('"*.example.com" becomes example.com', normalize('*.example.com') === 'example.com');
+    check('port is dropped', normalize('localhost:8765') === 'localhost');
+    check('not a site is rejected', normalize('my bank') === '' && normalize('') === '');
+
+    // Matching.
+    const list = ['example.com', 'news.site.org'];
+    check('the site itself matches', isListed('example.com', list));
+    check('a subdomain matches its parent entry', isListed('www.example.com', list) && isListed('blog.example.com', list));
+    check('a look-alike does not match ("badexample.com")', !isListed('badexample.com', list));
+    check('a parent does not match a subdomain entry ("site.org")', !isListed('site.org', list));
+    check('entries pasted as addresses still match', isListed('www.mybank.com', ['https://mybank.com/login']));
+    check('Resume removes every entry covering the site', JSON.stringify(without('www.example.com', ['example.com', 'www.example.com', 'other.com'])) === '["other.com"]');
+
+    // The settings page: typing a list saves cleaned-up host names.
+    const html = await (await fetch('../options.html')).text();
+    const shim = `<script>window.__store = {};
+      window.chrome = { storage: { sync: { get: async d => ({ ...d, ...window.__store }), set: async p => Object.assign(window.__store, p) } } };<\/script>`;
+    const f = document.createElement('iframe');
+    f.style.cssText = 'width:100%;height:300px;border:0';
+    f.srcdoc = html.replace('<script src="sites.js">', shim + '<script src="sites.js">').replace(/src="(sites|hiding|options)\.js"/g, (m, n) => `src="${new URL('../' + n + '.js', location.href).href}"`);
+    document.body.append(f);
+    await new Promise(r => f.addEventListener('load', r, { once: true }));
+    await new Promise(r => setTimeout(r, 300));
+    const ta = f.contentDocument.getElementById('disabledSites');
+    ta.value = 'https://www.mybank.com/login\nexample.com\nmy bank\nexample.com';
+    ta.dispatchEvent(new f.contentWindow.Event('input'));
+    await new Promise(r => setTimeout(r, 700));
+    check('settings page saves cleaned-up, de-duplicated host names', JSON.stringify(f.contentWindow.__store.disabledSites) === '["www.mybank.com","example.com"]');
+    check('settings page says which lines were ignored', /ignored: my bank/.test(f.contentDocument.getElementById('saved').textContent));
+
+    window.__done = true;
+  </script>
+</body>
+</html>

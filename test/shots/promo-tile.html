@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sloply small promo tile</title>
+  <!-- The Chrome Web Store small promo tile, 440x280: the name, the tagline, and two feed cards, one
+       real public-domain photo (USDA) and one AI image blurred the way Sloply blurs it.
+       Captured by store/capture-before-after.mjs (shot "tile"), which waits for window.__ready. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Schibsted+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #12161d; --signal: #f0a800; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 440px; height: 280px; overflow: hidden; }
+    body { background: var(--ink); position: relative; font-family: "Schibsted Grotesk", Helvetica, Arial, sans-serif; color: #fff; }
+    /* The icon's diagonal: amber below a line rising to the right. */
+    .band { position: absolute; inset: 0; background: var(--signal); clip-path: polygon(0 100%, 100% 58%, 100% 100%); }
+    .copy { position: absolute; left: 26px; top: 26px; width: 210px; }
+    .brand { display: flex; align-items: center; gap: 9px; font: 800 22px "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.02em; }
+    .brand img { width: 34px; height: 34px; border-radius: 9px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.35); }
+    h1 { margin: 18px 0 0; font: 800 33px/1.02 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.03em; }
+    h1 em { font-style: normal; color: var(--signal); }
+    .copy p { margin: 12px 0 0; font-size: 13.5px; line-height: 1.35; font-weight: 500; color: #c3cad4; }
+    .card { position: absolute; width: 150px; border-radius: 10px; overflow: hidden; background: #fff; color: var(--ink);
+      box-shadow: 0 14px 30px rgba(0,0,0,.45), 0 0 0 3px rgba(255,255,255,.9); }
+    .card .pic { position: relative; height: 104px; overflow: hidden; }
+    .card .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card .cap { padding: 7px 9px 9px; font: 600 11px/1.25 Georgia, serif; }
+    .real { left: 256px; top: 28px; transform: rotate(4deg); }
+    .slop { left: 236px; top: 116px; transform: rotate(-5deg); }
+    .slop .pic img { filter: blur(9px) saturate(.7); transform: scale(1.15); }
+    .warn { position: absolute; inset: 0; display: grid; place-items: center; }
+    .warn span { background: rgba(18,22,29,.88); color: #fff; font: 600 11px "Schibsted Grotesk", Helvetica, Arial, sans-serif; padding: 6px 9px; border-radius: 7px;
+      display: flex; align-items: center; gap: 6px; }
+    .warn b { width: 14px; height: 14px; border-radius: 4px; background: #7cc8f5; color: var(--ink); display: grid; place-items: center; font-size: 10px; }
+  </style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="copy">
+    <div class="brand"><img src="../../icons/icon128.png" alt="">Sloply</div>
+    <h1>More interest, less <em>slop.</em></h1>
+    <p>Blurs or removes AI images, videos and text.</p>
+  </div>
+  <div class="card real">
+    <div class="pic"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/The_USDA_Farmers_Market_on_the_National_Mall_during_the_2023_market_season_is_the_Department%E2%80%99s_own_%E2%80%9Cliving_laboratory%E2%80%9D_for_farmers_market_operations_across_the_country_-_15.jpg/960px-thumbnail.jpg"></div>
+    <div class="cap">Market day</div>
+  </div>
+  <div class="card slop">
+    <div class="pic"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Astronaut_walking_on_Mars.png/960px-Astronaut_walking_on_Mars.png">
+      <div class="warn"><span><b>!</b>Most likely AI</span></div></div>
+    <div class="cap">First light on the ridge</div>
+  </div>
+  <script type="module">
+    await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+    await document.fonts.ready;
+    window.__state = { ok: [...document.images].every(i => i.naturalWidth > 0), shot: 'tile' };
+    window.__ready = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sloply settings</title>
+  <style>
+    /* Same tokens as the popup. */
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f5f3; --surface: #ffffff; --fg: #1c1917; --muted: #78716c; --line: #e7e5e4;
+      --accent: #38bdf8; --accent-text: #0369a1; --accent-soft: rgba(56, 189, 248, 0.12);
+      --ok: #16a34a; --red: #dc2626;
+      --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0e0d; --surface: #1a1816; --fg: #f5f5f4; --muted: #a8a29e; --line: #2c2926;
+        --accent: #7dd3fc; --accent-text: #7dd3fc; --accent-soft: rgba(125, 211, 252, 0.12);
+        --ok: #4ade80; --red: #f87171;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    main { max-width: 640px; margin: 0 auto; padding: 40px 20px 60px; }
+    h1 { margin: 0 0 4px; font-size: 22px; letter-spacing: -0.02em; }
+    .lead { margin: 0 0 28px; color: var(--muted); }
+    .section {
+      display: flex; align-items: center; gap: 8px; margin: 0 2px 10px;
+      font: 600 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    }
+    .section::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
+    .panel { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 6px 16px; }
+    .field { padding: 14px 0; }
+    .field + .field { border-top: 1px solid var(--line); }
+    label { display: block; font-weight: 600; }
+    .hint { margin: 2px 0 8px; font-size: 12.5px; color: var(--muted); }
+    textarea, input[type=text] {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg);
+      font: 13px/1.5 var(--mono); resize: vertical;
+    }
+    textarea { min-height: 84px; }
+    textarea:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+    .saved { margin: 10px 2px 0; min-height: 18px; font-size: 12px; color: var(--muted); }
+    .try { margin-top: 28px; }
+    .verdict { margin-top: 8px; font-size: 13px; min-height: 20px; }
+    .verdict b { font-weight: 600; }
+    .verdict[data-ai="true"] b { color: var(--accent-text); }
+    .verdict[data-ai="false"] b { color: var(--ok); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sloply settings</h1>
+    <p class="lead">Your own lists. One per line; changes save as you type.</p>
+
+    <div class="section">Sites</div>
+    <div class="panel">
+      <div class="field">
+        <label for="disabledSites">Never check these sites</label>
+        <p class="hint">Nothing is blurred, flagged or hidden there. “example.com” also covers www.example.com and
+          blog.example.com. “Pause” in the popup adds the site you’re on.</p>
+        <textarea id="disabledSites" spellcheck="false" placeholder="mybank.com&#10;myblog.example.com"></textarea>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top: 28px">YouTube</div>
+    <p class="hint" style="margin: -4px 2px 10px">These apply when “YouTube videos about AI” is on in the popup.</p>
+    <div class="panel">
+      <div class="field">
+        <label for="topicBlock">Also hide videos that mention</label>
+        <p class="hint">Words or phrases, matched as whole words in the title or description, any capitalization.</p>
+        <textarea id="topicBlock" spellcheck="false" placeholder="robot&#10;automation&#10;singularity"></textarea>
+      </div>
+      <div class="field">
+        <label for="topicIgnore">Don’t count these</label>
+        <p class="hint">For names that contain AI terms but aren’t about AI, like a product or a newsletter.</p>
+        <textarea id="topicIgnore" spellcheck="false" placeholder="Swift Go AI&#10;Neural Network Newsletter"></textarea>
+      </div>
+      <div class="field">
+        <label for="allowChannels">Never hide these channels</label>
+        <p class="hint">Channel name or @handle.</p>
+        <textarea id="allowChannels" spellcheck="false" placeholder="@veritasium&#10;Two Minute Papers"></textarea>
+      </div>
+    </div>
+    <div class="saved" id="saved" role="status" aria-live="polite"></div>
+
+    <div class="try">
+      <div class="section">Try a title</div>
+      <div class="panel">
+        <div class="field">
+          <label for="tryText">Title or description</label>
+          <input type="text" id="tryText" spellcheck="false" placeholder="I built a robot that folds laundry">
+          <div class="verdict" id="verdict" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="sites.js"></script>
+  <script src="hiding.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

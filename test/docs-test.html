@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Google Docs badge test</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Google Docs badge test</h1>
+  <p>Runs <code>google-docs.js</code> as if this were a Google Doc. Its "document" is a ChatGPT answer
+    followed by a human Reddit answer (held-out set), served in place of the plain-text export, and
+    checked with the real text model (<code>?nomodel</code> for patterns only). Expect the badge, and no
+    Find box or highlighting.</p>
+  <pre id="log"></pre>
+  <script>
+    window.__aibTestDocUrl = 'https://docs.google.com/document/d/TESTDOC123/edit';
+    const local = window.__local = {};
+    window.chrome = {
+      storage: {
+        sync: { get: (d, cb) => { const r = { ...d }; cb?.(r); return Promise.resolve(r); } },
+        local: { get: (d, cb) => { const r = { ...d, ...local }; if (cb) cb(r); return Promise.resolve(r); }, set: async p => Object.assign(local, p) },
+        onChanged: { addListener() {} }
+      },
+      runtime: {
+        getManifest: () => ({ version: 'test' }), getURL: p => new URL('../' + p, location.href).href,
+        onMessage: { addListener: f => { window.__modelListener = f; } },
+        // Text checks go to the real model page code (models.js), like background.js does.
+        sendMessage: async msg => msg.type === 'checkText' && window.__modelListener
+          ? new Promise(res => window.__modelListener({ target: 'offscreen', type: 'text', text: msg.text }, null, res))
+          : null
+      }
+    };
+    // Any keyboard shortcut sent to the page (the old Find-box trick) is recorded here.
+    window.__keys = [];
+    addEventListener('keydown', e => window.__keys.push(e.key), true);
+    (async () => {
+      const data = await (await fetch('article-eval-data.json')).json();
+      // ?medical: ChatGPT's medical answers, which need 0.99 (medical text). Otherwise AI news articles.
+      const medicalDoc = location.search.includes('medical');
+      const ai = medicalDoc
+        ? data.find(d => d.group.startsWith('AI: 2022 ChatGPT')).paras
+        : data.filter(d => d.group.startsWith(new URLSearchParams(location.search).get('group') || 'AI: Mistral-chat')).slice(0, Number(new URLSearchParams(location.search).get('n') || 2)).flatMap(d => d.paras);
+      const human = data.find(d => d.group.startsWith('Human: HC3 Reddit')).paras;
+      const doc = [ai.slice(0, 3).join(' '), ai.slice(3).join(' '), human.join(' ')].join('\n\n');
+      const realFetch = window.fetch;
+      window.fetch = (url, opts) => String(url).includes('/export?format=txt') ? Promise.resolve(new Response(doc)) : realFetch(url, opts);
+      self.__aibModelsUrl ??= new URL('../models/', location.href).href; // models.js loads them from this test server
+      if (!location.search.includes('nomodel')) await import('../models.js');
+      for (const src of ['../license.js', '../sites.js', '../text-detector.js', '../reports.js', '../badge.js', '../google-docs.js']) {
+        await new Promise(res => { const s = document.createElement('script'); s.src = src + '?v=' + Date.now(); s.onload = res; document.body.append(s); });
+      }
+
+      // Checks for test/run-all.mjs.
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const pill = () => document.querySelector('[data-aib-ui="badge"]')?.shadowRoot.querySelector('.pill');
+      for (let t = 0; t < 150000 && !/Likely|Possibly|No signs/.test(pill()?.textContent || ''); t += 500) await wait(500);
+      pill()?.click();
+      await wait(100);
+      const sr = document.querySelector('[data-aib-ui="badge"]')?.shadowRoot;
+      const items = [...(sr?.querySelectorAll('.item') || [])].map(i => i.textContent);
+      const modelOn = !location.search.includes('nomodel');
+      window.__results = [
+        { name: 'badge shows a verdict', ok: /Likely|Possibly|No signs/.test(pill()?.textContent || '') },
+        { name: 'no Find box opened and no keys sent to the page', ok: window.__keys.length === 0 && !document.querySelector('input[aria-label="Find in document"]') },
+        ...(modelOn && medicalDoc ? [
+          { name: `medical document below 99% says "Possibly AI-written", not "No signs" (${pill()?.textContent})`, ok: /Possibly AI-written/.test(pill()?.textContent || '') || /Likely AI-written/.test(pill()?.textContent || '') && Number((pill()?.textContent.match(/(\d+)%/) || [])[1]) >= 99 }
+        ] : []),
+        ...(modelOn && !medicalDoc ? [
+          { name: `document is flagged as AI-written (${pill()?.textContent})`, ok: /Likely AI-written/.test(pill()?.textContent || '') },
+          { name: `the AI paragraphs are listed (${items.length})`, ok: items.length >= 2 },
+          { name: 'the human Reddit paragraph is not listed', ok: !items.some(t => human.join(' ').includes(t.replace(/^\d+%/, '').replace(/…$/, '').slice(0, 60))) }
+        ] : [])
+      ];
+      window.__done = true;
+    })();
+  </script>
+</body>
+</html>

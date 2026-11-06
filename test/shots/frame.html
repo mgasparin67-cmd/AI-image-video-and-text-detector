@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sloply before and after</title>
+  <!-- One 1280x800 before/after store screenshot, light theme: the same demo page without the
+       extension (left) and with it (right, the real content scripts and models). ?shot= picks it.
+       Captured by store/capture-before-after.mjs, which waits for window.__ready. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #12161d; --bg: #f3f5f8; --signal: #f0a800; --mark: #ffd66b; --muted: #5a6472; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1280px; height: 800px; overflow: hidden; }
+    body { background: var(--bg); color: var(--ink); font-family: "Schibsted Grotesk", Helvetica, Arial, sans-serif; position: relative; }
+    .head { position: absolute; left: 48px; right: 48px; top: 30px; display: grid; gap: 8px; }
+    h1 { margin: 0; font: 800 44px/1.08 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.025em; }
+    h1 em { font-style: normal; background: linear-gradient(transparent 58%, var(--mark) 58%, var(--mark) 92%, transparent 92%); padding: 0 .06em; }
+    .head p { margin: 0; font-size: 18.5px; color: var(--muted); }
+    .window { position: absolute; top: 146px; width: 584px; height: 654px; border-radius: 12px 12px 0 0; overflow: hidden; background: #fff;
+      box-shadow: 0 24px 60px rgba(18,22,29,.14), 0 0 0 1px rgba(18,22,29,.09); }
+    .left { left: 40px; } .right { left: 656px; }
+    .bar { height: 46px; display: flex; align-items: center; gap: 12px; padding: 0 14px; background: #e6e9ee; border-bottom: 1px solid #d9dde3; }
+    .dots { display: flex; gap: 7px; } .dots i { width: 12px; height: 12px; border-radius: 50%; background: #c8cdd4; }
+    .url { flex: 1; height: 30px; border-radius: 999px; background: #fff; display: flex; align-items: center; padding: 0 14px; font-size: 13.5px; color: #3c4450; white-space: nowrap; overflow: hidden; }
+    .chip { padding: 5px 12px; border-radius: 999px; font: 600 13px "Schibsted Grotesk", Helvetica, Arial, sans-serif; background: #d3d8df; color: #3a4350; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+    .chip.on { background: var(--signal); color: #12161d; }
+    .chip img { width: 15px; height: 15px; }
+    iframe { display: block; width: 584px; height: 608px; border: 0; }
+    /* The arrow between the two windows. */
+    /* "both": three narrower windows, each page drawn at full width and scaled down. */
+    .three .window { width: 392px; } .three .left { left: 40px; } .three .mid { left: 444px; } .three .right { left: 848px; }
+    .three iframe { width: 584px; height: 906px; transform: scale(.6712); transform-origin: top left; }
+    .three .url { font-size: 12.5px; padding: 0 12px; }
+    .three .arrow.a1 { left: 422px; } .three .arrow.a2 { left: 826px; }
+    .arrow { position: absolute; left: 624px; top: 440px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff;
+      display: grid; place-items: center; font: 700 17px sans-serif; box-shadow: 0 0 0 5px var(--bg); z-index: 2; }
+  </style>
+</head>
+<body>
+  <div class="head"><h1 id="title"></h1><p id="sub"></p></div>
+  <div class="window left">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url"></div><div class="chip">Without Sloply</div></div>
+    <iframe id="before" title="Without Sloply"></iframe>
+  </div>
+  <div class="arrow a1">→</div>
+  <div class="window mid" hidden>
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url"></div><div class="chip on">Blur</div></div>
+    <iframe id="mid" title="Sloply, blur"></iframe>
+  </div>
+  <div class="arrow a2" hidden>→</div>
+  <div class="window right">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url"></div><div class="chip on">With Sloply</div></div>
+    <iframe id="after" title="With Sloply"></iframe>
+  </div>
+
+  <script type="module">
+    // [page, query for both sides, URL bar, headline, subline]
+    const SHOTS = {
+      blur: ['feed.html', '', 'driftwood.example/explore', 'See what’s <em>AI</em> before you look at it.',
+        'Likely AI images and videos are blurred, with the reason and a View anyway button.'],
+      remove: ['feed.html', 'remove', 'driftwood.example/explore', 'Or don’t see the <em>slop</em> at all.',
+        'Remove mode takes the whole post out. No blur, no gap, the feed just closes up.'],
+      text: ['article.html', '', 'thelongweekend.example/lisbon-on-a-budget', 'Spots <em>AI-written</em> text.',
+        'A small badge says how likely the page is AI-written and lists the passages. The page itself is untouched.'],
+      search: ['search.html', 'host=www.google.com&path=/search&models=0', 'google.com/search?q=sourdough+starter', 'Skip the <em>AI answer</em>. Keep the results.',
+        'Hides Google’s AI Overview, Bing’s AI answers and DuckDuckGo’s Search Assist.'],
+      videos: ['videos.html', 'host=www.youtube.com&models=0', 'youtube.com', 'Tired of <em>AI videos</em>? Hide them.',
+        'Optional: videos about AI disappear from YouTube’s home page, search and sidebar.'],
+      // Blur and remove side by side: middle window blurs, right window removes.
+      both: ['feed.html', 'remove', 'driftwood.example', 'Blur the <em>AI</em>. Or remove it.',
+        'Likely AI images are blurred with a View anyway button. Or switch on Remove mode and the post is gone.']
+    };
+    const shot = new URLSearchParams(location.search).get('shot') || 'blur';
+    const [page, query, url, title, sub] = SHOTS[shot];
+    document.getElementById('title').innerHTML = title;
+    document.getElementById('sub').textContent = sub;
+    document.querySelectorAll('.url').forEach(u => { u.textContent = url; });
+    const before = document.getElementById('before'), after = document.getElementById('after'), mid = document.getElementById('mid');
+    if (shot === 'both') {
+      document.body.classList.add('three');
+      document.querySelectorAll('.mid, .a2').forEach(e => { e.hidden = false; });
+      document.querySelector('.right .chip').textContent = 'Remove';
+      mid.src = page;
+    }
+    before.src = `${page}?plain${query ? '&' + query : ''}`;
+    after.src = `${page}${query ? '?' + query : ''}`;
+
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const until = async (f, ms) => { for (let t = 0; t < ms && !f(); t += 250) { await wait(250); } return f(); };
+    const doc = () => after.contentDocument;
+    const imgs = (d = doc()) => [...d.querySelectorAll('.post img')];
+    const badge = () => doc().querySelector('[data-aib-ui="badge"]')?.shadowRoot;
+    // What "done" looks like on the right-hand side, per shot.
+    const READY = {
+      blur: (d = doc()) => { const [mars, soup, city, ferry] = imgs(d); return mars?.dataset.aibFlag && city?.dataset.aibFlag && soup?.dataset.aib === 'done' && !soup.dataset.aibFlag && ferry?.dataset.aib === 'done' && !ferry.dataset.aibFlag; },
+      remove: () => doc().querySelectorAll('.post.aib-removed, .post .aib-removed').length >= 2 && imgs().filter(i => i.dataset.aib === 'done' && !i.dataset.aibFlag).length >= 2,
+      text: () => /Likely AI-written/.test(badge()?.querySelector('.pill')?.textContent || ''),
+      search: () => doc().getElementById('aio')?.closest('.aib-hidden'),
+      videos: () => doc().querySelectorAll('ytd-rich-item-renderer.aib-hidden').length === 4
+    };
+    READY.both = () => READY.remove() && mid.contentDocument?.readyState === 'complete' && READY.blur(mid.contentDocument);
+    await until(() => before.contentDocument?.readyState === 'complete' && doc()?.readyState === 'complete', 30000);
+    const ok = await until(READY[shot], 150000);
+    await Promise.all([before.contentDocument.fonts?.ready, doc().fonts?.ready, mid.contentDocument?.fonts?.ready]);
+    await wait(1000); // let the warnings finish fading in
+    if (shot === 'text') {
+      badge().querySelector('.pill').click();
+      await wait(800);
+    }
+    window.__state = { ok: !!ok, shot,
+      removed: [...doc().querySelectorAll('.aib-removed')].map(e => e.className), hidden: doc().querySelectorAll('.aib-hidden').length };
+    window.__ready = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AI answers in search test</title>
+  <style>
+    body { max-width: 760px; margin: 24px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; color: #222; }
+    section { border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 14px 0; }
+    h2.case { font-size: 12px; text-transform: uppercase; color: #888; margin: 0 0 8px; }
+    pre { background: #f4f4f5; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
+    .tabs { display: flex; gap: 12px; }
+  </style>
+</head>
+<body>
+  <h1>AI answers in search test</h1>
+  <p>Mock Google, Bing and DuckDuckGo pages, shaped like the live ones (Oct 2026), including the cases
+    that went wrong while building this. Each runs <code>hiding.js</code> as that site.</p>
+  <pre id="log"></pre>
+
+  <!-- Google: AI Overview, AI Mode tab and pill, results, and "People also ask" whose answers carry
+       their own (collapsed) "AI Overview" labels. -->
+  <section id="google">
+    <h2 class="case">Google</h2>
+    <div id="g-header"><div id="g-pill" style="display:inline-block;padding:4px 10px;border:1px solid #ccc;border-radius:99px"><span>AI Mode</span></div></div>
+    <div role="list" class="tabs">
+      <div role="listitem" id="g-tab-all"><a href="#">All</a></div>
+      <div role="listitem" id="g-tab-ai"><div><span>AI Mode</span></div></div>
+      <div role="listitem" id="g-tab-images"><a href="#">Images</a></div>
+    </div>
+    <div id="rcnt"><div id="center_col">
+      <div id="g-aio"><div><div><span>AI Overview</span></div></div><div>Boiling time depends on how you like your yolks…</div></div>
+      <div id="rso">
+        <div class="g" id="g-r1"><a href="#"><h3>How long to boil eggs - RecipeTin Eats</h3></a></div>
+        <div id="g-paa"><div><span>People also ask</span></div>
+          <div class="q" id="g-q1"><div>Is 10 minutes long enough?</div>
+            <div class="answer" style="display:none"><div><span>AI Overview</span></div><div>Yes, 10 minutes is enough…</div></div></div>
+          <div class="q" id="g-q2"><div>Do you put eggs in cold water?</div>
+            <div class="answer" id="g-q2-answer"><div id="g-q2-answer-ai"><div><span>AI Overview</span></div><div>Most cooks start in boiling water…</div></div><div>Sources: allrecipes.com</div></div></div>
+        </div>
+        <div class="g" id="g-r2"><a href="#"><h3>Perfect boiled eggs</h3></a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- Bing: Copilot answer in the top-answers list next to another answer; AI Mode tab. -->
+  <section id="bing">
+    <h2 class="case">Bing</h2>
+    <ul class="tabs"><li id="b-tab-all"><a href="#">All</a></li><li id="b-tab-ai"><a href="/copilotsearch?q=x">AI Mode</a></li></ul>
+    <ol id="b_topw">
+      <li class="b_ans" id="b-ai"><div id="copans_container"><div>Boil eggs for 6 minutes for soft yolks…</div></div></li>
+      <li class="b_ans" id="b-news"><div>Top stories: egg prices fall</div></li>
+    </ol>
+    <ol id="b_results">
+      <li class="b_algo" id="b-r1"><h2><a href="#">How Long Does It Take to Boil Eggs? - Allrecipes</a></h2></li>
+    </ol>
+  </section>
+
+  <!-- DuckDuckGo: Search Assist box in the results list, and a toolbar with Search Assist / Duck.ai
+       buttons next to the search settings. -->
+  <section id="ddg">
+    <h2 class="case">DuckDuckGo</h2>
+    <ul class="tabs" id="d-toolbar">
+      <li id="d-tab-assist"><a href="/?q=x&assist">Search Assist</a></li>
+      <li id="d-tab-duckai"><a href="/?q=x&ia=chat">Duck.ai</a></li>
+      <li id="d-settings"><button aria-label="Search Settings">⚙</button></li>
+    </ul>
+    <section data-testid="mainline" style="border:0;padding:0;margin:0">
+      <ol>
+        <li id="d-assist"><div><div><div><span>Search Assist</span></div><button aria-label="Change Search Assist settings">⚙</button></div>
+          <div>For a hard-boiled egg, boil for 10 minutes…</div></div></li>
+        <li id="d-r1"><article data-testid="result"><h2><a href="#">How Long Does It Take to Boil Eggs?</a></h2></article></li>
+      </ol>
+    </section>
+  </section>
+
+  <script src="../hiding.js"></script>
+  <script>
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const results = window.__results = [];
+    const check = (name, ok, detail = '') => { results.push({ name: detail ? `${name} [got: ${detail}]` : name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ': ' + detail : ''}`); };
+    const ids = els => els.map(e => e.id || e.tagName.toLowerCase()).sort().join(', ');
+    const H = window.AIBHide;
+    const as = (hostname, pathname, f) => { window.__aibTestHost = hostname; window.__aibTestPath = pathname; try { return f(); } finally { window.__aibTestHost = window.__aibTestPath = null; } };
+    const $ = id => document.getElementById(id);
+
+    // Google
+    as('www.google.com', '/search', () => {
+      const ov = H.findAiOverviews($('google')), modes = H.findAiModeLinks($('google'));
+      check('google: hides the AI Overview', ov.includes($('g-aio')), ids(ov));
+      // The AI answer under an open question goes (with the sources it cites); the question stays.
+      check('google: hides the AI answer inside an open "People also ask" question', ov.some(e => e.contains($('g-q2-answer-ai')) && $('g-q2').contains(e)), ids(ov));
+      check('google: keeps "People also ask" and its questions', !ov.some(e => e.contains($('g-paa')) || e.contains($('g-q1')) || e.contains($('g-q2'))));
+      check('google: never hides a result', !ov.some(e => e.contains($('g-r1')) || e.contains($('g-r2'))));
+      check('google: hides the AI Mode tab and pill, only them', ids(modes) === 'g-pill, g-tab-ai', ids(modes));
+    });
+    check('google: nothing on other Google pages', as('www.google.com', '/maps', () => H.findAiOverviews($('google')).length + H.findAiModeLinks($('google')).length) === 0);
+
+    // Bing
+    as('www.bing.com', '/search', () => {
+      const ov = H.findAiOverviews($('bing')), modes = H.findAiModeLinks($('bing'));
+      check('bing: hides the Copilot answer slot only (not the whole top-answers list)', ids(ov) === 'b-ai', ids(ov));
+      check('bing: keeps the other top answer and the results', !ov.some(e => e.contains($('b-news')) || e.contains($('b-r1'))));
+      check('bing: hides the AI Mode tab only', ids(modes) === 'b-tab-ai', ids(modes));
+    });
+
+    // DuckDuckGo
+    as('duckduckgo.com', '/', () => {
+      const ov = H.findAiOverviews($('ddg')), modes = H.findAiModeLinks($('ddg'));
+      check('duckduckgo: hides the Search Assist box', ids(ov) === 'd-assist', ids(ov));
+      check('duckduckgo: hides the Search Assist and Duck.ai tabs', ids(modes) === 'd-tab-assist, d-tab-duckai', ids(modes));
+      check('duckduckgo: keeps the search settings and the results', ![...ov, ...modes].some(e => e.contains($('d-settings')) || e.contains($('d-r1'))));
+    });
+
+    check('other sites: nothing', as('www.example.com', '/search', () => H.findAiOverviews(document.body).length + H.findAiModeLinks(document.body).length) === 0);
+    window.__done = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sloply marquee promo tile</title>
+  <!-- The Chrome Web Store marquee promo tile, 1400x560: the name and tagline, and three feed cards,
+       two real public-domain photos (USDA, National Park Service) and one AI image blurred the way Sloply blurs it.
+       Captured by store/capture-before-after.mjs (shot "marquee"), which waits for window.__ready. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #12161d; --signal: #f0a800; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1400px; height: 560px; overflow: hidden; }
+    body { background: var(--ink); position: relative; font-family: "Schibsted Grotesk", Helvetica, Arial, sans-serif; color: #fff; }
+    /* The icon's diagonal: amber below a line rising to the right. */
+    .band { position: absolute; inset: 0; background: var(--signal); clip-path: polygon(0 100%, 100% 46%, 100% 100%); }
+    .copy { position: absolute; left: 80px; top: 70px; width: 560px; }
+    .brand { display: flex; align-items: center; gap: 14px; font: 800 38px "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.02em; }
+    .brand img { width: 58px; height: 58px; border-radius: 14px; box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+    h1 { margin: 34px 0 0; font: 800 76px/1 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.035em; }
+    h1 em { font-style: normal; color: var(--signal); }
+    .copy p { margin: 24px 0 0; font-size: 23px; line-height: 1.4; font-weight: 500; color: #c3cad4; max-width: 540px; }
+    .card { position: absolute; width: 300px; border-radius: 16px; overflow: hidden; background: #fff; color: var(--ink);
+      box-shadow: 0 26px 60px rgba(0,0,0,.5), 0 0 0 5px rgba(255,255,255,.92); }
+    .who { display: flex; align-items: center; gap: 9px; padding: 11px 14px; font-size: 14px; font-weight: 500; }
+    .who i { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 600 10.5px sans-serif; font-style: normal; color: #fff; }
+    .who small { margin-left: auto; color: #8a919b; font-size: 12.5px; }
+    .pic { position: relative; height: 210px; overflow: hidden; }
+    .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cap { padding: 11px 14px 15px; font: 700 16px/1.25 Georgia, serif; }
+    .cap span { display: block; margin-top: 3px; font: 400 12.5px "Schibsted Grotesk", Helvetica, Arial, sans-serif; color: #5a6472; }
+    .c1 { left: 700px; top: 92px; transform: rotate(-6deg); }
+    .c2 { left: 1040px; top: 70px; transform: rotate(5deg); }
+    .c3 { left: 860px; top: 150px; transform: rotate(-1deg); z-index: 1; }
+    .slop .pic img { filter: blur(14px) saturate(.75); transform: scale(1.15); }
+    .warn { position: absolute; inset: 0; display: grid; place-items: center; }
+    .warn > div { background: rgba(18,22,29,.9); color: #fff; padding: 14px 16px; border-radius: 11px; width: 236px; text-align: center; }
+    .warn strong { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; font-weight: 600; }
+    .warn strong b { width: 18px; height: 18px; border-radius: 5px; background: #7cc8f5; color: var(--ink); display: grid; place-items: center; font-size: 12px; }
+    .warn small { display: block; margin-top: 5px; color: #b6bdc7; font-size: 12px; }
+    .warn .btns { display: flex; gap: 12px; justify-content: center; align-items: center; margin-top: 10px; font-size: 12.5px; font-weight: 600; }
+    .warn .btns span:first-child { background: #7cc8f5; color: var(--ink); padding: 6px 12px; border-radius: 7px; }
+    .warn .btns span:last-child { color: #c3cad4; }
+  </style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="copy">
+    <div class="brand"><img src="../../icons/icon128.png" alt="">Sloply</div>
+    <h1>More interest,<br>less <em>slop.</em></h1>
+    <p>Spots AI-generated images, videos and text as you browse, and blurs or removes them.</p>
+  </div>
+  <div class="card c1">
+    <div class="who"><i style="background:#2f6e5a">TG</i>Tomás G.<small>3h</small></div>
+    <div class="pic"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/The_USDA_Farmers_Market_on_the_National_Mall_during_the_2023_market_season_is_the_Department%E2%80%99s_own_%E2%80%9Cliving_laboratory%E2%80%9D_for_farmers_market_operations_across_the_country_-_15.jpg/960px-thumbnail.jpg"></div>
+    <div class="cap">Market day<span>Picked up way too many carrots.</span></div>
+  </div>
+  <div class="card c2">
+    <div class="who"><i style="background:#5b7a3a">JP</i>Jo P.<small>8h</small></div>
+    <div class="pic"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Biking_Grand_Teton_%2849992990177%29.jpg/960px-Biking_Grand_Teton_%2849992990177%29.jpg"></div>
+    <div class="cap">Riding under the Tetons<span>Best ride of the summer.</span></div>
+  </div>
+  <div class="card c3 slop">
+    <div class="who"><i style="background:#8a5a44">NR</i>Nadia R.<small>2h</small></div>
+    <div class="pic"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Astronaut_walking_on_Mars.png/960px-Astronaut_walking_on_Mars.png">
+      <div class="warn"><div><strong><b>!</b>This image is most likely AI-generated</strong><small>AI image detector: 100% likely AI</small>
+        <div class="btns"><span>View anyway</span><span>Not AI?</span></div></div></div></div>
+    <div class="cap">First light on the ridge<span>Couldn’t believe the colors this morning.</span></div>
+  </div>
+  <script type="module">
+    await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+    await document.fonts.ready;
+    window.__state = { ok: [...document.images].every(i => i.naturalWidth > 0), shot: 'marquee' };
+    window.__ready = true;
+  </script>
+</body>
+</html>

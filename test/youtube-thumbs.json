@@ -1,0 +1,1342 @@
+{
+ "collected": "2026-10-23",
+ "note": "pre-ai:    videos 6+ years old (2020 or earlier) from 30 everyday searches. Their thumbnails\n           almost certainly aren't AI-generated, so any flag is a false alarm.\nlikely-ai: recent videos whose titles say the content itself is AI-generated (tutorials and\n           talk about AI excluded). Titles aren't proof, so this set is only a rough check.",
+ "rows": [
+  {
+   "set": "pre-ai",
+   "q": "easy pancake recipe",
+   "id": "LWuuCndtJr0",
+   "title": "How to Make the Easiest Pancakes | Allrecipes",
+   "age": "14y ago",
+   "thumb": "https://i.ytimg.com/vi/LWuuCndtJr0/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLDF1NwGHJqWWpbuQHBiqWOpN2TDKQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "easy pancake recipe",
+   "id": "FLd00Bx4tOk",
+   "title": "How to make Pancakes | Fluffy Pancake Recipe",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/FLd00Bx4tOk/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLDCbMZ3JGFnfU1cIoDNaUOka2uEBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "easy pancake recipe",
+   "id": "NCMKedZvnyI",
+   "title": "How to Make Pancakes at Home | Easy Pancake Recipe",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/NCMKedZvnyI/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLARxPw43oj9Hl8D37vsSwR-TH_16A"
+  },
+  {
+   "set": "pre-ai",
+   "q": "easy pancake recipe",
+   "id": "wiWB46xiIwU",
+   "title": "How to Make American Pancakes - Easy Homemade Pancake Recipe from Scratch",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/wiWB46xiIwU/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLAqrLde531_-cFNaxnNh0PNR8BWeA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "easy pancake recipe",
+   "id": "9zCVCL4V8JQ",
+   "title": "FLUFFY Pancakes Recipe",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/9zCVCL4V8JQ/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLC9_c-THNKVdvaHevfyramgggMEBw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "minecraft lets play",
+   "id": "RgNhOduAmqQ",
+   "title": "Let's Play Minecraft: Ep. 96 - Tallest Tower",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/RgNhOduAmqQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCR5JEEMlfJ_nVtj6SOlQ4ALuDt2Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "minecraft lets play",
+   "id": "vo0tweJVJrU",
+   "title": "Let's Play Minecraft: Ep. 194 - 1.8.8 Appreciation",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/vo0tweJVJrU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCL9ckNyGU7OT0qGFevMNyMH0a2DQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "minecraft lets play",
+   "id": "hhJLmnmTCe0",
+   "title": "Let's Play Minecraft: Ep. 196 - 1.8.8 Appreciation Part 3",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/hhJLmnmTCe0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCxRuq3nfgZo_WsuKHBTPvqzJwIGg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "minecraft lets play",
+   "id": "xoIpz0ThmSM",
+   "title": "Let's Play Minecraft: Ep. 190 - Tower of Gav",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/xoIpz0ThmSM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLASlSkRQl_6XYrsxC4YM4NyhrPeFA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "minecraft lets play",
+   "id": "r9DN7T2m6R8",
+   "title": "Let's Play Minecraft: Ep. 93 - Spring Harvest",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/r9DN7T2m6R8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBo0ETpz0Sz82P7NJY55io47xE7Sw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "travel vlog japan",
+   "id": "L8CqwIsiL4A",
+   "title": "JAPAN VLOG PT. 1 (Tokyo 2018)",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/L8CqwIsiL4A/hqdefault.jpg?sqp=-oaymwEgCOADEI4CSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLDTB2z07Dk88RdmIAKqRqoY8Q4NdQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "travel vlog japan",
+   "id": "kV_XRSQ44rs",
+   "title": "Japan Vlog 2018",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/kV_XRSQ44rs/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLAy3o0PXpNMw8n8e_rP4Ln2kAFfrA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "travel vlog japan",
+   "id": "QPcwfuStFnU",
+   "title": "I Went to Japan for the First Time | Tokyo Travel Vlog (Pt.1)",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/QPcwfuStFnU/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLDI6zU_H9CU_rJ6jIS_TQzyvaySvw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "travel vlog japan",
+   "id": "0wBX99EwpiM",
+   "title": "OUR FIRST TIME EVER IN JAPAN! | JAPAN 2018 VLOG | TOKYO",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/0wBX99EwpiM/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLCdnaH9C9ikBkkhU2QTeB3pZJjoTA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "travel vlog japan",
+   "id": "HNlT8wrgSug",
+   "title": "Japan 2018 vlog",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/HNlT8wrgSug/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLAyflgRh-XLaQZkIctxm84h4HiG_Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "how to fix a bike chain",
+   "id": "M-viV5DZ2mo",
+   "title": "How To Put A Bike Chain Back On-EASY Tutorial",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/M-viV5DZ2mo/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIF8oUjAP&rs=AOn4CLDAeFDKH-uEge4Cs_zPCOtHMqSfEQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "how to fix a bike chain",
+   "id": "rWchudX-Tqs",
+   "title": "How To Replace A Bicycle Chain",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/rWchudX-Tqs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBHu6puc-zD0eNZBHWrmFBJtUZ2iQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "how to fix a bike chain",
+   "id": "hr0iw3M-kzE",
+   "title": "The Correct Way To Route Your Bike Chain  | Tech Tip | Tredz Bikes",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/hr0iw3M-kzE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCFt1m8s66zIAVTvqSRNSRRxMIMNQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "how to fix a bike chain",
+   "id": "6iuLauaK0Ao",
+   "title": "How To Untangle A Bike Chain",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/6iuLauaK0Ao/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDi_7UFmzDxKVcEzQUHCFuoZpy3iw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "how to fix a bike chain",
+   "id": "HpUCCrgugQE",
+   "title": "How to Fix a Broken Bicycle Chain On-The-Go",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/HpUCCrgugQE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDDbGiTP0SOMz55X5tpKknXoUKcDA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "guitar lesson beginner",
+   "id": "BBz-Jyr23M4",
+   "title": "Guitar Lesson 1 - Absolute Beginner? Start Here! [Free 10 Day Starter Course]",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/BBz-Jyr23M4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBzAELeeOg4FKTagXmtSGW4svAkUA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "guitar lesson beginner",
+   "id": "Z7xm_juNcPY",
+   "title": "Fingerpicking For BEGINNERS-Play Guitar In 12 Minutes!",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/Z7xm_juNcPY/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARh_ID0oKjAP&rs=AOn4CLDP6wyNiNsHjuQlWrlI8Hlow2xtcQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "guitar lesson beginner",
+   "id": "w4a2ge9N31E",
+   "title": "This Should Be Everyone\u2019s First Guitar Lesson",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/w4a2ge9N31E/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDoM7J1asMKQprpaVkL0wYqj9fyQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "guitar lesson beginner",
+   "id": "d52MZJw-hIE",
+   "title": "Learn First 3 Chords on Guitar in 3 Minutes! | Beginner Lesson | Matt McCoy",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/d52MZJw-hIE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB26mTQNF3DUhg1nuN1X3U0-6qhLQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "guitar lesson beginner",
+   "id": "CIMiDVGOAwo",
+   "title": "How To Play Guitar - EASY First Guitar Lesson For Beginners!",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/CIMiDVGOAwo/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAPGfVjblgJWtEi8ECl4wluBTGfNQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nba highlights",
+   "id": "f05koa6s4Jw",
+   "title": "Top 100 Plays: 2016 NBA Season",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/f05koa6s4Jw/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLDMBaumd-zoh_niG7Rn-yLeaT22ug"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nba highlights",
+   "id": "Mxv5h-RZWVs",
+   "title": "Warriors vs Cavaliers: Game 7 NBA Finals - 06.19.16 Full Highlights",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/Mxv5h-RZWVs/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLCXGdaN0J7_wOmJsSJJ4h-cbAjMWQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nba highlights",
+   "id": "VUQrHFoDWKY",
+   "title": "NBA Playoffs 2016 Best Moments to Remember",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/VUQrHFoDWKY/hq720.jpg?sqp=-oaymwE6CNAFEJQDSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIEcoSDAPuAL3GA==&rs=AOn4CLCbZuSHTArGwJ9K9NjTtKNFTk37yA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nba highlights",
+   "id": "YmZayeouEGg",
+   "title": "Cleveland Cavaliers' Top 10 Plays of the 2015-2016 Season",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/YmZayeouEGg/hq720.jpg?sqp=-oaymwE6CNAFEJQDSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIFYoRjAPuAL3GA==&rs=AOn4CLDeNdrA3FGc_XjtXDK2Cblrwl0Mqw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nba highlights",
+   "id": "ecjq2jyT7B8",
+   "title": "The Top 100 Plays of the 2016-2017 NBA Season",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/ecjq2jyT7B8/hqdefault.jpg?sqp=-oaymwEgCOADEI4CSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLDQ_dGWb5eR6JGdO3Rjog7zA_oKcw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "makeup tutorial",
+   "id": "7hynQ643mKU",
+   "title": "High School Makeup Routine 2018 !",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/7hynQ643mKU/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAXzmeOoynFNf2COi-mv1b7rABc3Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "makeup tutorial",
+   "id": "YyYx62FW-a8",
+   "title": "Best Viral Makeup Videos On Instagram February 2018 | Best Makeup Tutorials Compilation",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/YyYx62FW-a8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB33Uy5TK7BglxYUW2JsI1A1Kv0xg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "makeup tutorial",
+   "id": "UWw9Pnv1-8U",
+   "title": "KYLIE GLAM: My Sexy 18th Birthday Look",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/UWw9Pnv1-8U/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCfdUSmG0HnQ9O02Nw8AnsJwMUIBA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "makeup tutorial",
+   "id": "U05WaMimRWI",
+   "title": "Amazing makeup tutorials | complications",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/U05WaMimRWI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAxxWndw9WHM8WJId9DgKmSBR8Cuw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "makeup tutorial",
+   "id": "Qb6CKuD1GTk",
+   "title": "Kim Kardashian West's Guide to Viral Holiday Glam | Beauty Secrets | Vogue",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/Qb6CKuD1GTk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBuqxvmn2U3zZrp_z5hJKJzrCsliw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "car review",
+   "id": "UzQ31WklTFQ",
+   "title": "2019 Mazda3 AWD Review | A Step Above The Competition",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/UzQ31WklTFQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDr7GRlXxdmzF4t_2bC4tjcAfslxw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "car review",
+   "id": "eJKwS1NpHH0",
+   "title": "Here's Why The 2019 Toyota RAV4 Is the Best Compact SUV",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/eJKwS1NpHH0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCjgFc2uHHQPByrwXA5xGEiszrBLA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "car review",
+   "id": "JIBf1ui4s2c",
+   "title": "10 SUVs, 1 winner: 2019 SUV Comparison. Best SUV of 2019 | CarAdvice Drive",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/JIBf1ui4s2c/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD2tkY8WfkauJApdQdbrIvxCT6XUw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "car review",
+   "id": "ULmqMr1Gpec",
+   "title": "2019 Mazda 3 Sedan: FULL REVIEW + DRIVE | Blurring the Line Between Mainstream & Luxury!",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/ULmqMr1Gpec/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDm97E2U1rsF3ZTkmRvedIReKcriQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "car review",
+   "id": "xy5cyhM0yfk",
+   "title": "2019 Audi Q7 review \u2013 the ultimate all-round SUV? | What Car?",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/xy5cyhM0yfk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD-NDCLMl2v5Lp2CmojbvAHyf-84g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "unboxing iphone",
+   "id": "p2tRRjtAwME",
+   "title": "iPhone 6 Unboxing | Apple iPhone 6 Unboxing & First Impressions (2014)",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/p2tRRjtAwME/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA7jeM-HIX1DgEd7ZxPy8v2MOpAbg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "unboxing iphone",
+   "id": "tvHCTjm5ksY",
+   "title": "iPhone 6 Plus - In Depth Unboxing and Multiuser Review (2014)",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/tvHCTjm5ksY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLASoiVyUVTUjNV9_-EK5HpcCYAZpw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "unboxing iphone",
+   "id": "RrhkxfhRNDg",
+   "title": "iPhone 6 Plus Unboxing! | iJustine",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/RrhkxfhRNDg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBPMKZL24XLjXziDFpzpTowmaqHpQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "unboxing iphone",
+   "id": "Km0QmJNRAy8",
+   "title": "iPhone 6 Unboxing (Gold + Space Gray)",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/Km0QmJNRAy8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAmKziHpWEL4pM3syiPg1V_tuFKAA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "unboxing iphone",
+   "id": "GViyr-59FNY",
+   "title": "Apple iPhone 6 White Silver 64gb Unboxing",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/GViyr-59FNY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDG8JHoETiCjlxtLE8rDe8bIC8kvA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "home workout",
+   "id": "nOQpD8aDJeI",
+   "title": "HOW TO GET THE ULTIMATE PHYSIQUE (CARDIO WORKOUT) 2016 | THENX",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/nOQpD8aDJeI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA_3SB4gmF4AiDWvItyegCP9fWlkQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "home workout",
+   "id": "gC_L9qAHVJ8",
+   "title": "30 minute fat burning home workout for beginners. Achievable, low impact results.",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/gC_L9qAHVJ8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCeSHcWqikEEzF-P1NwgmRoxzIcDQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "home workout",
+   "id": "77YlfwT6Jzk",
+   "title": "7 Min Abs Workout 2016 - How to get a Six Pack at home",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/77YlfwT6Jzk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBFKzw5V7IPy5P3OgR2lW-_YCwFlA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "home workout",
+   "id": "Y08OkdVO4Co",
+   "title": "20 Minute Full Body Workout At Home - No Equipment",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/Y08OkdVO4Co/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB0695aHgEjrHK9iLYnkxMEofQZZw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "home workout",
+   "id": "u30ElgGF8yk",
+   "title": "Intense Abs Workout Routine - 10 Mins Flat Stomach Exercise",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/u30ElgGF8yk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCNX50auBkwSdV7U0rGDY9DlGPHbA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "science experiment kids",
+   "id": "CmY-GqKGmgQ",
+   "title": "3 Easy Colorful Science Experiments For Kids | Sema's Lab",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/CmY-GqKGmgQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCNNV3Rgv-146S5kIalDZkNn3X7sA&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "science experiment kids",
+   "id": "BeLT-O8Mz2M",
+   "title": "5 Fun Science Experiments for Kids (w/ Grover!) | #5facts",
+   "age": "13y ago",
+   "thumb": "https://i.ytimg.com/vi/BeLT-O8Mz2M/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD4JyBDDY676HhxkAaUqYTenC-jGQ&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "science experiment kids",
+   "id": "X89itjNaTzk",
+   "title": "Science Max | BUBBLES | Science Experiments",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/X89itjNaTzk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDZIJgkVSvry2TC4bclgBXr55LmHQ&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "science experiment kids",
+   "id": "aVUXV5LG5O4",
+   "title": "Sink or Float | Fun Science Experiment for Kids",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/aVUXV5LG5O4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAKGONnDoyew1v9e_KZmMku_c1z4w&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "science experiment kids",
+   "id": "NYQl9-5FpQM",
+   "title": "Intro to Cool Science Experiments | Nat Geo Kids Cool Science Experiments Playlist",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/NYQl9-5FpQM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAyRjLw_JK-iBmjRuviQyZGROhPSg&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "stand up comedy",
+   "id": "zsdYLTQ74W4",
+   "title": "Gaurav Kapoor | No Ball | Stand Up Comedy 2019",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/zsdYLTQ74W4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAHfvCqfCb9rzTL3oicS3tZdQM0fg&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "stand up comedy",
+   "id": "FKcr2h7RR-g",
+   "title": "Joe Rogan 2019 - Standup Comedy Full Show",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/FKcr2h7RR-g/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARh_ICMoIzAP&rs=AOn4CLDZq1s8fdRSI_fNIuONkSXOT5KOLg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "stand up comedy",
+   "id": "3Su_ydENa2w",
+   "title": "KUNAL KAMRA | STAND UP COMEDY 2019",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/3Su_ydENa2w/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDHWblkeoWgq84xCAl1GFhFt8MsZw&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "stand up comedy",
+   "id": "paL1rGvv7WI",
+   "title": "New stand up comedy 2019 - Kvon comedy full show",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/paL1rGvv7WI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLALYDotZHLDZlloHV9lJLB8ccdDow"
+  },
+  {
+   "set": "pre-ai",
+   "q": "stand up comedy",
+   "id": "YAr7O8-iRgQ",
+   "title": "Trevor Noah - Most Viewed Videos of 2019",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/YAr7O8-iRgQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDcK1__hZ9tSMGJOduRBHTFGyXXlQ&usqp=CBQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nature documentary",
+   "id": "bqni6sUQ_Ag",
+   "title": "Nature Documentary A Murder of Crows Full Documentary HD",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/bqni6sUQ_Ag/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLCq-fCoVVqvA7mgt3DdTEAaP9IPtw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nature documentary",
+   "id": "iSIqA016MWU",
+   "title": "BBC documentary 2014 The Wild Bush Budgie Nature Documentary",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/iSIqA016MWU/hqdefault.jpg?sqp=-oaymwE6COADEI4CSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gSAAuADigIMCAAQARhlIFUoUjAPuALzGA==&rs=AOn4CLBayViYELWiPpzBPambb4mpttVERQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nature documentary",
+   "id": "UiFjONQDHNM",
+   "title": "Wildlife | Episode 1: Tiger, Lion, Leopard & Jaguar - The Four Big Cats | Free Documentary Nature",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/UiFjONQDHNM/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLDmt9wgxuEd05nbRxF4eGZDFw-Ifw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "nature documentary",
+   "id": "wLLDD229EDw",
+   "title": "Wolverine Chasing the Phantom - Nature Documentary HD",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/wLLDD229EDw/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC8xg=&rs=AOn4CLA82B3DhIJO09zIFe24qOMhoMYjcA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "piano cover",
+   "id": "JcSjjAqzPBA",
+   "title": "2016 PIANO MASHUP - Top Hits in 3.5 Minutes - Costantino Carrara",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/JcSjjAqzPBA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAVwUM87G1ox_AJbfhVTynHX19h2A"
+  },
+  {
+   "set": "pre-ai",
+   "q": "piano cover",
+   "id": "kvuMBgjADpY",
+   "title": "\ud83c\udfb9 TOP 10 PIANO COVERS on YOUTUBE #2 \ud83c\udfb9",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/kvuMBgjADpY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDXFVtfSUY5kYn9ekajFq1fOFrqxg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "piano cover",
+   "id": "0VqTwnAuHws",
+   "title": "One Direction - What Makes You Beautiful (5 Guys, 1 Piano) - The Piano Guys",
+   "age": "14y ago",
+   "thumb": "https://i.ytimg.com/vi/0VqTwnAuHws/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB0WzNsFcfsWiBoDbeO4MaviyokJg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "piano cover",
+   "id": "0p7nnJwwnDs",
+   "title": "Sia - The Greatest | Piano Cover - Peter Bence",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/0p7nnJwwnDs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDXTxKRPiwlp4Q_aODs2ghiN9QADQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "piano cover",
+   "id": "n1yS7WdYLZ8",
+   "title": "\"Closer\" - The Chainsmokers (Piano Cover) - Costantino Carrara",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/n1yS7WdYLZ8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDTRjsvTzDDDmNE--4gaPcAp_Luwg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fortnite funny moments",
+   "id": "v3uu3qnb86c",
+   "title": "STREAMERS REACT TO *NEW* BLOCKBUSTER SKIN! *EPIC* Fortnite SAVAGE & FUNNY Moments",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/v3uu3qnb86c/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB9R5IRLww9ryZ6gvcLvC7QRpx_wg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fortnite funny moments",
+   "id": "RvPxo7ZzNI8",
+   "title": "TOP 200 FUNNIEST FAILS IN FORTNITE",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/RvPxo7ZzNI8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLACbg3OuRmr8O93I4qpcnQVNfo--w"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fortnite funny moments",
+   "id": "3sUrNb3mqvA",
+   "title": "TOP 250 FUNNIEST FAILS IN FORTNITE",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/3sUrNb3mqvA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDHdEa3XSnBB7eYUbGzkRvybB_GCQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fortnite funny moments",
+   "id": "gEw4CgTpRN0",
+   "title": "Who Remembers This Intro? \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/gEw4CgTpRN0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAxu-xVYRwXiecC-fj8cEQgC7qczA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fortnite funny moments",
+   "id": "AkfnaVfKe1I",
+   "title": "TOP 100 FUNNIEST FAILS & EPIC MOMENTS IN FORTNITE",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/AkfnaVfKe1I/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDGtqD02rv2ZnEnSaQyOny_DyxNgg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "woodworking project",
+   "id": "P1GneiwAutQ",
+   "title": "My 2019 Woodworking, The year in Projects",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/P1GneiwAutQ/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBJtZH684c3q_1ceH5aw78TD_h-9Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "woodworking project",
+   "id": "yZLQw8rSKn0",
+   "title": "Woodworking Projects (Part -4) - Make Wooden Diamond Wine Rack // Wooden Partition Wall Designs",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/yZLQw8rSKn0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA_LQ_Bh00z-t74nrJDfpzaTAjoqA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "woodworking project",
+   "id": "nWea4rk3hfw",
+   "title": "20 Cool Woodworking Project Ideas",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/nWea4rk3hfw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCBNwwhrJV_CXzNTU2wWrxBTmahbQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "woodworking project",
+   "id": "8vFGrNjT4P4",
+   "title": "How to make a basic box. And why you need to know how | Woodworking BASICS | Power Tools",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/8vFGrNjT4P4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDCg1nQ3KtBU8QFb0BxPdRTX4Gc8A"
+  },
+  {
+   "set": "pre-ai",
+   "q": "woodworking project",
+   "id": "7pIKH-BCLoA",
+   "title": "Top 5 Woodworking Projects That Sell",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/7pIKH-BCLoA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCP8_n_QK8TlJb-59rRgAtTmk9OVA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "cat compilation",
+   "id": "JxS5E-kZc2s",
+   "title": "Funny Cats Compilation (Most Popular) Part 1",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/JxS5E-kZc2s/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDLjnAsAIPacxshWEeXeZMzdDrEJA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "cat compilation",
+   "id": "A1EhTqN0ZLw",
+   "title": "Funny Cats Compilation 2014   HD   720p \u2714",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/A1EhTqN0ZLw/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhyIGAoRDAP&rs=AOn4CLBK87k91AvzeI_uiBapTwhPpLk0UQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "cat compilation",
+   "id": "q18mLcIeSlc",
+   "title": "Funny Cats Compilation 2014 - 18 Min HD !",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/q18mLcIeSlc/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCooRvzNGK-O5KMZym9tUaAyl0EVw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "cat compilation",
+   "id": "XRE9J9NyP3Y",
+   "title": "Best Funny Cats Fails Compilation | Funny Cat Videos 2014",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/XRE9J9NyP3Y/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBfFiBy7dfX2bZ8Lv_WDWahXTxmqQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "cat compilation",
+   "id": "kiwj1kk9YPA",
+   "title": "Funny Cat Videos Compilation part. 1 [2014 NEW HD]",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/kiwj1kk9YPA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAIiwsChkPDZtL1Ga146uBVV4dBXg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fishing trip",
+   "id": "hv3HxvOvyXI",
+   "title": "Canada fishing trip 2016",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/hv3HxvOvyXI/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhTIFgoZTAP&rs=AOn4CLBJkkSpqou2rCYgSzP65-cRh2b-AQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fishing trip",
+   "id": "S3m3xA5BpOI",
+   "title": "Canada Fishing Trip 2016",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/S3m3xA5BpOI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBlvIyXPW_ZhNgRYGEly1GwKd7qyQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fishing trip",
+   "id": "72t2NnXqWo0",
+   "title": "Canada Fishing Trip 2016",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/72t2NnXqWo0/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhSIF8oZTAP&rs=AOn4CLDRuz6g5nrTCIOyTh8R5XsEa_lTJQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fishing trip",
+   "id": "KNRB1bJwBgg",
+   "title": "Fishing Trip Canada 2016",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/KNRB1bJwBgg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA6NHy4hzevFguxUdW2asipohnTsA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "fishing trip",
+   "id": "fdFXh6LUT38",
+   "title": "Lake Kipawa Fishing Trip 2016",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/fdFXh6LUT38/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBQMkCBxiPubz_rksG5rP8142jZag"
+  },
+  {
+   "set": "pre-ai",
+   "q": "skateboarding tricks",
+   "id": "qsebzPaSp7E",
+   "title": "Halloween Hellbomb 2019 Video",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/qsebzPaSp7E/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBZOhXIKi60NQD3Now5GYClgldMkw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "skateboarding tricks",
+   "id": "a5VF6lecJvw",
+   "title": "Best Skateboarding Clips 2019 | Effortless Steez",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/a5VF6lecJvw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCy8Wy5dZ_VHa3ZS-Pxp3WvEMqjWg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "skateboarding tricks",
+   "id": "a2H08HlNuj0",
+   "title": "BEST OF: Skateboarding | X Games Minneapolis 2019",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/a2H08HlNuj0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDvzQK_Cg-bv7zQmr5C6G7TbxdmIw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "skateboarding tricks",
+   "id": "8Zx7fFFfPis",
+   "title": "Tony Hawk: 50 tricks at Age 50",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/8Zx7fFFfPis/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDhgEmMTpX9gLHwtMtjwrtXX0RXUQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "skateboarding tricks",
+   "id": "qN4rn-PTJuc",
+   "title": "Best Skateboard Tricks Ever !!!!!",
+   "age": "14y ago",
+   "thumb": "https://i.ytimg.com/vi/qN4rn-PTJuc/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIFwoRTAP&rs=AOn4CLDpVUJgQG4YAZQhX01P2eKl97KeRw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "chemistry lecture",
+   "id": "CYSVd2qTfAk",
+   "title": "Lectures: 2014 Nobel Prize in Chemistry",
+   "age": "Streamed 11y ago",
+   "thumb": "https://i.ytimg.com/vi/CYSVd2qTfAk/hq720.jpg?sqp=-oaymwE6CNAFEJQDSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARh_IFAoHDAPuAL3GA==&rs=AOn4CLAqR0IDw5-qHbQHTCAIrAVcUtK8oQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "chemistry lecture",
+   "id": "oqRRZD9OT0E",
+   "title": "Where is the Acid?, Science and Cooking Public Lecture Series 2014",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/oqRRZD9OT0E/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLDFZJCrhCVyT32STD0fQhkbe4Weog"
+  },
+  {
+   "set": "pre-ai",
+   "q": "chemistry lecture",
+   "id": "1WBXx6R9jAo",
+   "title": "(13th of 19 Chapters) Metals - GCE O Level Chemistry Lecture",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/1WBXx6R9jAo/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLCE_hrrTjwhVYoIPWKJu1q460hv2Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "chemistry lecture",
+   "id": "L867XWw6S1k",
+   "title": "Chemistry Lecture Series 2011",
+   "age": "15y ago",
+   "thumb": "https://i.ytimg.com/vi/L867XWw6S1k/hqdefault.jpg?sqp=-oaymwEgCOADEI4CSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLCON7wF_qBNeOpprnEKf6W7mle1xQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "chemistry lecture",
+   "id": "OIVcJG7fxFo",
+   "title": "Lecture Catalytic Organometallics 1 Prof  G  Dyker 080414",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/OIVcJG7fxFo/hq720.jpg?sqp=-oaymwE6CNAFEJQDSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhWIGUoRzAPuAL3GA==&rs=AOn4CLBGCh8Xz7p5LmClNQ_2XJmkX-RGCg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "gardening tips",
+   "id": "JBvvrH-dMF8",
+   "title": "Lessons for Beginner Gardeners (9 Tips)",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/JBvvrH-dMF8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCq4e2rLqRnD2lzNlVLabKRipCw3w"
+  },
+  {
+   "set": "pre-ai",
+   "q": "gardening tips",
+   "id": "J38nraK8IhA",
+   "title": "Top Gardening Tips",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/J38nraK8IhA/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCzRn0Fv0-Bp0iLyvh-wC6FejGI1g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "gardening tips",
+   "id": "-m-Yl5Z9xaI",
+   "title": "Spring sprucing: Gardening Tips for 2016 | Euromaxx",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/-m-Yl5Z9xaI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCFQDfQRNOp37MOrqP33JJKQH1ysg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "gardening tips",
+   "id": "OCcbhl3wIAc",
+   "title": "Garden Tour 2016 (Our Old House)",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/OCcbhl3wIAc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCsyMmoJyrCsVqSPb5YxwNVInh8aQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "gardening tips",
+   "id": "xSTMIvsg7cY",
+   "title": "Vegetable Gardening for Beginners - 7 Tips You Must Know",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/xSTMIvsg7cY/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD-SXWmvf2jtVlfNJd9F-ampM9f1g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "drawing tutorial",
+   "id": "i_pQWFkZJrc",
+   "title": "How To Draw A Sunflower",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/i_pQWFkZJrc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD7qQNIBYVdUtBOc9YVBD8X9W6qew"
+  },
+  {
+   "set": "pre-ai",
+   "q": "drawing tutorial",
+   "id": "QJ_F9tZctA0",
+   "title": "How To Draw A McLaren 720s (Front View)",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/QJ_F9tZctA0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB-gS_LxmatcNPogpUSF5bfNNGozQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "drawing tutorial",
+   "id": "lhBFN1add9c",
+   "title": "How To Draw Cartoon Sushi",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/lhBFN1add9c/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCpw62A-gTDvKBcfGVZYhhtlpvCJA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "drawing tutorial",
+   "id": "_GC59u3-WuI",
+   "title": "How To Draw Cartoon Cotton Candy",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/_GC59u3-WuI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDd6Q8fTu-Qxg-8UM3sWA0wqr29Gg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "drawing tutorial",
+   "id": "bF-ihxyMCCI",
+   "title": "Let's Draw 2018!",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/bF-ihxyMCCI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDhnWTd2SkTddAwp2YmsvUaVoJ1TA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "wedding vlog",
+   "id": "xmPgv5T20yQ",
+   "title": "Simply\u2019s Safiya & Tyler's Wedding Vlog | LA 2019",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/xmPgv5T20yQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCL2bVF89oAKBOCXm12xqGycDlw1Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "wedding vlog",
+   "id": "7PIMiDcwNvc",
+   "title": "Marzia & Felix - Wedding 19.08.2019",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/7PIMiDcwNvc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD6-rpLleXLmnWQes0lWhA5S1NhEA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "wedding vlog",
+   "id": "MK5zVLYXzyg",
+   "title": "OUR WEDDING VIDEO!!!  *Vows to 4 year old daughter*",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/MK5zVLYXzyg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAFSd7onJISEThCGKyjqPsMwWlfLA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "wedding vlog",
+   "id": "HDntl7yzzVI",
+   "title": "Our Wedding | Safiya & Tyler",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/HDntl7yzzVI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBP0lGx18nV-eAf4Dfa47X4OnkwSw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "wedding vlog",
+   "id": "UzYRtGaFOi0",
+   "title": "Our Wedding Day",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/UzYRtGaFOi0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC7qvTs5pYpLsDUdavx4i-Rhh4diQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "camping gear review",
+   "id": "mc2AKHy2MtI",
+   "title": "Military Surplus Overnight Adventure - The Outdoor Gear Review",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/mc2AKHy2MtI/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCZXB5VczBjG9-CYrYzfWnw66eF0w"
+  },
+  {
+   "set": "pre-ai",
+   "q": "camping gear review",
+   "id": "vZ8cCghI4bA",
+   "title": "The End of Summer Van Camp - The Outdoor Gear Review",
+   "age": "13y ago",
+   "thumb": "https://i.ytimg.com/vi/vZ8cCghI4bA/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBfRXZGJ_7ZQrikgXK6Vga9hwVnJw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "camping gear review",
+   "id": "Wy81pHBeyQQ",
+   "title": "Backpacking in a Blizzard - Winter Storm Backpacking Overnight Adventure",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/Wy81pHBeyQQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB9W28MA2lHX342oUg92ZIMq-w08w"
+  },
+  {
+   "set": "pre-ai",
+   "q": "camping gear review",
+   "id": "stV_fQ6v0cw",
+   "title": "Viewer's Choice January 2014 - Bushcraft Overnighter - The Outdoor Gear Review",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/stV_fQ6v0cw/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCQf_YN5oq2p7kN7SazdroRJEaVbg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "camping gear review",
+   "id": "bwpVcnid-Zo",
+   "title": "The Bushcraft Overnight Adventure - The Outdoor Gear Review",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/bwpVcnid-Zo/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAeL281DGcrjxybJWE1mjOmo_5XqA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "soccer goals",
+   "id": "BV1vQBxi44E",
+   "title": "Top ten UEFA EURO 2016 goals",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/BV1vQBxi44E/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBLHnA6Q6n10QFZF2m-V6xg5wcWYQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "soccer goals",
+   "id": "PPqiXlq-kw8",
+   "title": "Best Football Skills Mix 2016 HD",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/PPqiXlq-kw8/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBL7BNg07b6p86AB0UL2bdOCmuKxg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "soccer goals",
+   "id": "bZZgC06Q5CQ",
+   "title": "Top 50 Goals of 2016 \u2022 HD",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/bZZgC06Q5CQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCzEESZMIXfIUAMZG0EjLCB-Fl2PA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "soccer goals",
+   "id": "WuTCW-b5Tww",
+   "title": "best 100 goals 2016",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/WuTCW-b5Tww/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhNIGUoMDAP&rs=AOn4CLB3NqKIUlt1WuATUZh3cT2mf8c14Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "soccer goals",
+   "id": "a4Qvh6VIoSs",
+   "title": "EVERY Goal Scored at UEFA EURO 2016! \ud83e\udd29",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/a4Qvh6VIoSs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDgx280Qa-No1RPejnDKTpkyH4b-w"
+  },
+  {
+   "set": "pre-ai",
+   "q": "baking bread",
+   "id": "VrUdtzXquWk",
+   "title": "How To Make Bread | Jamie Oliver - AD",
+   "age": "9y ago",
+   "thumb": "https://i.ytimg.com/vi/VrUdtzXquWk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCp47Ft2zHOGxRr2C7_16y-P1qoJQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "baking bread",
+   "id": "SM5lZ9TICdk",
+   "title": "130: Easy Loaf of Bread, Start to Finish (Yeasted) - Bake with Jack",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/SM5lZ9TICdk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA9zqaAh0Y4kzujXG2DSh-gLEIFHw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "baking bread",
+   "id": "EGbNI26PPYg",
+   "title": "The Magic Of Bread Making",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/EGbNI26PPYg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAGe03yUOaBK8aDsPSfZ9K12wbpkA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "baking bread",
+   "id": "e8tymUqV2-4",
+   "title": "The 12 Steps of Baking Guide | Bread Making Principles",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/e8tymUqV2-4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC3A5SXLkcbsSdo-abP-8py4nSvRw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "baking bread",
+   "id": "V4Uuxg6jmbo",
+   "title": "The Try Guys Bake Bread Without A Recipe",
+   "age": "8y ago",
+   "thumb": "https://i.ytimg.com/vi/V4Uuxg6jmbo/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC2XViooJDVLdnr9dVJq7g_8wZOkg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "history documentary",
+   "id": "3Em-jE2aBZA",
+   "title": "This American Civil War Full History Documentary Film Full Length Non-Stop for over 8 hours",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/3Em-jE2aBZA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDH3tdWACrJmofB7o5KixwTj_yqAw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "history documentary",
+   "id": "HapGfrGR_gE",
+   "title": "1000 AD - A Tour of Europe / Medieval History Documentary",
+   "age": "6y ago",
+   "thumb": "https://i.ytimg.com/vi/HapGfrGR_gE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBe5SWmT5s8xI3hsQxvWMEm6UnJ9g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "history documentary",
+   "id": "kKjbc66qp3Y",
+   "title": "The Dead Sea Scrolls // Ancient History Documentary",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/kKjbc66qp3Y/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAausV3Ji5NA7WYHheCahwm7KG8OA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "history documentary",
+   "id": "1k3e4qlgtaQ",
+   "title": "Britain After Rome // The Age of Arthur - History Documentary",
+   "age": "7y ago",
+   "thumb": "https://i.ytimg.com/vi/1k3e4qlgtaQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAdZvSSTOxsfOVjCoA9j4UhWHKi6Q"
+  },
+  {
+   "set": "pre-ai",
+   "q": "speedrun",
+   "id": "H50nqenYMDM",
+   "title": "\"I would really prefer if you'd be quiet\" - SGDQ 2014",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/H50nqenYMDM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLARhaTeHDK1BouqSudAL1VxVVPVNQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "speedrun",
+   "id": "ZwQOpRcEoJ8",
+   "title": "Halo: Combat Evolved by Goatrope in 1:51: 19 - SGDQ2014 - Part 121",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/ZwQOpRcEoJ8/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIEsoSTAP&rs=AOn4CLAi0uK9RDeUTkiktzfFBfQzIj111g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "speedrun",
+   "id": "zOrA91_xg4M",
+   "title": "AGDQ 2014 - Yoshi\u00b4s Island (100% + Glitched%) - TRI-HEX and Carl Sagan - Speedrun",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/zOrA91_xg4M/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARgvIFUocjAP&rs=AOn4CLAkjWTlGuvu9js3AsezTX4c-uOPiA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "speedrun",
+   "id": "-IUbUF8cnVA",
+   "title": "Pokemon Soul Silver Speedrun 2:55:55 - Live at AGDQ 2014",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/-IUbUF8cnVA/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARg1IFsocjAP&rs=AOn4CLBHEIpp3jNVnDw8kB-zejSLRcZVAw"
+  },
+  {
+   "set": "pre-ai",
+   "q": "speedrun",
+   "id": "VRX_ZVKIHN0",
+   "title": "Minecraft [PC] :: SPEED RUN (0:16:40) By Bismuth #AGDQ 2014",
+   "age": "12y ago",
+   "thumb": "https://i.ytimg.com/vi/VRX_ZVKIHN0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB8NdEPVJRitI08RoOO1py95uFebQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "diy room decor",
+   "id": "ncIr-GwzKI4",
+   "title": "DIY Tumblr Room Decor 2016 | JENerationDIY",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/ncIr-GwzKI4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAApjcKBqIFKjQXBe3lQQb_dBmDAA"
+  },
+  {
+   "set": "pre-ai",
+   "q": "diy room decor",
+   "id": "AS9CBtgEi6A",
+   "title": "DIY Tumblr Room Decor + Organization 2016! Alisha Marie",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/AS9CBtgEi6A/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBBwb0u1yFnonijKRkUDoZFYXcUeg"
+  },
+  {
+   "set": "pre-ai",
+   "q": "diy room decor",
+   "id": "h2V5LejYVW8",
+   "title": "DIY Room Decor! 10 DIY Room Decorating Ideas for Teenagers (DIY Wall Decor, Pillows, etc.)",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/h2V5LejYVW8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCunG9bkyjMlnu5bIilDWh2LZjxMQ"
+  },
+  {
+   "set": "pre-ai",
+   "q": "diy room decor",
+   "id": "bGIsTxluQio",
+   "title": "DIY Room Decorations for Cheap! + Make Your Room Look Like Pinterest & Tumblr | MyLifeAsEva",
+   "age": "11y ago",
+   "thumb": "https://i.ytimg.com/vi/bGIsTxluQio/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD8o61mhhmGowFHq_qnmBj4QMHT4g"
+  },
+  {
+   "set": "pre-ai",
+   "q": "diy room decor",
+   "id": "O3mUYti8Q_Y",
+   "title": "DIY Room Decor 2016 - EASY & INEXPENSIVE Ideas!",
+   "age": "10y ago",
+   "thumb": "https://i.ytimg.com/vi/O3mUYti8Q_Y/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAMPqkQQ4FZNMmFxFwpn0NdSdHVUA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated movie trailer",
+   "id": "pAHNaaRbv_w",
+   "title": "1 Hour of the BEST Sora 2 Disney Trailers \ud83d\ude31 Stunning AI Remakes, Magic Moments & Viral Edits",
+   "age": "9mo ago",
+   "thumb": "https://i.ytimg.com/vi/pAHNaaRbv_w/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhlIEwoSzAP&rs=AOn4CLBux6bOUyzzyuhEoMH7Ys6mZc9DvA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated movie trailer",
+   "id": "wvUSxm8qDUw",
+   "title": "GHOSTBUSTERS 3: HELLBENT | Full AI-Generated Trailer (Dan Aykroyd's Lost Screenplay)",
+   "age": "3mo ago",
+   "thumb": "https://i.ytimg.com/vi/wvUSxm8qDUw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDvFaMV0BUUxRJlC82xQR23n8kFQ"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated movie trailer",
+   "id": "GqHqCKJV1K4",
+   "title": "CURSED Sora 2 AI Disney Movies..\ud83e\udd72",
+   "age": "11mo ago",
+   "thumb": "https://i.ytimg.com/vi/GqHqCKJV1K4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAqa_GRQa3w_VDH0d9uaBkgGNjJQw"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated movie trailer",
+   "id": "bmlvF4uAiiU",
+   "title": "Varaha avatar movie trailer | Epic AI-Generated Teaser Trailer | ghantee media",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/bmlvF4uAiiU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBOZpRYlevbGJ4KPt4fXOsHbVAwbg"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated movie trailer",
+   "id": "WyBxMfhCbUs",
+   "title": "The Silmarillion - Teaser Trailer (AI Generated)",
+   "age": "2y ago",
+   "thumb": "https://i.ytimg.com/vi/WyBxMfhCbUs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBslNrWFmDfd93CL8GBuxutpVeegQ"
+  },
+  {
+   "set": "likely-ai",
+   "q": "midjourney art showcase",
+   "id": "E9PvSeIO5NY",
+   "title": "Introducing Midjourney V1 Video",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/E9PvSeIO5NY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBHx2ImHQQDNoZLZugDKXe96gyLHg"
+  },
+  {
+   "set": "likely-ai",
+   "q": "midjourney art showcase",
+   "id": "ImHZ8_A8-Rw",
+   "title": "20 Artists Styles To Make Your Midjourney AI Art Pop!",
+   "age": "9mo ago",
+   "thumb": "https://i.ytimg.com/vi/ImHZ8_A8-Rw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCAwWh2YMwa5eA5v9wR3W0LSclMaw"
+  },
+  {
+   "set": "likely-ai",
+   "q": "midjourney art showcase",
+   "id": "Kx5FwLf583k",
+   "title": "AI Art Showcase Beyond Reality in Midjourney & Runway",
+   "age": "3mo ago",
+   "thumb": "https://i.ytimg.com/vi/Kx5FwLf583k/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhBIFYoZTAP&rs=AOn4CLB4cg8Mmq2My6Q97McUKUM8pLBbWA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "midjourney art showcase",
+   "id": "wJ7Af0Zwb50",
+   "title": "Making Midjourney Look Hand-Drawn: 50 Styles",
+   "age": "1mo ago",
+   "thumb": "https://i.ytimg.com/vi/wJ7Af0Zwb50/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD0JtPs699nXdAa3ZwmNl6ELylXcw"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated music video",
+   "id": "KHSr80Rnm9k",
+   "title": "YURI - SURREAL Completely AI-Generated Music Video | AI.TALK",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/KHSr80Rnm9k/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAc4JT8KNrCp1qGKy8FtJiUB6suXg"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "1PaoWKvcJP0",
+   "title": "Sound on for Sora 2",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/1PaoWKvcJP0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAYrRoECpKQE_trevUImZfu1-5yPw"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "TtwWbQku8sk",
+   "title": "ABUSING Sora 2.0 Video AI (again)",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/TtwWbQku8sk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCyj7kMZV0j4znnR5yvfhhUTt-3BA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "TNM8moLggbI",
+   "title": "The Most Creative Sora 2 AI Animal Videos Compilation",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/TNM8moLggbI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDkDNw6PEqAUaYX9JMoxZF6mzyLmw"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "HK6y8DAPN_0",
+   "title": "Introducing Sora \u2014 OpenAI\u2019s text-to-video model",
+   "age": "2y ago",
+   "thumb": "https://i.ytimg.com/vi/HK6y8DAPN_0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBcJuZExxWN3XIm-YwpTaTRRhrh5Q"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "iiRwMCeDPkM",
+   "title": "OpenAI's Sora AI Video Generator First Look",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/iiRwMCeDPkM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCWt7BojoVbIkoH7CgdCB8u7gGr_Q"
+  },
+  {
+   "set": "likely-ai",
+   "q": "sora generated video",
+   "id": "H6jyttQ6I90",
+   "title": "\"AI Anime Fight Scene | Generated with Sora 2\"  ",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/H6jyttQ6I90/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB6gmAAtAFigIMCAAQARgTIFQofzAP&rs=AOn4CLBhyZLz_85WTZ6oZKQ9EAiHucTsNQ"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated images compilation",
+   "id": "ubDtimmhpbw",
+   "title": "AI Generated Images Compilation AIGIC23",
+   "age": "2y ago",
+   "thumb": "https://i.ytimg.com/vi/ubDtimmhpbw/hq720.jpg?sqp=-oaymwE6CNAFEJQDSFXyq4qpAywIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhYIGUoYDAPuAL3GA==&rs=AOn4CLBScyyPzIO7fvk7Kx4IvbHwMmmhLQ"
+  },
+  {
+   "set": "likely-ai",
+   "q": "ai generated images compilation",
+   "id": "nVQSbNJI0Gg",
+   "title": "Why Old AI Generated Videos Are So Terrifying",
+   "age": "2y ago",
+   "thumb": "https://i.ytimg.com/vi/nVQSbNJI0Gg/hq720.jpg?sqp=-oaymwEgCNAFEJQDSFXyq4qpAxIIARUAAIhCGAFwAcABBrgC9xg=&rs=AOn4CLDMNNiccxNEEbPXHfidmyba9s13VA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "coVZ-1y6aPE",
+   "title": "Free AI Video Generator With Free Seedance 2.5, Veo 3.1 + Kling 3.0 | AI Video Generator API",
+   "age": "1d ago",
+   "thumb": "https://i.ytimg.com/vi/coVZ-1y6aPE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCwdBC2Qs1wPW_XSygFXfhjn4GdGA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "dxR9LBaqcJo",
+   "title": "Laughing At Psychotic VEO 3 AI Videos",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/dxR9LBaqcJo/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBI_ULuEKYPZN9lqSLKFpxIbKup5w"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "4yZ25JGh3gs",
+   "title": "ABUSING VEO 3 Video AI",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/4yZ25JGh3gs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC0jWLtQnD485G79ghGHeo6INGCWA"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "WeIzH2jFsNw",
+   "title": "Video created with Google's Veo 3!",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/WeIzH2jFsNw/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARg4IGUoQTAP&rs=AOn4CLCWEjQ5JmZM9CWug3beAzMPeoVN4w"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "Cqcf3XEwPeo",
+   "title": "100+ Veo 3 AI Videos \u2013 Indistinguishable from Reality",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/Cqcf3XEwPeo/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC33GCjPEod9vwuqmwsiEjGcHZK7w"
+  },
+  {
+   "set": "likely-ai",
+   "q": "veo 3 ai video",
+   "id": "gcZwE5cM4xs",
+   "title": "Google\u2019s new AI video tool Veo 3 is WILD!",
+   "age": "1y ago",
+   "thumb": "https://i.ytimg.com/vi/gcZwE5cM4xs/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_g6AArgIigIMCAAQARhyID8oPTAP&rs=AOn4CLBYquTDVsLvcxYpSv1y2_2zkehkEA"
+  }
+ ]
+}

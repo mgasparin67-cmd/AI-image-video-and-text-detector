@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Sloply</title>
+  <style>
+    /* Same tokens as the popup: warm neutrals with one light-blue accent. */
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f5f3;
+      --surface: #ffffff;
+      --fg: #1c1917;
+      --muted: #6b6560;
+      --line: #e7e5e4;
+      --accent: #38bdf8;
+      --accent-text: #0369a1;
+      --on-accent: #082f49;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --ok: #16a34a;
+      --red: #dc2626;
+      --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0e0d;
+        --surface: #1a1816;
+        --fg: #f5f5f4;
+        --muted: #a8a29e;
+        --line: #2c2926;
+        --accent: #7dd3fc;
+        --accent-text: #7dd3fc;
+        --accent-soft: rgba(125, 211, 252, 0.12);
+        --ok: #4ade80;
+        --red: #f87171;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; background: var(--bg); color: var(--fg);
+      font: 15px/1.55 system-ui, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased;
+      display: grid; place-items: start center; padding: clamp(32px, 8vh, 88px) 16px 48px;
+    }
+    main { width: 100%; max-width: 520px; display: grid; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -0.015em; }
+    .logo { width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); }
+    .kicker { margin: 0; font: 600 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+    h1 { margin: 4px 0 0; font-size: clamp(26px, 5vw, 32px); line-height: 1.12; letter-spacing: -0.025em; text-wrap: balance; }
+    p { margin: 0; color: var(--muted); }
+    a { color: var(--accent-text); }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 14px; }
+    .card[hidden], [hidden] { display: none !important; }
+    fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; }
+    legend { padding: 0; margin-bottom: 8px; font: 600 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .opt {
+      position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+      border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
+      transition: border-color 160ms ease, background-color 160ms ease;
+    }
+    .opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+    .opt:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .opt input { margin: 0; accent-color: var(--accent-text); }
+    .opt .name { flex: 1; display: grid; }
+    .opt .name strong { font-weight: 650; }
+    .opt .name small { color: var(--muted); font-size: 13px; }
+    .opt .price { text-align: right; font: 600 16px var(--mono); letter-spacing: -0.02em; }
+    .opt .price small { display: block; font: 500 11px var(--mono); letter-spacing: 0; color: var(--muted); }
+    .badge {
+      position: absolute; top: -9px; right: 12px; padding: 1px 7px; border-radius: 5px;
+      background: var(--accent); color: var(--on-accent); font: 700 10px var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    label.field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; }
+    input[type=email], input[type=text] {
+      font: inherit; font-weight: 400; color: inherit; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 9px; padding: 10px 12px; width: 100%;
+    }
+    input[type=text] { font-family: var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
+    input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+    .primary {
+      font: 650 15px system-ui, sans-serif; padding: 12px 16px; border: 0; border-radius: 10px; cursor: pointer;
+      background: var(--fg); color: var(--bg); transition: transform 160ms var(--ease-out), opacity 150ms ease;
+    }
+    .primary:active { transform: scale(0.98); }
+    .primary:disabled { opacity: 0.55; cursor: default; }
+    .primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .row { display: flex; gap: 8px; }
+    .row input { flex: 1; min-width: 0; }
+    .row .primary { flex: none; padding-inline: 14px; }
+    .fine { font-size: 12.5px; }
+    .error { color: var(--red); font-size: 13px; }
+    .ok { color: var(--ok); font-weight: 600; }
+    details summary { cursor: pointer; color: var(--accent-text); font-size: 14px; font-weight: 500; }
+    details[open] summary { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12.5l2 2 4-4"/></svg>
+      </div>
+      Sloply
+    </div>
+
+    <header>
+      <p class="kicker" id="kicker">Free trial</p>
+      <h1 id="title">Sloply is on. Your 7‑day free trial has started.</h1>
+    </header>
+    <p id="lede">Everything works during the trial, no card needed.</p>
+
+    <form class="card" id="buy" novalidate>
+      <fieldset>
+        <legend>Choose a plan</legend>
+        <label class="opt">
+          <input type="radio" name="plan" value="monthly" checked>
+          <span class="name"><strong>Monthly</strong><small>Cancel anytime</small></span>
+          <span class="price">$2.99<small>/month</small></span>
+        </label>
+        <label class="opt">
+          <span class="badge">Best value</span>
+          <input type="radio" name="plan" value="lifetime">
+          <span class="name"><strong>Lifetime</strong><small>Pay once, no renewals</small></span>
+          <span class="price">$24.99<small>once</small></span>
+        </label>
+      </fieldset>
+      <label class="field">Email for your receipt and license
+        <input type="email" id="email" autocomplete="email" placeholder="you@example.com" required>
+      </label>
+      <p class="error" id="buyError" role="alert" hidden></p>
+      <button class="primary" id="buyBtn" type="submit">Continue to checkout</button>
+      <p class="fine" id="terms"></p>
+      <p class="fine">Secure checkout by Stripe. Sloply unlocks in this browser by itself, and you also get a license key for other computers.</p>
+    </form>
+
+    <div class="card" id="owned" hidden>
+      <p><span class="ok" id="ownedPlan">Lifetime</span> · license <code id="ownedKey"></code></p>
+      <p class="fine"><a href="https://sloply.app/manage.html" target="_blank" rel="noopener">Cancel anytime, change your card or get receipts</a> on the manage page, with your license key. If you cancel a monthly plan, you keep it until the end of the month you paid for.</p>
+    </div>
+
+    <details class="card" id="keyBox">
+      <summary>Already bought Sloply? Enter your license key</summary>
+      <form id="keyForm" novalidate>
+        <div class="row">
+          <input type="text" id="key" placeholder="ABK-XXXXX-XXXXX-XXXXX-XXXXX" autocomplete="off" spellcheck="false" aria-label="License key">
+          <button class="primary" id="keyBtn" type="submit">Activate</button>
+        </div>
+        <p class="error" id="keyError" role="alert" hidden></p>
+      </form>
+    </details>
+
+    <p class="fine">Detection runs on this computer. Only the license check goes to our server. <a href="https://sloply.app/privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="https://sloply.app/support.html" target="_blank" rel="noopener">Support</a></p>
+  </main>
+  <script src="license.js"></script>
+  <script src="activity.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

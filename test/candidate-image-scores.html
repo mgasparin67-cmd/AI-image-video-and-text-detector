@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Candidate image model scores</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Candidate image model scores</h1>
+  <p>For evaluating other image models (not used by the extension). <code>?model=ID</code> (a Hugging Face
+    id, or <code>local:PATH</code> under this folder), <code>&amp;dtype=fp16|q4|int8|fp32</code>,
+    <code>&amp;data=FILE.json</code> ({ rows: [{ url }] }). The AI score is the sum of the model's AI-type
+    labels (artificial, AI, fake, deepfake, generated, synthetic).</p>
+  <pre id="log"></pre>
+  <script type="module">
+    import { env, pipeline, RawImage } from '../lib/transformers.min.js';
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const q = new URLSearchParams(location.search);
+    let model = q.get('model');
+    env.useWasmCache = false;
+    env.backends.onnx.wasm.wasmPaths = { mjs: new URL('../lib/ort-wasm-simd-threaded.asyncify.mjs', location.href).href, wasm: new URL('../lib/ort-wasm-simd-threaded.asyncify.wasm', location.href).href };
+    // local:PATH loads the files from this test server (http paths count as remote to Transformers.js,
+    // so the server becomes the "remote host", as models.js does with __aibModelsUrl).
+    if (model.startsWith('local:')) {
+      env.allowLocalModels = false;
+      env.remoteHost = new URL('../', location.href).href;
+      env.remotePathTemplate = '{model}/';
+      model = model.slice(6);
+    }
+    const AI_LABEL = /(artificial|^ai$|^ai[-_ ]|fake|deepfake|generated|synthetic)/i;
+    const dtype = q.get('dtype') || 'fp16';
+    let clf, device = 'webgpu';
+    try { clf = await pipeline('image-classification', model, { dtype, device }); }
+    catch (e) { log('webgpu failed, using wasm: ' + e); device = 'wasm'; clf = await pipeline('image-classification', model, { dtype: dtype === 'fp16' ? 'fp32' : dtype, device }); }
+    log(`loaded ${model} (${dtype}, ${device}); labels: ${Object.values(clf.model.config.id2label).join(', ')}`);
+    const { rows } = await (await fetch(q.get('data'))).json();
+    const out = [];
+    for (const [i, r] of rows.entries()) {
+      try {
+        const image = await RawImage.fromURL(r.url);
+        const res = await clf(image, { top_k: 10 });
+        out.push({ score: res.filter(x => AI_LABEL.test(x.label) && !/real|human/i.test(x.label)).reduce((a, x) => a + x.score, 0) });
+      } catch { out.push({ score: null }); }
+      document.title = `${i + 1}/${rows.length}`;
+    }
+    const failed = out.filter(s => s.score == null).length;
+    log(`scored ${rows.length - failed}, failed ${failed}`);
+    window.__saveAs = { name: q.get('name') || 'candidate_scores', data: out };
+    window.__results = [{ name: `scored ${rows.length - failed} of ${rows.length} with ${model}`, ok: rows.length - failed > 0 }];
+    window.__done = true;
+  </script>
+</body>
+</html>

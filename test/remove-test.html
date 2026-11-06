@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Remove mode test</title>
+  <style>
+    body { max-width: 860px; margin: 24px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; color: #222; }
+    h2.case { font-size: 12px; text-transform: uppercase; color: #888; margin: 24px 0 8px; }
+    pre { background: #f4f4f5; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .tile { background: #f3f3f3; border-radius: 8px; overflow: hidden; }
+    .tile img, .pin img.photo, .row img { width: 100%; height: 150px; object-fit: cover; display: block; }
+    .tile .title { padding: 4px 6px; font-size: 12px; }
+    .pins { display: flex; gap: 8px; }
+    .pin { width: 200px; }
+    .pin .meta { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+    .pin .meta img { width: 28px; height: 28px; border-radius: 50%; }
+    figure { margin: 0; width: 320px; } figure img { width: 320px; height: 200px; display: block; }
+    article p { margin: 8px 0; }
+    .inline img { width: 300px; height: 180px; display: block; }
+    .row { display: flex; gap: 8px; } .row > div { width: 260px; }
+    .hero { display: flex; gap: 16px; align-items: center; } .hero img { width: 300px; height: 180px; }
+  </style>
+</head>
+<body>
+  <h1>Remove mode test</h1>
+  <p>With "Remove" picked, a flagged picture should take the item it belongs to with it, and nothing
+    else. AI pictures here are marked with an "AI-generated" alt text, which flags them without the model.</p>
+  <pre id="log"></pre>
+
+  <h2 class="case">Image search grid: the tile goes, the others stay</h2>
+  <div class="grid" id="grid">
+    <div class="tile" id="tile-ai"><a href="#"><img alt="AI-generated castle at sunset"></a><div class="title">Castle at sunset · wallpapers.example</div></div>
+    <div class="tile" id="tile-2"><a href="#"><img alt="castle photo"></a><div class="title">Bodiam Castle · wikipedia.org</div></div>
+    <div class="tile" id="tile-3"><a href="#"><img alt="castle"></a><div class="title">Castles of Wales · visitwales.com</div></div>
+    <div class="tile" id="tile-4"><a href="#"><img alt="castle"></a><div class="title">Castle tours · example.com</div></div>
+  </div>
+
+  <h2 class="case">Figure with caption: both go</h2>
+  <div id="figure-wrap"><figure id="figure-ai"><img alt="AI-generated portrait"><figcaption>Portrait, made in an app.</figcaption></figure></div>
+
+  <h2 class="case">Image inside an article: the image goes, the article stays</h2>
+  <article id="article">
+    <p id="para-1">The old mill stood at the edge of the village for three hundred years, grinding grain for farms from miles around until the river was diverted in the 1950s.</p>
+    <div class="inline" id="inline-ai"><img alt="AI-generated illustration of a mill"></div>
+    <p id="para-2">Restoration began in 2019 with volunteers from the local history society, who rebuilt the wheel by hand using drawings found in the county archive.</p>
+  </article>
+
+  <h2 class="case">Pin cards: the whole card goes (a small avatar doesn't count)</h2>
+  <div class="pins">
+    <div class="pin" id="pin-ai"><div><img class="photo" alt="AI-generated cozy cabin"></div><div class="meta"><img alt=""><span>Cabin ideas</span></div></div>
+    <div class="pin" id="pin-2"><div><img class="photo" alt="cabin"></div><div class="meta"><img alt=""><span>Real cabins</span></div></div>
+  </div>
+
+  <h2 class="case">Two pictures side by side: only the AI one goes</h2>
+  <div class="row" id="row"><div id="side-ai"><img alt="AI-generated dog"></div><div id="side-2"><img alt="dog"></div></div>
+
+  <h2 class="case">Hero with a long headline: the image goes, the headline stays</h2>
+  <div class="hero" id="hero"><img id="hero-img" alt="AI-generated city skyline">
+    <div id="hero-text"><h3>Our city in 2050</h3><p>Planners, residents and architects spent two years imagining how the riverfront could change, and these are the ideas that came out of the public sessions held last spring.</p></div></div>
+
+  <script>
+    // Placeholder pictures with real sizes.
+    const svg = c => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250"><rect width="400" height="250" fill="${c}"/></svg>`);
+    const colors = ['#f97316', '#0ea5e9', '#22c55e', '#a855f7', '#eab308', '#ef4444', '#14b8a6', '#64748b'];
+    document.querySelectorAll('img').forEach((img, i) => { img.src = svg(colors[i % colors.length]); });
+
+    const store = { removeFlagged: true, useModels: false };
+    window.chrome = {
+      storage: { sync: { get: (d, cb) => { const r = { ...d, ...store }; cb?.(r); return Promise.resolve(r); } },
+        local: { get: (d, cb) => { if (cb) cb({ ...d }); return Promise.resolve({ ...d }); }, set: async () => {} },
+        onChanged: { addListener() {} } },
+      runtime: { getManifest: () => ({ version: 'test' }), sendMessage: async () => ({ score: 0, reasons: [] }), onMessage: { addListener() {} } }
+    };
+  </script>
+  <link rel="stylesheet" href="../content.css">
+  <script src="../license.js"></script>
+  <script src="../sites.js"></script>
+  <script src="../text-detector.js"></script>
+  <script src="../reports.js"></script>
+  <script src="../platform-labels.js"></script>
+  <script src="../hiding.js"></script>
+  <script src="../badge.js"></script>
+  <script src="../content.js"></script>
+  <script>
+    (async () => {
+      const log = s => { document.getElementById('log').textContent += s + '\n'; };
+      const results = window.__results = [];
+      const check = (name, ok) => { results.push({ name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}`); };
+      const $ = id => document.getElementById(id);
+      const gone = el => getComputedStyle(el).display === 'none' || !!el.closest('.aib-removed');
+      const shown = el => !gone(el);
+      // Images are checked as they come near the screen: scroll through the page.
+      for (const y of [0, 400, 800, 1200, 1600, 2000]) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 300)); }
+      await new Promise(r => setTimeout(r, 600));
+      check('grid: the AI tile is gone (picture and title)', gone($('tile-ai')));
+      check('grid: the other tiles and the grid stay', shown($('tile-2')) && shown($('tile-3')) && shown($('tile-4')) && shown($('grid')));
+      check('figure: picture and caption are gone together', gone($('figure-ai')));
+      check('article: the inline picture is gone', gone($('inline-ai')));
+      check('article: the article and its paragraphs stay', shown($('article')) && shown($('para-1')) && shown($('para-2')));
+      check('pins: the AI pin card is gone', gone($('pin-ai')));
+      check('pins: the other pin stays', shown($('pin-2')));
+      check('side by side: only the AI picture is gone', gone($('side-ai')) && shown($('side-2')) && shown($('row')));
+      check('hero: the picture is gone, the headline stays', gone($('hero-img')) && shown($('hero-text')) && shown($('hero')));
+      check('nothing left behind: no blur or warning anywhere', !document.querySelector('.aib-media-blur, [data-aib-ui="image"]'));
+      window.__done = true;
+    })();
+  </script>
+</body>
+</html>

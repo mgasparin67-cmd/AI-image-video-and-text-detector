@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Popup preview</title>
+  <style>
+    body { margin: 0; padding: 20px; background: #6e6e73; font: 12px system-ui, sans-serif; color: #fff; }
+    .grid { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 6px; }
+    iframe { width: 320px; height: 600px; border: 0; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.35); background: transparent; }
+  </style>
+</head>
+<body>
+  <p>The real popup.html and popup.js, each with a stand-in for the chrome.* APIs in a different state.</p>
+  <div class="grid" id="grid"></div>
+  <script type="module">
+    const day = n => { const d = new Date(Date.now() - n * 86400000); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+    const BUSY = { [day(9)]: { 'example.com': { image: 212, video: 34, hidden: 12 } } };
+    // A real signed token, from a key pair made here, so the popup goes through the real check.
+    const ECDSA = { name: 'ECDSA', namedCurve: 'P-256', hash: 'SHA-256' };
+    const pair = await crypto.subtle.generateKey(ECDSA, true, ['sign', 'verify']);
+    const b64url = bytes => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const payload = b64url(new TextEncoder().encode(JSON.stringify({ k: 'ABK-TEST', i: 'install-test', p: 'monthly', exp: Date.now() + 86400000 })));
+    const token = `${payload}.${b64url(new Uint8Array(await crypto.subtle.sign(ECDSA, pair.privateKey, new TextEncoder().encode(payload))))}`;
+    const publicKey = JSON.stringify(await crypto.subtle.exportKey('jwk', pair.publicKey));
+    const PLAN = { key: 'ABK-TEST', plan: 'monthly', status: 'active', token, checkedAt: Date.now() };
+    const states = {
+      'Active, images waiting': { license: PLAN, settings: { threshold: 0.5 }, stats: { flagged: 3, checked: 36, waiting: 4 }, models: { image: { state: 'ready', device: 'webgpu' }, text: { state: 'downloading', pct: 45 } }, reports: 3 },
+      'Paused on this site': { license: PLAN, settings: { disabledSites: ['www.google.com'] }, stats: { flagged: 0, checked: 1, waiting: 0 }, models: {}, reports: 0 },
+      'Off, model error': { license: PLAN, settings: { enabled: false }, stats: { flagged: 0, checked: 0, waiting: 0 }, models: { image: { state: 'error', error: 'TypeError: example' }, text: { state: 'ready', device: 'wasm' } }, reports: 1 },
+      'Models failed to download': { license: PLAN, settings: {}, stats: { flagged: 0, checked: 12, waiting: 0 }, models: { image: { state: 'error', error: 'The image model download stopped (no data for 90 s)' }, text: { state: 'error', error: 'TypeError: Failed to fetch' } }, reports: 0 },
+      'Free trial': { trialStart: Date.now() - 2 * 86400000, settings: {}, stats: { flagged: 3, checked: 36, waiting: 4 }, models: { image: { state: 'ready', device: 'webgpu' }, text: { state: 'ready', device: 'webgpu' } }, reports: 3 },
+      'Trial over': { trialStart: Date.now() - 8 * 86400000, settings: {}, stats: { flagged: 0, checked: 0, waiting: 0 }, models: {}, reports: 0 },
+      'Trial ending': { trialStart: Date.now() - 5.5 * 86400000, settings: {}, stats: { flagged: 3, checked: 36, waiting: 4 }, models: {}, reports: 3 },
+      'Last day, review due': { trialStart: Date.now() - 6.5 * 86400000, activity: { [day(1)]: { 'example.com': { image: 25 } } }, settings: {}, stats: { flagged: 3, checked: 36, waiting: 4 }, models: { image: { state: 'ready', device: 'webgpu' }, text: { state: 'ready', device: 'webgpu' } }, reports: 3 },
+      'Trial over, with counts': { trialStart: Date.now() - 10 * 86400000, activity: BUSY, settings: {}, stats: { flagged: 0, checked: 0, waiting: 0 }, models: {}, reports: 0 },
+      'Review already answered': { license: PLAN, activity: BUSY, reviewPrompt: { done: true }, settings: {}, stats: { flagged: 3, checked: 36, waiting: 4 }, models: {}, reports: 0 }
+    };
+    const page = await (await fetch('../popup.html')).text();
+    const js = await (await fetch('../popup.js')).text();
+    for (const [name, st] of Object.entries(states)) {
+      const shim = `<script>
+        const DEF = { enabled: true, images: true, videos: true, text: true, threshold: 0.7, disabledSites: [], useModels: true };
+        const sync = Object.assign({}, DEF, ${JSON.stringify(st.settings)});
+        const local = { modelStatus: ${JSON.stringify(st.models)}, reports: new Array(${st.reports}).fill({}), license: ${JSON.stringify(st.license ?? null)}, trialStart: ${JSON.stringify(st.trialStart ?? null)}, installId: 'install-test', activity: ${JSON.stringify(st.activity ?? {})}, reviewPrompt: ${JSON.stringify(st.reviewPrompt ?? {})} };
+        window.__local = local;
+        const pick = (src, d) => Array.isArray(d) ? Object.fromEntries(d.filter(k => src[k] != null).map(k => [k, src[k]])) : Object.fromEntries(Object.entries(d).map(([k, v]) => [k, k in src ? src[k] : v]));
+        window.chrome = {
+          // As a store install: update_url means license.js wants a real plan.
+          runtime: { getManifest: () => ({ version: 'test', update_url: 'https://clients2.google.com/service/update2/crx' }), sendMessage: async () => null, openOptionsPage() {} },
+          storage: {
+            sync: { get: async d => pick(sync, d), set: async p => Object.assign(sync, p) },
+            local: { get: async d => pick(local, d), set: async p => Object.assign(local, p) },
+            onChanged: { addListener() {} }
+          },
+          tabs: { query: async () => [{ id: 1, url: 'https://www.google.com/search?q=ai' }], sendMessage: async () => (${JSON.stringify(st.stats)}) }
+        };
+      <\/script>`;
+      const html = page.replace('<script src="popup.js"><' + '/script>', `${shim}<script>${js}<\/script>`).replace('src="sites.js"', 'src="../sites.js"').replace('<script src="license.js"><' + '/script>', `<script src="../license.js"><` + `/script><script>AIBLicense.PUBLIC_KEY = ${publicKey};<` + `/script>`).replace('src="activity.js"', 'src="../activity.js"');
+      const fig = document.createElement('figure');
+      fig.innerHTML = `<figcaption>${name}</figcaption>`;
+      const frame = document.createElement('iframe');
+      frame.srcdoc = html;
+      fig.append(frame);
+      document.getElementById('grid').append(fig);
+    }
+
+    // Checks for test/run-all.mjs: each state renders, fits Chrome's 600 px popup limit, and
+    // shows what it should.
+    const frames = [...document.querySelectorAll('iframe')];
+    await Promise.all(frames.map(f => new Promise(r => f.addEventListener('load', r, { once: true }))));
+    await new Promise(r => setTimeout(r, 800)); // popup.js reads settings and stats
+    const text = (f, id) => f.contentDocument.getElementById(id)?.textContent.trim();
+    const [active, paused, off, failed, trial, over, ending, lastDay, overCounts, answered] = frames;
+    const shows = (f, id) => !f.contentDocument.getElementById(id).hidden;
+    const reviewBefore = shows(lastDay, 'reviewBar');
+    const shownBefore = lastDay.contentWindow.__local.reviewPrompt.shown;
+    const heightWithReview = lastDay.contentDocument.body.getBoundingClientRect().height;
+    lastDay.contentDocument.getElementById('reviewLater').click();
+    await new Promise(r => setTimeout(r, 50));
+    window.__results = [
+      { name: 'trial: no reminder or review question early on', ok: !trial.contentDocument.getElementById('planBar').classList.contains('ending') && text(trial, 'choosePlan') === 'Choose a plan' && !shows(trial, 'reviewBar') },
+      { name: 'trial, 2 days left: the reminder shows', ok: ending.contentDocument.getElementById('planBar').classList.contains('ending') && text(ending, 'planText') === 'Free trial · 2 days left' && text(ending, 'choosePlan') === 'Keep Sloply on' },
+      { name: 'trial, last day: says so', ok: text(lastDay, 'planText') === 'Last day of your free trial' },
+      { name: 'trial over: names what Sloply did, with the price', ok: text(overCounts, 'lockBody') === 'In your free trial, Sloply flagged 212 likely AI images and 34 videos, and hid 12 other AI items. It’s paused now. Keep it on for $2.99 a month, or $24.99 once.', detail: text(overCounts, 'lockBody') },
+      { name: 'trial over, nothing found: no made-up counts', ok: /^Sloply is paused/.test(text(over, 'lockBody')) },
+      { name: 'review: asked after enough items, link goes to the store', ok: reviewBefore && shownBefore === 1 && lastDay.contentDocument.getElementById('reviewLink').href.endsWith('imemjjpgjcmkbcpoglmpieekihphjidk/reviews') },
+      { name: 'review: fits in 600 px while asked (' + Math.ceil(heightWithReview) + ' px)', ok: heightWithReview <= 600 },
+      { name: 'review: Not now hides it and ends it for good', ok: !shows(lastDay, 'reviewBar') && lastDay.contentWindow.__local.reviewPrompt.done === true },
+      { name: 'review: not asked again once answered', ok: !shows(answered, 'reviewBar') },
+      { name: 'free trial: shows the days left, not locked', ok: !trial.contentDocument.getElementById('planBar').hidden && text(trial, 'planText') === 'Free trial · 5 days left' && !trial.contentDocument.body.classList.contains('locked') },
+      { name: 'trial over: locked, offers the plans', ok: over.contentDocument.body.classList.contains('locked') && text(over, 'lockTitle') === 'Your free trial has ended' && text(over, 'lockChoose') === 'Choose a plan' },
+      { name: 'paid plan: shows the plan and a cancel link', ok: !active.contentDocument.getElementById('licenseFoot').hidden && text(active, 'licenseText') === 'Monthly plan' },
+      ...frames.map((f, i) => ({ name: `${Object.keys(states)[i]}: fits in 600 px (${Math.ceil(f.contentDocument.body.getBoundingClientRect().height)} px)`, ok: f.contentDocument.body.getBoundingClientRect().height <= 600 })),
+      { name: 'active: shows the counts (3 flagged, 36 checked, 4 waiting)', ok: text(active, 'statBlurred') === '3' && text(active, 'statChecked') === '36' && text(active, 'statWaiting') === '4' },
+      { name: 'active: model lines show ready·gpu and loading 45%', ok: text(active, 'imageStatus') === 'ready·gpu' && text(active, 'textStatus') === 'loading 45%' },
+      { name: 'paused: says so and offers Resume', ok: /^Paused on/.test(text(paused, 'stats')) && text(paused, 'siteToggle') === 'Resume' },
+      { name: 'off: says off everywhere and dims the settings', ok: text(off, 'stats') === 'Off everywhere' && off.contentDocument.body.classList.contains('off') },
+      { name: 'off: model error shows as failed', ok: text(off, 'imageStatus') === 'failed' },
+      { name: 'off: no download warning while switched off', ok: off.contentDocument.getElementById('modelAlert').hidden },
+      { name: 'active, no failure: no warning, counts shown', ok: active.contentDocument.getElementById('modelAlert').hidden && getComputedStyle(active.contentDocument.querySelector('.meter')).display !== 'none' },
+      { name: 'models failed: a warning replaces the counts', ok: !failed.contentDocument.getElementById('modelAlert').hidden && getComputedStyle(failed.contentDocument.querySelector('.meter')).display === 'none' },
+      { name: 'models failed: says which models and offers Try again', ok: /Detection models didn’t load/.test(text(failed, 'modelAlertTitle')) && /basic checks/.test(text(failed, 'modelAlertBody')) && text(failed, 'retryModels') === 'Try again' }
+    ];
+    window.__done = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sloply model test</title>
+  <style>
+    body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; }
+    pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Sloply model test</h1>
+  <p>Runs <code>models.js</code> outside the extension with a stand-in for the chrome.* APIs.
+    Open this page from a local web server rooted at the <code>ai-blocker</code> folder.
+    Add image URLs as <code>?img=URL&amp;img=URL</code>.</p>
+  <pre id="log">Loading models…</pre>
+  <script src="../metadata.js"></script>
+  <script type="module">
+    const log = (...a) => { document.getElementById('log').textContent += '\n' + a.join(' '); };
+    let listener;
+    const root = new URL('..', location.href).href;
+    // Only chrome.runtime, like a real offscreen document (it has no chrome.storage).
+    window.chrome = {
+      runtime: {
+        getURL: p => root + p,
+        onMessage: { addListener: f => { listener = f; } },
+        sendMessage: async msg => { if (msg.type === 'modelStatus') window.__status = JSON.stringify(msg.status); }
+      }
+    };
+    // ?nogpu pretends the computer has no WebGPU, to test the CPU fallback.
+    if (location.search.includes('nogpu')) Object.defineProperty(Navigator.prototype, 'gpu', { get: () => undefined });
+    // ?remote loads the models the way a store build does: downloaded from a URL (here, this
+    // server's models/ folder) and kept in the browser cache, instead of read from the extension.
+    if (location.search.includes('remote')) self.__aibModelsUrl = root + 'models/';
+    self.__aibModelsUrl ??= new URL('../models/', location.href).href; // models.js loads them from this test server
+    await import('../models.js');
+    const run = job => new Promise(res => listener({ target: 'offscreen', ...job }, null, res));
+
+    const texts = {
+      'AI, casual (current)': "So we finally made it to the lake house after a six-hour drive, two wrong turns, and one very dramatic argument about snacks. The kids were asleep in the back by the time we pulled in. The place was smaller than the photos made it look, but the view off the deck was unreal, just pine trees and still water and this orange light sliding across everything. We sat out there until it got dark and the mosquitoes chased us inside. Tomorrow, if the weather holds, we're renting kayaks.",
+      'ChatGPT answer': "There are several reasons why the sky appears blue. The main reason is a phenomenon called Rayleigh scattering. When sunlight enters Earth's atmosphere, it collides with gas molecules and small particles. Shorter wavelengths of light, such as blue and violet, are scattered more strongly than longer wavelengths like red and orange. Although violet light is scattered even more than blue, our eyes are more sensitive to blue light, and some violet light is absorbed by the upper atmosphere. As a result, the sky appears blue to us during the day.",
+      'Casual post (written by Claude to sound human, not real human text)':"Honestly I think it depends a lot on what you mean by 'better'. I switched from a mechanical keyboard back to my old laptop-style one after like two years because my wrists hated the extra height, and nobody tells you that part. The clacky ones are fun for maybe a month. Then it's just loud and your roommate starts giving you looks. If you type all day for work, get something low profile and spend the extra money on a decent chair, that did way more for me than any keyboard ever did lol"
+    };
+    for (const [name, text] of Object.entries(texts)) {
+      const t0 = performance.now();
+      const r = await run({ type: 'text', text });
+      log(`TEXT ${name}: ${r ? Math.round(r.score * 100) + '% AI' : 'too short'} in ${Math.round(performance.now() - t0)} ms`);
+    }
+    for (const url of new URLSearchParams(location.search).getAll('img')) {
+      const t0 = performance.now();
+      const r = await run({ type: 'imageUrl', url: new URL(url, location.href).href });
+      log(`IMAGE ${url.split('/').pop()}: ${r ? Math.round(r.score * 100) + '% AI' : 'failed'} in ${Math.round(performance.now() - t0)} ms`);
+    }
+    // Crop path used for video frames: crop the left half of the first image.
+    const first = new URLSearchParams(location.search).get('img');
+    if (first) {
+      const blob = await (await fetch(new URL(first, location.href).href)).blob();
+      const dataUrl = await new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(blob); });
+      const r = await run({ type: 'image', dataUrl, crop: [0, 0, 199, 199] });
+      log(`CROP test: ${r ? Math.round(r.score * 100) + '% AI' : 'failed'}`);
+    }
+    log('Model status:', window.__status);
+
+    // ?auto: checks for test/run-all.mjs, using only local data (a generated image, no network).
+    if (location.search.includes('auto')) {
+      const chatgpt = await run({ type: 'text', text: texts['ChatGPT answer'] });
+      const c = Object.assign(document.createElement('canvas'), { width: 400, height: 300 });
+      const g = c.getContext('2d');
+      const grad = g.createLinearGradient(0, 0, 400, 300); grad.addColorStop(0, '#0ea5e9'); grad.addColorStop(1, '#f97316');
+      g.fillStyle = grad; g.fillRect(0, 0, 400, 300);
+      const dataUrl = c.toDataURL('image/png');
+      const image = await run({ type: 'imageUrl', url: dataUrl });
+      const frame = await run({ type: 'image', dataUrl, crop: [0, 0, 199, 199] });
+      const status = JSON.parse(window.__status || '{}');
+      const inRange = r => r && r.score >= 0 && r.score <= 1;
+      window.__results = [
+        { name: `ChatGPT answer scores at least 90% (${Math.round((chatgpt?.score ?? 0) * 100)}%)`, ok: chatgpt?.score >= 0.9 },
+        { name: 'image check (one download: metadata + model) returns a score', ok: inRange(image) },
+        { name: 'video-frame check (crop) returns a score', ok: inRange(frame) },
+        { name: `both models report ready (${status.image?.device}, ${status.text?.device})`, ok: status.image?.state === 'ready' && status.text?.state === 'ready' }
+      ];
+      window.__done = true;
+    }
+    log('DONE');
+  </script>
+</body>
+</html>

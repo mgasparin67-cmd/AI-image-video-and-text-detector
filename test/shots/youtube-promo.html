@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sloply YouTube before and after</title>
+  <!-- One 1280x800 store screenshot: a YouTube home feed full of AI videos (before) and the same
+       account's feed with Sloply hiding them (after), with the real popup on top.
+       Captured by store/capture-before-after.mjs (shot "youtube"), which waits for window.__ready. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #12161d; --signal: #f0a800; --paper: #fff; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1280px; height: 800px; overflow: hidden; }
+    body { background: var(--ink); position: relative; font-family: "Schibsted Grotesk", Helvetica, Arial, sans-serif; }
+    /* The icon's diagonal: amber below a line rising to the right. */
+    .band { position: absolute; inset: 0; background: var(--signal); clip-path: polygon(0 79%, 100% 52%, 100% 100%, 0 100%); }
+    .card { position: absolute; border-radius: 16px; overflow: hidden; background: #0f0f0f;
+      box-shadow: 0 28px 70px rgba(0,0,0,.5), 0 0 0 6px rgba(255,255,255,.92); }
+    .card img { display: block; width: 100%; }
+    .before { left: 40px; top: 34px; width: 720px; }
+    .after { left: 380px; top: 200px; width: 720px; }
+    .tag { position: absolute; left: 16px; top: 14px; padding: 7px 18px 8px; border-radius: 10px;
+      font: 800 26px/1 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.01em; z-index: 1; }
+    .before .tag { background: #fff; color: var(--ink); }
+    .after .tag { background: var(--signal); color: var(--ink); }
+    /* The popup as Chrome opens it under the toolbar icon, scaled to fit beside the feed. */
+    .popup { position: absolute; left: 1040px; top: 46px; width: 320px; height: 600px; border: 0; border-radius: 12px; background: #fff;
+      transform: scale(.66); transform-origin: top left; box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 0 0 6px rgba(255,255,255,.92); }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font: 800 24px "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.02em; }
+    .brand img { width: 34px; height: 34px; border-radius: 9px; box-shadow: 0 0 0 2px var(--ink); }
+    .copy { position: absolute; left: 48px; bottom: 30px; width: 760px; color: var(--ink); }
+    h1 { margin: 0; font: 800 58px/1 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.03em; }
+    .copy p { margin: 10px 0 0; font-size: 20px; font-weight: 500; color: #3b2c00; }
+  </style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="card before"><span class="tag">Before</span><img src="img/youtube-before.webp" alt=""></div>
+  <div class="card after"><span class="tag">After</span><img src="img/youtube-after.webp" alt=""></div>
+  <iframe class="popup" id="popup" title="Sloply popup"></iframe>
+  <div class="copy">
+    <div class="brand"><img src="../../icons/icon128.png" alt="">Sloply</div>
+    <h1>More interest, less slop.</h1>
+    <p>Sloply hides AI videos from your YouTube feed. Just what you came for.</p>
+  </div>
+
+  <script type="module">
+    // The real popup.html and popup.js, with a stand-in for chrome.* (as test/popup-preview.html):
+    // on YouTube, in the free trial, with "Hide videos about AI" on. The two feeds are captures, so
+    // the live counts are left out rather than made up.
+    const page = await (await fetch('../../popup.html')).text();
+    const js = await (await fetch('../../popup.js')).text();
+    const shim = `<script>
+      const sync = { enabled: true, images: true, videos: true, text: true, threshold: 0.7, disabledSites: [], useModels: true,
+        platformLabels: true, hideAiOverview: true, hideAiTopics: true, removeFlagged: false };
+      const local = { modelStatus: { image: { state: 'ready', device: 'webgpu' }, text: { state: 'ready', device: 'webgpu' } }, reports: [], trialStart: Date.now() - 86400000 };
+      const pick = (src, d) => Array.isArray(d) ? Object.fromEntries(d.filter(k => k in src).map(k => [k, src[k]])) : Object.fromEntries(Object.entries(d).map(([k, v]) => [k, k in src ? src[k] : v]));
+      window.chrome = {
+        storage: {
+          sync: { get: async d => pick(sync, d), set: async p => Object.assign(sync, p) },
+          local: { get: async d => pick(local, d), set: async p => Object.assign(local, p) },
+          onChanged: { addListener() {} }
+        },
+        tabs: { query: async () => [{ id: 1, url: 'https://www.youtube.com/' }], sendMessage: async () => ({ flagged: 0, checked: 0, waiting: 0 }) },
+        runtime: { openOptionsPage() {}, sendMessage: async () => null, getManifest: () => ({ version: '0.7.4', update_url: 'https://clients2.google.com/service/update2/crx' }), getURL: p => p }
+      };
+    <\/script>`;
+    const root = new URL('../../', location.href).href;
+    const popup = document.getElementById('popup');
+    popup.srcdoc = page.replace('<head>', `<head><base href="${root}">`).replace('</head>', '<style>.meter { display: none !important; }</style></head>').replace('<script src="popup.js"><' + '/script>', `${shim}<script>${js}<\/script>`);
+    await new Promise(r => popup.addEventListener('load', r, { once: true }));
+    await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+    await document.fonts.ready;
+    await new Promise(r => setTimeout(r, 900)); // popup.js reads settings and stats
+    popup.style.height = Math.min(600, Math.ceil(popup.contentDocument.body.getBoundingClientRect().height)) + 'px';
+    window.__state = { ok: !!popup.contentDocument.getElementById('hideAiTopics')?.checked && !popup.contentDocument.body.classList.contains('locked') && /Free trial/.test(popup.contentDocument.getElementById('planText')?.textContent || ''), shot: 'youtube' };
+    window.__ready = true;
+  </script>
+</body>
+</html>

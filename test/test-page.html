@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sloply test page</title>
+  <style>
+    body { max-width: 720px; margin: 40px auto; padding: 0 16px; font: 16px/1.6 Georgia, serif; color: #222; background: #fafafa; }
+    h2 { font-family: system-ui, sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: #888; margin-top: 40px; }
+    .imgs { display: flex; gap: 16px; flex-wrap: wrap; }
+    figure { margin: 0; }
+    figcaption { font: 12px system-ui, sans-serif; color: #777; }
+  </style>
+</head>
+<body>
+  <h1>Sloply test page</h1>
+
+  <h2>Should be blurred (AI-style text)</h2>
+  <p>In today's fast-paced world, productivity is more important than ever. It's important to note that effective time management plays a crucial role in achieving your goals. Whether you're a student or a busy professional, these strategies can help you unlock the potential of every day. Moreover, building healthy habits fosters a sense of balance and well-being. By leveraging simple tools, you can streamline your workflow and elevate your performance. In conclusion, mastering your schedule is not just about doing more, but about doing what matters most.</p>
+
+  <h2>Should NOT be blurred (human-style text)</h2>
+  <p>So I finally tried that ramen place on 5th that everyone keeps talking about. Honestly? It was fine. The broth was good but way too salty for me, and I waited almost 40 minutes for a table on a Tuesday night which is kind of ridiculous. My friend got the spicy miso and liked it a lot more than I liked mine. Would I go back. Maybe, if someone else is paying lol. The gyoza were the best part tbh, crispy on the bottom and actually hot when they came out.</p>
+
+  <h2>Images</h2>
+  <div class="imgs">
+    <figure>
+      <img width="260" height="180" alt="A castle on a cliff at sunset"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='260' height='180' fill='url(%23g)'/%3E%3Cpath d='M0 180 L90 90 L140 130 L200 70 L260 180Z' fill='%231e1b4b'/%3E%3C/svg%3E">
+      <figcaption>Generated with Midjourney (should be blurred)</figcaption>
+    </figure>
+    <figure>
+      <img width="260" height="180" alt="Photo of a park bench"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='180'%3E%3Crect width='260' height='180' fill='%2386efac'/%3E%3Crect x='70' y='100' width='120' height='14' fill='%2378350f'/%3E%3Crect x='80' y='114' width='8' height='30' fill='%2378350f'/%3E%3Crect x='172' y='114' width='8' height='30' fill='%2378350f'/%3E%3C/svg%3E">
+      <figcaption>Photo by a person (should NOT be blurred)</figcaption>
+    </figure>
+  </div>
+
+  <h2>Video</h2>
+  <video id="demo-video" width="400" height="225" muted playsinline></video>
+  <p style="font: 12px system-ui, sans-serif; color: #777">A generated animation. In preview mode the fake detector scores
+    every frame 93% AI, so it should blur and pause after about 3 frames (~8 seconds).</p>
+
+  <script>
+    // Make a playing video without a video file: animate a canvas and stream it into <video>.
+    const canvas = Object.assign(document.createElement('canvas'), { width: 400, height: 225 });
+    const ctx = canvas.getContext('2d');
+    (function draw(t) {
+      ctx.fillStyle = `hsl(${(t / 20) % 360} 70% 55%)`; ctx.fillRect(0, 0, 400, 225);
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(200 + Math.sin(t / 500) * 140, 112, 30, 0, 7); ctx.fill();
+      requestAnimationFrame(draw);
+    })(0);
+    const video = document.getElementById('demo-video');
+    video.srcObject = canvas.captureStream(30);
+    video.play();
+
+    // Preview mode: if the extension isn't running on this page (e.g. opened without
+    // "Allow access to file URLs"), load the content scripts directly with a stand-in
+    // for the chrome.* APIs so you can still see how the blur looks.
+    setTimeout(() => {
+      if (document.querySelector('[data-aib]')) return; // the real extension is active
+      // Settings, on window.__store; change one and call window.__settingsChanged() to apply it.
+      const store = window.__store = { enabled: true, images: true, videos: true, text: true, threshold: 0.7, disabledSites: [], useModels: true };
+      // In-memory stand-in for chrome.storage.local (mistake reports), kept on window.__local for inspection.
+      const local = window.__local = {};
+      const listeners = [];
+      window.__settingsChanged = () => listeners.forEach(f => f({}, 'sync'));
+      const pick = d => Object.fromEntries(Object.entries(d).map(([k, v]) => [k, k in local ? local[k] : v]));
+      window.chrome = {
+        storage: {
+          sync: { get: (d, cb) => { const r = { ...d, ...store }; cb?.(r); return Promise.resolve(r); } },
+          local: {
+            get: (d, cb) => { const r = pick(d); if (cb) cb(r); return Promise.resolve(r); },
+            set: async patch => {
+              const changes = Object.fromEntries(Object.entries(patch).map(([k, v]) => [k, { newValue: v }]));
+              Object.assign(local, patch);
+              listeners.forEach(f => f(changes, 'local'));
+            }
+          },
+          onChanged: { addListener: f => listeners.push(f) }
+        },
+        runtime: {
+          getManifest: () => ({ version: 'test' }),
+          sendMessage: async msg => {
+            if (msg.type === 'checkVideoFrame') return { score: 0.93, reasons: [] };
+            if (msg.type === 'checkText') return null; // pretend the text model isn't loaded
+            return { score: 0, reasons: [] };
+          },
+          onMessage: { addListener: f => { window.__onMessage = f; } }
+        }
+      };
+      const link = document.createElement('link');
+      link.rel = 'stylesheet'; link.href = '../content.css';
+      document.head.appendChild(link);
+      for (const src of ['../license.js', '../sites.js', '../text-detector.js', '../reports.js', '../platform-labels.js', '../hiding.js', '../badge.js', '../content.js']) {
+        const s = document.createElement('script'); s.src = src; s.async = false; document.body.appendChild(s);
+      }
+    }, 1500);
+  </script>
+  <script>
+    // Checks for test/run-all.mjs, once the stand-in page script is running.
+    (async () => {
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const until = async (f, ms) => { for (let t = 0; t < ms && !f(); t += 200) await wait(200); return f(); };
+      await until(() => window.__store, 5000);
+      const fig = text => [...document.querySelectorAll('figure')].find(f => f.textContent.includes(text));
+      const aiP = document.querySelectorAll('p')[0], humanP = [...document.querySelectorAll('p')].find(p => p.textContent.includes('ramen'));
+      const aiImg = fig('Midjourney').querySelector('img'), humanImg = fig('Photo by a person').querySelector('img');
+      aiImg.scrollIntoView({ block: 'center' });
+      await until(() => aiImg.dataset.aib === 'done' && humanImg.dataset.aib === 'done', 8000);
+      const badge = () => document.querySelector('[data-aib-ui="badge"]');
+      await until(badge, 3000);
+      const video = document.getElementById('demo-video');
+      video.scrollIntoView({ block: 'center' });
+      await until(() => video.dataset.aibFlag, 12000); // two frames in a row over the threshold
+      window.__results = [
+        { name: 'AI paragraph is flagged (in the badge, not blurred)', ok: !!aiP.dataset.aibFlag && !aiP.querySelector('[data-aib-ui]') },
+        { name: 'human paragraph is not flagged', ok: !humanP.dataset.aibFlag },
+        { name: 'badge says the text looks AI-written', ok: /Likely AI-written/.test(badge()?.shadowRoot.querySelector('.pill')?.textContent || '') },
+        { name: 'AI image (Midjourney caption) is blurred with a warning', ok: !!aiImg.dataset.aibFlag && aiImg.classList.contains('aib-media-blur') },
+        { name: 'human photo is not blurred', ok: !humanImg.dataset.aibFlag },
+        { name: 'AI video is blurred after two high frames', ok: !!video.dataset.aibFlag && video.paused }
+      ];
+      window.__done = true;
+    })();
+  </script>
+</body>
+</html>

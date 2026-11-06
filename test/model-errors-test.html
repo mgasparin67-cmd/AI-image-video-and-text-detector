@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Model errors test</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Model errors test</h1>
+  <p>Models that can't load must say so instead of reporting "not AI". <code>?case=missing</code>: the model
+    files aren't there. <code>?case=stall</code>: the download starts and then stops (needs test/run-all.mjs's
+    /stall/ path). <code>?case=notice</code>: the page notice when checks come back with a model error.</p>
+  <pre id="log"></pre>
+  <script src="../metadata.js"></script>
+  <script type="module">
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const kase = new URLSearchParams(location.search).get('case');
+    const results = window.__results = [];
+    const check = (name, ok, got) => { results.push({ name: !ok && got !== undefined ? `${name} [got: ${JSON.stringify(got)}]` : name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}`); };
+    const root = new URL('..', location.href).href;
+
+    if (kase === 'missing' || kase === 'stall') {
+      let listener; const statuses = [];
+      window.chrome = { runtime: { getURL: p => root + p, onMessage: { addListener: f => { listener = f; } }, sendMessage: async m => { if (m.type === 'modelStatus') statuses.push(JSON.parse(JSON.stringify(m.status))); } } };
+      self.__aibModelsUrl = new URL(kase === 'stall' ? '/stall/' : '/missing-models/', location.href).href;
+      self.__aibStallMs = 2000;
+      await import('../models.js');
+      const job = msg => new Promise(res => listener({ target: 'offscreen', ...msg }, null, res));
+      const t0 = performance.now();
+      const text = await job({ type: 'text', text: 'There are several reasons why the sky appears blue. The main reason is a phenomenon called Rayleigh scattering, which affects short wavelengths of light more strongly than long ones.' });
+      const image = await job({ type: 'imageUrl', url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==' });
+      const last = statuses[statuses.length - 1] || {};
+      check(`text check answers with a model error, not "not AI" (${Math.round(performance.now() - t0)} ms)`, !!text?.modelError, text);
+      check('image check answers with a model error', !!image?.modelError, image);
+      check('the popup status says the text model failed', last.text?.state === 'error', last.text);
+      check('the popup status says the image model failed', last.image?.state === 'error', last.image);
+      if (kase === 'stall') check('a stalled download is reported as stopped', /stopped/.test(last.text?.error || '') || /stopped/.test(last.image?.error || ''), [last.text?.error, last.image?.error]);
+    }
+
+    if (kase === 'notice') {
+      const local = {};
+      window.chrome = {
+        storage: { sync: { get: (d, cb) => { const r = { ...d }; cb?.(r); return Promise.resolve(r); } },
+          local: { get: (d, cb) => { const r = { ...d, ...local }; if (cb) cb(r); return Promise.resolve(r); }, set: async p => Object.assign(local, p) },
+          onChanged: { addListener() {} } },
+        runtime: { getManifest: () => ({ version: 'test' }), onMessage: { addListener() {} },
+          // Every check comes back as "the models couldn't load", as background.js sends it.
+          sendMessage: async m => (m.type === 'checkText' ? { modelError: 'download failed' } : m.type === 'checkImage' ? { score: 0, reasons: [], incomplete: true, modelError: 'download failed' } : null) }
+      };
+      for (const id of ['p1', 'p2']) {
+        const p = document.createElement('p'); p.id = id;
+        p.textContent = 'The committee met on Tuesday to review the budget, and after a long discussion about the parks department and the library hours, members agreed to postpone the vote until the next meeting in March so that residents could weigh in. Several people at the back of the room asked for the meeting to be moved to the evening next time.'; // over the 280 characters a paragraph needs to be checked
+        document.body.append(p);
+      }
+      for (const src of ['../license.js', '../sites.js', '../text-detector.js', '../reports.js', '../platform-labels.js', '../hiding.js', '../badge.js', '../content.js']) {
+        await new Promise(res => { const s = document.createElement('script'); s.src = src; s.onload = res; document.body.append(s); });
+      }
+      for (let t = 0; t < 5000 && !document.querySelector('[data-aib-ui="toast"]'); t += 100) await new Promise(r => setTimeout(r, 100));
+      const toasts = () => document.querySelectorAll('[data-aib-ui="toast"]');
+      const toast = toasts()[0];
+      check('the page shows a notice that the models didn\'t load', /couldn’t load its detection models/.test(toast?.shadowRoot.textContent || ''), toast?.shadowRoot.textContent);
+      check('the notice is fixed to the window', toast && getComputedStyle(toast).position === 'fixed', toast && getComputedStyle(toast).position);
+      await new Promise(r => setTimeout(r, 800));
+      check('only one notice for several failed checks', toasts().length === 1, toasts().length);
+      check('the time is saved, so other tabs stay quiet for 10 minutes', local.modelsDownNoticeAt > 0);
+    }
+    window.__done = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Driftwood · Explore</title>
+  <!-- A made-up community site for the Chrome Web Store screenshots (store/capture-screenshots.mjs).
+       The real content scripts and the real models run here, through a stand-in for chrome.*, so
+       every blur and score on it is the extension's own verdict. Images are from Wikimedia Commons:
+       the two AI images are public domain, the two photos are credited in their captions. -->
+  <style>
+    :root { --bg: #f6f4f0; --card: #fff; --ink: #1d1b19; --muted: #6f6a63; --line: #e7e2da; --accent: #2f6f5e; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+    header { display: flex; align-items: center; gap: 28px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--line); }
+    .logo { font: 700 20px Georgia, serif; letter-spacing: -.01em; color: var(--accent); }
+    nav { display: flex; gap: 20px; color: var(--muted); font-size: 14px; }
+    nav b { color: var(--ink); font-weight: 600; }
+    .search { margin-left: auto; width: 240px; padding: 8px 14px; border-radius: 999px; background: var(--bg); color: var(--muted); font-size: 13px; }
+    main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 22px 28px 60px; max-width: 1180px; margin: 0 auto; }
+    article { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .who { display: flex; align-items: center; gap: 10px; padding: 12px 14px; font-size: 13.5px; }
+    .av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font: 600 12px sans-serif; }
+    .who span { color: var(--muted); font-size: 12.5px; margin-left: auto; }
+    article img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .body { padding: 12px 14px 14px; display: grid; gap: 6px; }
+    .body h3 { margin: 0; font: 600 15.5px/1.3 Georgia, serif; }
+    .body p { margin: 0; color: var(--muted); font-size: 13.5px; }
+    .credit { font-size: 11px !important; color: #9a948b !important; }
+    .wide { grid-column: span 2; }
+    .wide .body p { color: var(--ink); font-size: 14.5px; line-height: 1.6; }
+    /* Half-width window in the side-by-side screenshot. */
+    @media (max-width: 760px) {
+      header { gap: 18px; padding: 12px 18px; } .search { display: none; }
+      main { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 16px 18px 40px; }
+      .wide { order: 5; } /* the four picture posts fill the first two rows */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Driftwood</div>
+    <nav><b>Explore</b><span>Following</span><span>Travel</span><span>Food</span></nav>
+    <div class="search">Search Driftwood</div>
+  </header>
+  <main>
+    <article>
+      <div class="who"><div class="av" style="background:#8a5a44">NR</div>Nadia R.<span>2h</span></div>
+      <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Astronaut_walking_on_Mars.png/960px-Astronaut_walking_on_Mars.png">
+      <div class="body"><h3>First light on the ridge</h3><p>Couldn’t believe the colors this morning.</p></div>
+    </article>
+    <article>
+      <div class="who"><div class="av" style="background:#2f6f5e">TG</div>Tomás G.<span>3h</span></div>
+      <img alt="A bowl of ajiaco soup" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ajiaco_in_Bogot%C3%A1.jpg/960px-Ajiaco_in_Bogot%C3%A1.jpg">
+      <div class="body"><h3>Ajiaco at La Puerta Falsa</h3><p class="credit">Photo: Bernard Gagnon, CC BY-SA 4.0, Wikimedia Commons</p></div>
+    </article>
+    <article>
+      <div class="who"><div class="av" style="background:#4a5d8f">KO</div>Kai O.<span>5h</span></div>
+      <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/An_elbish_city_on_an_exoplanet_%28science_fantasy%29.jpg/960px-An_elbish_city_on_an_exoplanet_%28science_fantasy%29.jpg">
+      <div class="body"><h3>Where should we go next?</h3><p>Booking flights this weekend.</p></div>
+    </article>
+    <article class="wide">
+      <div class="who"><div class="av" style="background:#9b6b2f">LM</div>Lena M.<span>6h</span></div>
+      <div class="body">
+        <h3>Three days eating my way through Bogotá</h3>
+        <p>Exploring Bogotá’s food scene is a truly unforgettable journey that offers something for everyone. From bustling markets to cozy family-run restaurants, the city’s culinary landscape serves as a vibrant testament to Colombia’s rich cultural heritage. Whether you’re savoring a steaming bowl of ajiaco or sampling fresh tropical fruits, each bite tells a story of tradition and innovation. It’s important to note that timing your visit can make all the difference, as many local favorites are busiest at lunchtime. Ultimately, Bogotá invites travelers to slow down, embrace new flavors, and create lasting memories.</p>
+      </div>
+    </article>
+    <article>
+      <div class="who"><div class="av" style="background:#5f7f3a">JP</div>Jo P.<span>8h</span></div>
+      <img alt="Ferries at Auckland harbour" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/11._AucklandFerryHarbour.jpg/960px-11._AucklandFerryHarbour.jpg">
+      <div class="body"><h3>Ferry day</h3><p class="credit">Photo: Elemaki, CC BY-SA 3.0, Wikimedia Commons</p></div>
+    </article>
+  </main>
+
+  <script src="../metadata.js"></script>
+  <script type="module">
+    // ?plain leaves the extension out: the "without" half of the side-by-side screenshot.
+    if (!new URLSearchParams(location.search).has('plain')) await (async () => {
+    // Stand-in for chrome.*: the background worker's routing (checkImage / checkText to the models)
+    // and in-memory storage. models.js is imported here, so the scores come from the real models.
+    const root = new URL('..', location.href).href;
+    const store = window.__store = { enabled: true, images: true, videos: true, text: true, threshold: 0.7, disabledSites: [], useModels: true };
+    const local = window.__local = {};
+    const storageListeners = [];
+    const messageListeners = window.__messageListeners = [];
+    const pick = d => Object.fromEntries(Object.entries(d).map(([k, v]) => [k, k in local ? local[k] : v]));
+    let modelListener = null;
+    const runModel = job => new Promise(res => modelListener({ target: 'offscreen', ...job }, null, res));
+    window.chrome = {
+      storage: {
+        sync: { get: (d, cb) => { const r = { ...d, ...store }; if (cb) cb(r); return Promise.resolve(r); } },
+        local: {
+          get: (d, cb) => { const r = pick(d); if (cb) cb(r); return Promise.resolve(r); },
+          set: async patch => {
+            Object.assign(local, patch);
+            const changes = Object.fromEntries(Object.entries(patch).map(([k, v]) => [k, { newValue: v }]));
+            storageListeners.forEach(f => f(changes, 'local'));
+          }
+        },
+        onChanged: { addListener: f => storageListeners.push(f) }
+      },
+      runtime: {
+        getURL: p => root + p,
+        getManifest: () => ({ version: 'demo' }),
+        sendMessage: async msg => {
+          if (msg.type === 'modelStatus') { window.__modelStatus = msg.status; return true; }
+          if (msg.type === 'checkImage') return runModel({ type: 'imageUrl', url: msg.url });
+          if (msg.type === 'checkText') return runModel({ type: 'text', text: msg.text });
+          return null;
+        },
+        onMessage: { addListener: f => messageListeners.push(f) }
+      }
+    };
+    // Over http:// Transformers.js skips local model paths, so load the models from this server
+    // the way a store build downloads them (as test/models-test.html does).
+    self.__aibModelsUrl = root + 'models/';
+    await import('../models.js');
+    modelListener = messageListeners.shift(); // models.js registered first; the rest are the page's
+    const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: '../content.css' });
+    document.head.append(link);
+    for (const src of ['license.js', 'sites.js', 'text-detector.js', 'reports.js', 'platform-labels.js', 'hiding.js', 'badge.js', 'content.js']) {
+      const s = Object.assign(document.createElement('script'), { src: '../' + src, async: false });
+      document.body.append(s);
+    }
+    // Asks the content script for the popup's counts, the way the popup does.
+    window.__askContent = msg => new Promise(res => {
+      let answered = false;
+      for (const f of messageListeners) {
+        const keep = f(msg, { id: 'popup' }, r => { if (!answered) { answered = true; res(r); } });
+        if (keep === true) continue;
+      }
+      setTimeout(() => { if (!answered) res(null); }, 2000);
+    });
+    })();
+  </script>
+</body>
+</html>

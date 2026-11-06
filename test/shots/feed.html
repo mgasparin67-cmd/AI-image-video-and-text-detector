@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Driftwood · Explore</title>
+  <!-- A made-up community feed for the before/after store screenshots. The two AI images are public
+       domain on Wikimedia Commons; the photos are credited in their captions. -->
+  <style>
+    :root { --bg: #f6f4f0; --card: #fff; --ink: #1d1b19; --muted: #6f6a63; --line: #e7e2da; --accent: #2f6f5e; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+    header { display: flex; align-items: center; gap: 20px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+    .logo { font: 700 20px Georgia, serif; color: var(--accent); }
+    nav { display: flex; gap: 18px; color: var(--muted); font-size: 14px; }
+    nav b { color: var(--ink); font-weight: 600; }
+    main { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 16px 18px 40px; }
+    .post { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .who { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 13.5px; }
+    .av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: #fff; font: 600 11px sans-serif; }
+    .who span { color: var(--muted); font-size: 12.5px; margin-left: auto; }
+    .post img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .body { padding: 10px 14px 12px; display: grid; gap: 4px; }
+    .body h3 { margin: 0; font: 600 15px/1.3 Georgia, serif; }
+    .body p { margin: 0; color: var(--muted); font-size: 13px; }
+    .credit { font-size: 10.5px !important; color: #9a948b !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Driftwood</div>
+    <nav><b>Explore</b><span>Following</span><span>Travel</span><span>Food</span></nav>
+  </header>
+  <main>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#8a5a44">NR</div>Nadia R.<span>2h</span></div>
+      <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Astronaut_walking_on_Mars.png/960px-Astronaut_walking_on_Mars.png">
+      <div class="body"><h3>First light on the ridge</h3><p>Couldn’t believe the colors this morning.</p></div>
+    </div>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#2f6f5e">TG</div>Tomás G.<span>3h</span></div>
+      <img alt="A bowl of ajiaco soup" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ajiaco_in_Bogot%C3%A1.jpg/960px-Ajiaco_in_Bogot%C3%A1.jpg">
+      <div class="body"><h3>Ajiaco at La Puerta Falsa</h3><p class="credit">Photo: Bernard Gagnon, CC BY-SA 4.0, Wikimedia Commons</p></div>
+    </div>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#4a5d8f">KO</div>Kai O.<span>5h</span></div>
+      <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/An_elbish_city_on_an_exoplanet_%28science_fantasy%29.jpg/960px-An_elbish_city_on_an_exoplanet_%28science_fantasy%29.jpg">
+      <div class="body"><h3>Where should we go next?</h3><p>Booking flights this weekend.</p></div>
+    </div>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#5f7f3a">JP</div>Jo P.<span>8h</span></div>
+      <img alt="Ferries at Auckland harbour" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/11._AucklandFerryHarbour.jpg/960px-11._AucklandFerryHarbour.jpg">
+      <div class="body"><h3>Ferry day</h3><p class="credit">Photo: Elemaki, CC BY-SA 3.0, Wikimedia Commons</p></div>
+    </div>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#7a4f8a">ML</div>Maya L.<span>9h</span></div>
+      <div class="body"><h3>Market haul</h3><p>Three kinds of potatoes, a bag of guavas and way too much cheese. No regrets. Soup again tomorrow?</p></div>
+    </div>
+    <div class="post">
+      <div class="who"><div class="av" style="background:#a0603a">RB</div>Ravi B.<span>11h</span></div>
+      <div class="body"><h3>Missed the last ferry</h3><p>Ended up walking the long way round. Best wrong turn this year, found a tiny bakery open till midnight.</p></div>
+    </div>
+  </main>
+  <script src="harness.js"></script>
+</body>
+</html>

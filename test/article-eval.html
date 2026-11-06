@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Article check evaluation</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; }</style>
+</head>
+<body>
+  <h1>Article check evaluation</h1>
+  <p>Held-out texts split into blog-style paragraphs of two sentences. Compares checking
+    paragraphs one by one (only those of 280+ characters, as content.js does) with also scoring
+    the whole article (as the new article check does). Threshold 0.7. Data: <code>article-eval-data.json</code>.</p>
+  <pre id="log">Loading models…</pre>
+  <script src="../text-detector.js"></script>
+  <script type="module">
+    const log = (...a) => { document.getElementById('log').textContent += '\n' + a.join(' '); };
+    let listener;
+    const root = new URL('..', location.href).href;
+    window.chrome = { runtime: { getURL: p => root + p, onMessage: { addListener: f => { listener = f; } }, sendMessage: async () => {} } };
+    self.__aibModelsUrl ??= new URL('../models/', location.href).href; // models.js loads them from this test server
+    await import('../models.js');
+    const model = text => new Promise(res => listener({ target: 'offscreen', type: 'text', text }, null, res));
+    const T = 0.7;
+    const data = await (await fetch('article-eval-data.json')).json();
+    const rows = [];
+    for (const s of data) {
+      // Paragraph by paragraph.
+      let para = 0;
+      for (const p of s.paras) {
+        if (p.length < 280) continue;
+        const m = await model(p);
+        para = Math.max(para, window.AIBText.score(p).score, m?.score ?? 0);
+      }
+      // Whole article: patterns on all of it, model averaged over 350-word chunks (up to 4).
+      const text = s.paras.join('\n\n');
+      const words = text.split(/\s+/);
+      const scores = [];
+      for (let i = 0; i < words.length && scores.length < 4; i += 350) {
+        const c = words.slice(i, i + 350);
+        if (c.length >= 50) { const m = await model(c.join(' ')); if (m) scores.push(m.score); }
+      }
+      const art = Math.max(window.AIBText.score(text).score, scores.length ? scores.reduce((a, b) => a + b) / scores.length : 0);
+      rows.push({ group: s.group, ai: s.ai, para, art });
+      document.title = `${rows.length}/${data.length}`;
+    }
+    const groups = [...new Set(rows.map(r => r.group))];
+    for (const g of groups) {
+      const r = rows.filter(x => x.group === g);
+      const n = f => r.filter(f).length;
+      log(`${g} (n=${r.length}): flagged by paragraphs ${n(x => x.para >= T)}, by article ${n(x => x.art >= T)}, by either ${n(x => x.para >= T || x.art >= T)}`);
+    }
+    for (const ai of [true, false]) {
+      const r = rows.filter(x => x.ai === ai);
+      const n = f => r.filter(f).length;
+      log(`${ai ? 'ALL AI' : 'ALL HUMAN'} (n=${r.length}): paragraphs ${n(x => x.para >= T)}, article ${n(x => x.art >= T)}, either ${n(x => x.para >= T || x.art >= T)}`);
+    }
+    window.__rows = rows;
+    log('DONE');
+  </script>
+</body>
+</html>

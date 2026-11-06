@@ -1,0 +1,73 @@
+{
+  "manifest_version": 3,
+  "name": "Sloply",
+  "version": "0.7.5",
+  "description": "More interest, less slop. Blurs or removes likely AI-generated images, videos and text, and hides AI answers.",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "offscreen",
+    "unlimitedStorage",
+    "contextMenus",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "license.js",
+        "sites.js",
+        "text-detector.js",
+        "reports.js",
+        "platform-labels.js",
+        "hiding.js",
+        "badge.js",
+        "content.js",
+        "google-docs.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://sloply.app/success.html*"
+      ],
+      "js": [
+        "unlock.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    },
+    "default_title": "Sloply"
+  }
+}

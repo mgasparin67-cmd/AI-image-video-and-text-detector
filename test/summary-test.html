@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weekly summary test</title>
+  <style>body { max-width: 760px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; } pre { background: #f4f4f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; } iframe { width: 100%; height: 900px; border: 1px solid #ddd; border-radius: 10px; }</style>
+</head>
+<body>
+  <h1>Weekly summary test</h1>
+  <p>Checks <code>activity.js</code> (adding, keeping 8 weeks, weekly totals) and renders
+    <code>summary.html</code> with sample data, then with none.</p>
+  <pre id="log"></pre>
+  <script src="../activity.js"></script>
+  <script type="module">
+    const log = s => { document.getElementById('log').textContent += s + '\n'; };
+    const results = window.__results = [];
+    const check = (name, ok, got) => { results.push({ name: got !== undefined && !ok ? `${name} [got: ${JSON.stringify(got)}]` : name, ok }); log(`${ok ? 'PASS' : 'FAIL'}  ${name}`); };
+    const A = window.AIBActivity;
+    const today = A.dayKey();
+
+    // activity.js
+    let act = {};
+    act = A.add(act, today, 'example.com', { image: 2, text: 1 });
+    act = A.add(act, today, 'example.com', { image: 1, hidden: 3, bogus: 5 });
+    check('adds counts for the same site and day', JSON.stringify(act[today]['example.com']) === JSON.stringify({ image: 3, text: 1, hidden: 3 }), act[today]['example.com']);
+    act = A.add(act, A.daysBefore(today, 60), 'old.com', { image: 1 });
+    act = A.add(act, today, 'other.com', { video: 1 });
+    check('drops days older than 8 weeks', !Object.keys(act).includes(A.daysBefore(today, 60)), Object.keys(act));
+    const old = A.add({ [A.daysBefore(today, 3)]: { 'a.com': { text: 4 } } }, today, 'a.com', { text: 1 });
+    const s = A.summarize(old, today, 7);
+    check('summary has 7 days ending today', s.days.length === 7 && s.days[6].day === today && s.days[3].day === A.daysBefore(today, 3));
+    check('summary totals across days', s.totals.text === 5 && s.totals.all === 5, s.totals);
+    const s2 = A.summarize({ [today]: { 'b.com': { image: 1 }, 'a.com': { image: 5 }, 'c.com': { image: 5 } } }, today);
+    check('sites sorted by total, then name', s2.sites.map(x => x.site).join(',') === 'a.com,c.com,b.com', s2.sites.map(x => x.site));
+    check('a day 8 days ago is not in this week', A.summarize({ [A.daysBefore(today, 7)]: { 'x.com': { image: 9 } } }, today).totals.all === 0);
+
+    // summary.html with sample data
+    const sample = {
+      [A.daysBefore(today, 0)]: { 'www.google.com': { hidden: 6 }, 'www.youtube.com': { hidden: 12, video: 1 } },
+      [A.daysBefore(today, 2)]: { 'medium.com': { text: 4 }, 'www.pinterest.com': { image: 9 } },
+      [A.daysBefore(today, 5)]: { 'www.google.com': { hidden: 2, image: 3 } }
+    };
+    const reports = [
+      { time: new Date().toISOString(), verdict: 'not-ai' },
+      { time: new Date().toISOString(), verdict: 'is-ai' },
+      { time: new Date(Date.now() - 20 * 864e5).toISOString(), verdict: 'not-ai' }
+    ];
+    const html = await (await fetch('../summary.html')).text();
+    const frame = async local => {
+      const shim = `<script>window.chrome = { storage: { local: { get: async d => ({ ...d, ...${JSON.stringify(local)} }), remove: async () => {} }, onChanged: { addListener() {} } } };<\/script>`;
+      const f = document.createElement('iframe');
+      f.srcdoc = html.replace('<script src="activity.js">', shim + '<script src="activity.js">').replace(/src="(activity|summary)\.js"/g, (m, n) => `src="${new URL('../' + n + '.js', location.href).href}"`);
+      document.body.append(f);
+      await new Promise(r => f.addEventListener('load', r, { once: true }));
+      await new Promise(r => setTimeout(r, 400));
+      return f.contentDocument;
+    };
+    const d = await frame({ activity: sample, reports });
+    const t = id => d.getElementById(id).textContent;
+    check('tiles: 12 images, 1 video, 4 text, 20 hidden', t('tImages') === '12' && t('tVideos') === '1' && t('tText') === '4' && t('tHidden') === '20', [t('tImages'), t('tVideos'), t('tText'), t('tHidden')]);
+    check('range line gives the week total (37)', /37 flagged or hidden/.test(t('range')), t('range'));
+    const bars = d.querySelectorAll('#chart .bar');
+    check('one bar per day with something (3)', bars.length === 3, bars.length);
+    check('the largest day is labelled (19)', d.querySelector('#chart text.value')?.textContent === '19', d.querySelector('#chart text.value')?.textContent);
+    check('every day has a hover/focus target with its count', d.querySelectorAll('#chart .hit[aria-label]').length === 7);
+    d.getElementById('toggleTable').click();
+    check('"Show as table" shows 7 rows of days', !d.getElementById('dayTable').hidden && d.querySelectorAll('#dayTable tbody tr').length === 7);
+    check('top site first: www.youtube.com (13)', d.querySelector('#sites tbody tr td.site')?.textContent === 'www.youtube.com');
+    check('reports: 2 this week (1 not AI, 1 reported as AI), 3 in total', /^2 this week: 1 marked “Not AI”, 1 reported as AI\. 3 in total\.$/.test(t('reports')), t('reports'));
+
+    // Empty
+    const e = await frame({});
+    check('empty week says so', /Nothing flagged or hidden/.test(e.getElementById('chart').textContent) && e.getElementById('sites').textContent === 'No sites yet.');
+
+    window.__done = true;
+  </script>
+</body>
+</html>

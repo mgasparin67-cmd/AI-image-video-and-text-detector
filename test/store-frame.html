@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sloply store screenshot</title>
+  <!-- One 1280x800 Chrome Web Store screenshot: a headline over a browser window showing
+       store-demo.html, where the real content scripts and models run. ?shot= picks the state.
+       Captured by store/capture-screenshots.mjs, which waits for window.__ready. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Schibsted+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #12161d; --paper: #eef1f4; --signal: #f0a800; --muted: #a9b3c1; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1280px; height: 800px; overflow: hidden; }
+    body { background: var(--ink); color: #fff; font-family: "Schibsted Grotesk", Helvetica, Arial, sans-serif; position: relative; }
+    .head { position: absolute; left: 72px; right: 72px; top: 34px; display: grid; gap: 10px; }
+    h1 { margin: 0; font: 800 46px/1.05 "Bricolage Grotesque", Helvetica, Arial, sans-serif; letter-spacing: -.025em; }
+    h1 em { font-style: normal; color: var(--signal); }
+    .head p { margin: 0; font-size: 19px; color: var(--muted); max-width: 52em; }
+    /* Runs to the bottom edge, so the page's corner badge sits inside the picture. */
+    .window { position: absolute; left: 64px; top: 150px; width: 1152px; height: 650px; border-radius: 12px 12px 0 0; overflow: hidden;
+      background: #fff; box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08); }
+    .bar { height: 46px; display: flex; align-items: center; gap: 14px; padding: 0 16px; background: #dfe3e8; }
+    .dots { display: flex; gap: 7px; } .dots i { width: 12px; height: 12px; border-radius: 50%; background: #c3c8cf; }
+    .url { flex: 1; height: 30px; border-radius: 999px; background: #fff; display: flex; align-items: center; padding: 0 16px; font-size: 14px; color: #444; }
+    .ext { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
+    .ext.on { background: #c9ced6; }
+    .ext img { width: 18px; height: 18px; }
+    #page, #plain { display: block; width: 1152px; height: 604px; border: 0; }
+    /* Side by side: the same page without and with the extension. */
+    .compare .window { top: 150px; width: 590px; }
+    .compare #page, .compare #plain { width: 590px; }
+    .compare .win-l { left: 40px; } .compare .win-r { left: 650px; }
+    .chip { margin-left: auto; padding: 5px 12px; border-radius: 999px; font: 500 13px "Schibsted Grotesk", Helvetica, Arial, sans-serif; background: #c9ced6; color: #3a4350; white-space: nowrap; }
+    .chip.on { background: var(--signal); color: #12161d; }
+    /* Under the toolbar icon, like Chrome opens it; the popup is about 600 px tall, so it just fits. */
+    #popup { position: absolute; top: 200px; right: 74px; width: 320px; height: 520px; border: 0; border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35); background: #fff; display: none; }
+  </style>
+</head>
+<body>
+  <div class="head"><h1 id="title"></h1><p id="sub"></p></div>
+  <div class="window">
+    <div class="bar">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="url">driftwood.example/explore</div>
+      <div class="ext" id="ext"><img src="../icons/icon32.png" alt=""></div>
+    </div>
+    <iframe id="page" src="store-demo.html"></iframe>
+  </div>
+  <iframe id="popup" title="Sloply popup"></iframe>
+
+  <script type="module">
+    const SHOTS = {
+      compare: ['The same page, <em>minus the slop</em>.', 'Sloply blurs likely AI images and flags AI-written text. Nothing else on the page changes.'],
+      blur: ['Know what’s <em>AI</em> before you look at it.', 'Images and videos that are likely AI-generated are blurred, with the reason and a View anyway button.'],
+      text: ['Spots <em>AI-written</em> text without touching the page.', 'A small badge lists the passages that look AI-written. Click one to jump to it.'],
+      reveal: ['You decide <em>what to see</em>.', 'Reveal anything with one click. A small tag lets you blur it again or report a mistake.'],
+      popup: ['Set it once from the <em>toolbar</em>.', 'Blur or remove, choose how sure it has to be, and turn it off on any site.']
+    };
+    const shot = new URLSearchParams(location.search).get('shot') || 'blur';
+    const [title, sub] = SHOTS[shot];
+    document.getElementById('title').innerHTML = title;
+    document.getElementById('sub').textContent = sub;
+
+    if (shot === 'compare') {
+      // Two narrow windows: the left page loads without the extension (?plain), the right one is the usual one.
+      document.body.classList.add('compare');
+      const right = document.querySelector('.window');
+      const left = right.cloneNode(true);
+      left.querySelector('iframe').remove();
+      const plain = Object.assign(document.createElement('iframe'), { id: 'plain', src: 'store-demo.html?plain' });
+      left.append(plain);
+      left.classList.add('win-l'); right.classList.add('win-r');
+      left.querySelector('.url').textContent = right.querySelector('.url').textContent;
+      for (const [w, text, on] of [[left, 'Without Sloply', false], [right, 'With Sloply', true]]) {
+        const ext = w.querySelector('.ext');
+        const chip = Object.assign(document.createElement('div'), { className: 'chip' + (on ? ' on' : ''), textContent: text });
+        ext.replaceWith(chip);
+      }
+      right.before(left);
+    }
+
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const until = async (f, ms) => { for (let t = 0; t < ms && !f(); t += 250) await wait(250); return f(); };
+    const pageWin = () => document.getElementById('page').contentWindow;
+    const doc = () => document.getElementById('page').contentDocument;
+    const imgs = () => [...doc().querySelectorAll('article img')];
+    const badge = () => doc().querySelector('[data-aib-ui="badge"]')?.shadowRoot;
+    const overlayFor = img => [...doc().querySelectorAll('[data-aib-ui="image"]')].find(h => h.__aibFor === img) ||
+      [...doc().querySelectorAll('[data-aib-ui="image"]')].find(h => { const a = h.getBoundingClientRect(), b = img.getBoundingClientRect(); return Math.abs(a.left - b.left) < 4 && Math.abs(a.top - b.top) < 4; });
+
+    // Both AI images blurred, both photos checked and clear, and the text badge up.
+    const ready = () => {
+      const [mars, soup, city, ferry] = imgs();
+      return mars?.dataset.aibFlag && city?.dataset.aibFlag && soup?.dataset.aib === 'done' && !soup.dataset.aibFlag &&
+        ferry?.dataset.aib === 'done' && !ferry.dataset.aibFlag && /Likely AI-written/.test(badge()?.querySelector('.pill')?.textContent || '');
+    };
+    await until(() => doc()?.readyState === 'complete', 20000);
+    const ok = await until(ready, 150000);
+    await doc().fonts?.ready;
+    await wait(1000); // let the warnings finish fading in
+
+    if (shot === 'text') {
+      badge().querySelector('.pill').click();
+      await wait(600);
+      badge().querySelector('.go').click(); // scroll to the passage; its outline fades after 2 s
+      await wait(900);
+    }
+    if (shot === 'reveal') {
+      overlayFor(imgs()[0])?.shadowRoot.querySelector('.view').click();
+      await wait(600);
+    }
+    if (shot === 'popup') {
+      const root = new URL('..', location.href).href;
+      const html = await (await fetch('../popup.html')).text();
+      const js = await (await fetch('../popup.js')).text();
+      // The popup's stand-in: settings like the demo page's, live counts from its content script.
+      window.__popupBridge = { ask: msg => pageWin().__askContent(msg), store: pageWin().__store, models: () => pageWin().__modelStatus || {} };
+      const shim = `<script>
+        const bridge = parent.__popupBridge;
+        const sync = Object.assign({}, bridge.store);
+        const local = { modelStatus: bridge.models(), reports: [] };
+        const pick = (src, d) => Object.fromEntries(Object.entries(d).map(([k, v]) => [k, k in src ? src[k] : v]));
+        window.chrome = {
+          storage: {
+            sync: { get: async d => pick(sync, d), set: async p => Object.assign(sync, p) },
+            local: { get: async d => pick(local, d), set: async p => Object.assign(local, p) },
+            onChanged: { addListener() {} }
+          },
+          tabs: { query: async () => [{ id: 1, url: 'https://driftwood.example/explore' }], sendMessage: async (id, msg) => bridge.ask(msg) },
+          runtime: { openOptionsPage() {}, sendMessage: async () => null, getManifest: () => ({ version: 'demo', update_url: 'https://clients2.google.com/service/update2/crx' }) }
+        };
+      <\/script>`;
+      const popup = document.getElementById('popup');
+      popup.srcdoc = html.replace('<head>', `<head><base href="${root}">`).replace('<script src="popup.js"><' + '/script>', `${shim}<script>${js}<\/script>`);
+      popup.style.visibility = 'hidden';
+      popup.style.display = 'block'; // laid out, so its height can be measured
+      await new Promise(r => popup.addEventListener('load', r, { once: true }));
+      await wait(900);
+      popup.style.height = Math.min(600, Math.ceil(popup.contentDocument.body.getBoundingClientRect().height)) + 'px';
+      popup.style.visibility = 'visible';
+      document.getElementById('ext').classList.add('on');
+      await wait(300);
+    }
+    window.__state = { ok: !!ok, shot, flags: imgs().map(i => i.dataset.aibFlag || i.dataset.aib), status: pageWin().__modelStatus };
+    window.__ready = true;
+  </script>
+</body>
+</html>
